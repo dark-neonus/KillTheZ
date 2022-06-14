@@ -1774,7 +1774,7 @@ namespace KillTheZGame
         public static UkraineTraktorMykola traktorMykola;
 
         public static bool isDanger;
-        public static void EmptyMethod() { }
+        public static void EmptyMethod() { } 
     }
 
 
