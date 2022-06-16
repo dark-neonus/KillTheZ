@@ -50,7 +50,7 @@ namespace KillTheZGame
             GameData.english = new Language("en");
             GameData.ukraine = new Language("ua");
             GameData.poland = new Language("pl");
-            GameData.aplication.gameText = new GameText(GameData.english.name, new List<Language>() { GameData.english, GameData.ukraine, GameData.poland });
+            GameData.aplication.gameText = new GameText(GameData.ukraine.name, new List<Language>() { GameData.english, GameData.ukraine, GameData.poland });
             TextInit();
 
             GameData.originalMyGame = new MyGame(ref GameData.aplication, new Vector2(GameData.myGameWindowWidth, GameData.myGameWindowHeight), "Game", 40);
@@ -151,6 +151,14 @@ namespace KillTheZGame
                 {"Tut3_12", new Dictionary<string, string>() { { GameData.english.name, "These daredevils can:" }, { GameData.ukraine.name, "Ці сміливці можуть:" }, { GameData.poland.name, "These daredevils can:" } } },
                 {"Tut3_13", new Dictionary<string, string>() { { GameData.english.name, "1) Shoot the enemies at a distance of up to " }, { GameData.ukraine.name, "1) Стріляти у ворогів на відстані до " }, { GameData.poland.name, "1) Shoot the enemies at a distance of up to " } } },
                 {"Tut3_14", new Dictionary<string, string>() { { GameData.english.name, "2) Plant on the map flashing surprises for enemies" }, { GameData.ukraine.name, "2) Ставити на карті миготливі сюрпризи для ворогів" }, { GameData.poland.name, "2) Plant on the map flashing surprises for enemies" } } },
+
+                {"Tut4_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            4                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 4                Наступна Сторінка>" }, { GameData.poland.name, "<Previor Page            4                Next Page>" } } },
+                {"Tut4_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Enemy ──────────────────" }, { GameData.ukraine.name, "────────────────── Напарники ──────────────────" }, { GameData.poland.name, "────────────────── Friends ──────────────────" } } },
+                {"Tut4_4", new Dictionary<string, string>() { { GameData.english.name, "Shitty russian tank" }, { GameData.ukraine.name, "Лайняні російські танки" }, { GameData.poland.name, "Tractor driver Mykola" } } },
+                {"Tut4_6", new Dictionary<string, string>() { { GameData.english.name, "These tanks are cans that can barely drive" }, { GameData.ukraine.name, "Ці танки - це бляшанки, які ледве можуть їхати" }, { GameData.poland.name, "Press D or Right Arrow to move left" } } },
+                {"Tut4_7", new Dictionary<string, string>() { { GameData.english.name, "They can't do anything advanced for Ukrainian vehicles," }, { GameData.ukraine.name, "Вони не можуть зашкодити просунутій українській техніці," }, { GameData.poland.name, "Press A or Left Arrow to move left" } } },
+                {"Tut4_8", new Dictionary<string, string>() { { GameData.english.name, "and the only thing they realy can do is destroy a car" }, { GameData.ukraine.name, "і єдине, що вони реально можуть - це переїхати легкове авто," }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut4_9", new Dictionary<string, string>() { { GameData.english.name, "or drive to civilians in the yard" }, { GameData.ukraine.name, "або заїхати у двір мирним людям" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
             });
 
             GameData.tutorailTabPages = new List<List<SLTItem>>()
@@ -176,15 +184,15 @@ namespace KillTheZGame
                     new SLTItem("2_3", GameData.aplication.gameText.GetText("Tut2_3"), GameData.EmptyMethod, 1),
                     new SLTItem("2_4", GameData.aplication.gameText.GetText("Tut2_4"), GameData.EmptyMethod, 1),
                     new SLTItem("2_5", GameData.aplication.gameText.GetText("Tut2_5"), GameData.EmptyMethod, 1),
-                    new SLTItem("2_6", MyPlayer.basicRightChar.ToString(), GameData.EmptyMethod, 1), 
+                    new SLTItem("2_6", MyPlayer.basicRightChar.ToString(), GameData.EmptyMethod, 1),
                     new SLTItem("2_7", GameData.aplication.gameText.GetText("Tut2_7"), GameData.EmptyMethod, 1),
-                    new SLTItem("2_8", MyPlayer.basicLeftChar.ToString(), GameData.EmptyMethod, 1), 
+                    new SLTItem("2_8", MyPlayer.basicLeftChar.ToString(), GameData.EmptyMethod, 1),
                     new SLTItem("2_9", GameData.aplication.gameText.GetText("Tut2_9"), GameData.EmptyMethod, 1),
-                    new SLTItem("2_10",MyPlayer.basicUpChar.ToString(), GameData.EmptyMethod, 1), 
+                    new SLTItem("2_10",MyPlayer.basicUpChar.ToString(), GameData.EmptyMethod, 1),
                     new SLTItem("2_11",GameData.aplication.gameText.GetText("Tut2_11"), GameData.EmptyMethod, 1),
-                    new SLTItem("2_12",MyPlayer.basicDownChar.ToString(), GameData.EmptyMethod, 1), 
+                    new SLTItem("2_12",MyPlayer.basicDownChar.ToString(), GameData.EmptyMethod, 1),
                     new SLTItem("2_13",GameData.aplication.gameText.GetText("Tut2_13"), GameData.EmptyMethod, 2),
-                    new SLTItem("2_14",MyPlayer.basicRightChar.ToString() + "    " + GoodBullet.bulletIcon + "    " + GoodBullet.bulletIcon, GameData.EmptyMethod, 1), 
+                    new SLTItem("2_14",MyPlayer.basicRightChar.ToString() + "    " + GoodBullet.bulletIcon + "    " + GoodBullet.bulletIcon, GameData.EmptyMethod, 1),
                     new SLTItem("2_15",GameData.aplication.gameText.GetText("Tut2_15"), GameData.EmptyMethod, 2),
                     new SLTItem("2_16",GoodMine.mine1Ico + " " + MyPlayer.basicRightChar.ToString(), GameData.EmptyMethod, 1),
                     new SLTItem("2_17",GameData.aplication.gameText.GetText("Tut2_17"), GameData.EmptyMethod, 2),
@@ -212,6 +220,20 @@ namespace KillTheZGame
                     new SLTItem("3_12", GameData.aplication.gameText.GetText("Tut3_12"), GameData.EmptyMethod, 1),
                     new SLTItem("3_13", GameData.aplication.gameText.GetText("Tut3_13") + UkraineSoldier.attackMaxDistance, GameData.EmptyMethod, 1),
                     new SLTItem("3_14", GameData.aplication.gameText.GetText("Tut3_14"), GameData.EmptyMethod, 1),
+                },
+                new List<SLTItem>()
+                {
+
+                    new SLTItem("4_0", GameData.aplication.gameText.GetText("TutTitle"), GameData.EmptyMethod, 1),
+                    new SLTItem("4_1", "────────────────────────────────────────────────────────────",GameData.EmptyMethod, 1),
+                    new SLTItem("4_2", GameData.aplication.gameText.GetText("Tut4_2"), GameData.EmptyMethod, 1),
+                    new SLTItem("4_3", GameData.aplication.gameText.GetText("Tut4_3"), GameData.EmptyMethod, 1),
+                    new SLTItem("4_4", GameData.aplication.gameText.GetText("Tut4_4"), GameData.EmptyMethod, 1),
+                    new SLTItem("4_5", ShitrussiaTankZ.basicIcon.ToString(), GameData.EmptyMethod, 1),
+                    new SLTItem("4_6", GameData.aplication.gameText.GetText("Tut4_6"), GameData.EmptyMethod, 1),
+                    new SLTItem("4_7", GameData.aplication.gameText.GetText("Tut4_7"), GameData.EmptyMethod, 1),
+                    new SLTItem("4_8", GameData.aplication.gameText.GetText("Tut4_8"), GameData.EmptyMethod, 1),
+                    new SLTItem("4_9", GameData.aplication.gameText.GetText("Tut4_9"), GameData.EmptyMethod, 1),
                 }
         };
         }
@@ -1025,7 +1047,9 @@ namespace KillTheZGame
 
         public bool isCloseToTarget = false;
 
-        public ShitrussiaTankZ (MyGameShell myGame_, GameLayer layer_, Vector2 pos) : base ("russiaTankZ" + KTZEngineAplication.GenerateProtectName(), layer_, pos, 'z', new List<string>() { GameData.gameIds["enemy"] })
+        public static char basicIcon = 'z';
+
+        public ShitrussiaTankZ (MyGameShell myGame_, GameLayer layer_, Vector2 pos) : base ("russiaTankZ" + KTZEngineAplication.GenerateProtectName(), layer_, pos, basicIcon, new List<string>() { GameData.gameIds["enemy"] })
         {
             localPosition = pos;
             layerSize = new Vector2(layer.layerWidth, layer.layerHeight);
