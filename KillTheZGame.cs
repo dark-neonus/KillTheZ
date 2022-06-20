@@ -31,7 +31,8 @@ namespace KillTheZGame
             GameData.myGameWindowWidth = Console.LargestWindowWidth;
             GameData.myGameWindowHeight = Console.LargestWindowHeight;
 
-
+            KTZEngineAplication.windowWidth = GameData.myGameWindowWidth;
+            KTZEngineAplication.windowHeight = GameData.myGameWindowHeight;
 
             GameData.myGameWidth = GameData.myGameWindowWidth - 20;
             GameData.myGameHeight = GameData.myGameWindowHeight - 10;
@@ -40,9 +41,6 @@ namespace KillTheZGame
 
             Console.OutputEncoding = Encoding.Unicode;
 
-            KTZEngineAplication.windowWidth = GameData.myGameWindowWidth;
-            KTZEngineAplication.windowHeight = GameData.myGameWindowHeight;
-            // GameData.aplication.SetConsoleSizeOnWindows();
 
             ConsoleFullScreen.SetMode(3);
 
@@ -63,8 +61,9 @@ namespace KillTheZGame
 
             GameData.aplication.tabsBehavior.Add(GameData.mainMenu.menuTab.name, MainMenuBehavior);
 
-            GameData.lostCityTab = new("LostCityTab", new List<SLTItem>() { new SLTItem("Message1", "You lost the city", GameData.EmptyMethod, 0) });
-;           GameData.captureCityTab = new("CaptureCityTab", new List<SLTItem>() { new SLTItem("Message1", "Congratulations", GameData.EmptyMethod, 0), new SLTItem("Message2", "You have captured the city", GameData.EmptyMethod, 0) });
+            GameData.lostCityTab = new("LostCityTab", new List<SLTItem>() { new SLTItem("Message1", GameData.aplication.gameText.GetText("YouLost"), GameData.EmptyMethod, 0) });
+            GameData.captureCityTab = new("CaptureCityTab", new List<SLTItem>() { new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0), new SLTItem("Message2", GameData.aplication.gameText.GetText("YouWin"), GameData.EmptyMethod, 0) });
+
             GameData.aplication.tabsBehavior.Add(GameData.lostCityTab.name, LoseCityTab);
             GameData.aplication.tabsBehavior.Add(GameData.captureCityTab.name, CaptureCityTab);
 
@@ -118,16 +117,22 @@ namespace KillTheZGame
                 {"Credits", new Dictionary<string, string>() { { GameData.english.name, "Credits" }, { GameData.ukraine.name, "Автори" }, { GameData.poland.name, "Autorski" } } },
                 {"Exit", new Dictionary<string, string>() { { GameData.english.name, "Exit" }, { GameData.ukraine.name, "Вихід" }, { GameData.poland.name, "Wyjście" } } },
 
+                {"YouLost", new Dictionary<string, string>() { { GameData.english.name, "You lost the city" }, { GameData.ukraine.name, "Ви втратили місто" }, { GameData.poland.name, "KillTheZ tutorial" } } },
+                {"Congratulations", new Dictionary<string, string>() { { GameData.english.name, "Congratulations" }, { GameData.ukraine.name, "Вітаємо" }, { GameData.poland.name, "KillTheZ tutorial" } } },
+                {"YouWin", new Dictionary<string, string>() { { GameData.english.name, "You have captured the city" }, { GameData.ukraine.name, "Ви захопили місто" }, { GameData.poland.name, "KillTheZ tutorial" } } },
+                
+                {"PressEscape", new Dictionary<string, string>() { { GameData.english.name, "Press Escape to go back to menu" }, { GameData.ukraine.name, "Нажміть Escape щоб вийти в меню" }, { GameData.poland.name, "KillTheZ tutorial" } } },
+                {"PressEnter", new Dictionary<string, string>() { { GameData.english.name, "Press Enter or Space to continue game" }, { GameData.ukraine.name, "Нажміть Enter або Space(Укр.Пробіл) щоб продовжити гру" }, { GameData.poland.name, "KillTheZ tutorial" } } },
+
+
                 {"TutTitle", new Dictionary<string, string>() { { GameData.english.name, "KillTheZ tutorial" }, { GameData.ukraine.name, "KillTheZ підручник" }, { GameData.poland.name, "KillTheZ tutorial" } } },
-
-
 
                 {"Tut1_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            1                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 1                Наступна Сторінка>" }, { GameData.poland.name, "<Previor Page            1                Next Page>" } } },
                 {"Tut1_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Mission ──────────────────" }, { GameData.ukraine.name, "────────────────── Місія ──────────────────" }, { GameData.poland.name, "────────────────── Mission ──────────────────" } } },
-                {"Tut1_4", new Dictionary<string, string>() { { GameData.english.name, "Your have only 2 main missions:" }, { GameData.ukraine.name, "У тебе є тільки 2 основні місії:" }, { GameData.poland.name, "Your have only 2 main missions:" } } },
+                {"Tut1_4", new Dictionary<string, string>() { { GameData.english.name, "Your have only 2 main missions:" }, { GameData.ukraine.name, "У вас є тільки 2 основні місії:" }, { GameData.poland.name, "Your have only 2 main missions:" } } },
                 {"Tut1_5", new Dictionary<string, string>() { { GameData.english.name, "1) Capture moscow" }, { GameData.ukraine.name, "1) Захопити москву" }, { GameData.poland.name, "1) Capture moscow" } } },
                 {"Tut1_6", new Dictionary<string, string>() { { GameData.english.name, "2) Collect more scores" }, { GameData.ukraine.name, "2) Назбирати більше очок" }, { GameData.poland.name, "2) Collect more scores" } } },
-                {"Tut1_7", new Dictionary<string, string>() { { GameData.english.name, "Good luck" }, { GameData.ukraine.name, "Удачі" }, { GameData.poland.name, "Good luck" } } },
+                {"Tut1_7", new Dictionary<string, string>() { { GameData.english.name, "Good luck!" }, { GameData.ukraine.name, "Удачі!" }, { GameData.poland.name, "Good luck" } } },
 
                 {"Tut2_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            2                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 2                Наступна Сторінка>" }, { GameData.poland.name, "<Previor Page            2                Next Page>" } } },
                 {"Tut2_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Player Control ──────────────────" }, { GameData.ukraine.name, "────────────────── Керування гравцем ──────────────────" }, { GameData.poland.name, "────────────────── Player Control ──────────────────" } } },
@@ -153,12 +158,29 @@ namespace KillTheZGame
                 {"Tut3_14", new Dictionary<string, string>() { { GameData.english.name, "2) Plant on the map flashing surprises for enemies" }, { GameData.ukraine.name, "2) Ставити на карті миготливі сюрпризи для ворогів" }, { GameData.poland.name, "2) Plant on the map flashing surprises for enemies" } } },
 
                 {"Tut4_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            4                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 4                Наступна Сторінка>" }, { GameData.poland.name, "<Previor Page            4                Next Page>" } } },
-                {"Tut4_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Enemy ──────────────────" }, { GameData.ukraine.name, "────────────────── Напарники ──────────────────" }, { GameData.poland.name, "────────────────── Friends ──────────────────" } } },
+                {"Tut4_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Enemy ──────────────────" }, { GameData.ukraine.name, "────────────────── Вороги ──────────────────" }, { GameData.poland.name, "────────────────── Friends ──────────────────" } } },
                 {"Tut4_4", new Dictionary<string, string>() { { GameData.english.name, "Shitty russian tank" }, { GameData.ukraine.name, "Лайняні російські танки" }, { GameData.poland.name, "Tractor driver Mykola" } } },
                 {"Tut4_6", new Dictionary<string, string>() { { GameData.english.name, "These tanks are cans that can barely drive" }, { GameData.ukraine.name, "Ці танки - це бляшанки, які ледве можуть їхати" }, { GameData.poland.name, "Press D or Right Arrow to move left" } } },
                 {"Tut4_7", new Dictionary<string, string>() { { GameData.english.name, "They can't do anything advanced for Ukrainian vehicles," }, { GameData.ukraine.name, "Вони не можуть зашкодити просунутій українській техніці," }, { GameData.poland.name, "Press A or Left Arrow to move left" } } },
                 {"Tut4_8", new Dictionary<string, string>() { { GameData.english.name, "and the only thing they realy can do is destroy a car" }, { GameData.ukraine.name, "і єдине, що вони реально можуть - це переїхати легкове авто," }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
                 {"Tut4_9", new Dictionary<string, string>() { { GameData.english.name, "or drive to civilians in the yard" }, { GameData.ukraine.name, "або заїхати у двір мирним людям" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+
+                {"Tut5_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            5                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 5                Наступна Сторінка>" }, { GameData.poland.name, "<Previor Page            5                Next Page>" } } },
+                {"Tut5_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Objects on map ──────────────────" }, { GameData.ukraine.name, "────────────────── Об'єкти на карті ──────────────────" }, { GameData.poland.name, "────────────────── Friends ──────────────────" } } },
+                {"Tut5_4", new Dictionary<string, string>() { { GameData.english.name, "House" }, { GameData.ukraine.name, "Будинок" }, { GameData.poland.name, "Tractor driver Mykola" } } },
+                {"Tut5_6", new Dictionary<string, string>() { { GameData.english.name, "A simple house used as a wall" }, { GameData.ukraine.name, "Простий будинок, який використовується як стіна" }, { GameData.poland.name, "Press D or Right Arrow to move left" } } },
+                {"Tut5_7", new Dictionary<string, string>() { { GameData.english.name, "City important zone" }, { GameData.ukraine.name, "Важлива міська зона" }, { GameData.poland.name, "Press A or Left Arrow to move left" } } },
+                {"Tut5_9", new Dictionary<string, string>() { { GameData.english.name, "Enemy spawns on top zone" }, { GameData.ukraine.name, "Вороги зявляються у верхній зоні" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_10", new Dictionary<string, string>() { { GameData.english.name, "If enemy reach the bottom zone" }, { GameData.ukraine.name, "Якщо ворог досягне нижньої зони," }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_11", new Dictionary<string, string>() { { GameData.english.name, "you lose the current city" }, { GameData.ukraine.name, "ви втрачаєте поточне місто" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_12", new Dictionary<string, string>() { { GameData.english.name, "Crater" }, { GameData.ukraine.name, "Кратер" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_14", new Dictionary<string, string>() { { GameData.english.name, "Consequences of the explosion of ruscists missiles" }, { GameData.ukraine.name, "Наслідки вибуху рашистських ракет" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_15", new Dictionary<string, string>() { { GameData.english.name, "Slows down enemies and your soldiers" }, { GameData.ukraine.name, "Сповільнює ворогів і ваших солдатів" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_16", new Dictionary<string, string>() { { GameData.english.name, "Hedgehog" }, { GameData.ukraine.name, "Їжачок" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_18", new Dictionary<string, string>() { { GameData.english.name, "Very useful thing" }, { GameData.ukraine.name, "Дуже корисна штука" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_19", new Dictionary<string, string>() { { GameData.english.name, "Biolaboratory" }, { GameData.ukraine.name, "Біолабораторія" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_21", new Dictionary<string, string>() { { GameData.english.name, "A very common thing in the Ukrainian lands" }, { GameData.ukraine.name, "Дуже поширена річ в Українських краях" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+
             });
 
             GameData.tutorailTabPages = new List<List<SLTItem>>()
@@ -214,7 +236,7 @@ namespace KillTheZGame
                     new SLTItem("3_6", GameData.aplication.gameText.GetText("Tut3_6"), GameData.EmptyMethod, 1),
                     new SLTItem("3_7", GameData.aplication.gameText.GetText("Tut3_7"), GameData.EmptyMethod, 1),
                     new SLTItem("3_8", GameData.aplication.gameText.GetText("Tut3_8"), GameData.EmptyMethod, 1),
-                    new SLTItem("3_9", GameData.aplication.gameText.GetText("Tut3_9"), GameData.EmptyMethod, 3),
+                    new SLTItem("3_9", GameData.aplication.gameText.GetText("Tut3_9"), GameData.EmptyMethod, 4),
                     new SLTItem("3_10", UkraineSoldier.soldierPoses[Vector2.up] + " " + UkraineSoldier.soldierPoses[Vector2.down] + " " + UkraineSoldier.soldierPoses[Vector2.left] + " " + UkraineSoldier.soldierPoses[Vector2.right], GameData.EmptyMethod, 1),
                     new SLTItem("3_11", GameData.aplication.gameText.GetText("Tut3_11"), GameData.EmptyMethod, 1),
                     new SLTItem("3_12", GameData.aplication.gameText.GetText("Tut3_12"), GameData.EmptyMethod, 1),
@@ -234,8 +256,34 @@ namespace KillTheZGame
                     new SLTItem("4_7", GameData.aplication.gameText.GetText("Tut4_7"), GameData.EmptyMethod, 1),
                     new SLTItem("4_8", GameData.aplication.gameText.GetText("Tut4_8"), GameData.EmptyMethod, 1),
                     new SLTItem("4_9", GameData.aplication.gameText.GetText("Tut4_9"), GameData.EmptyMethod, 1),
-                }
-        };
+                },
+                new List<SLTItem>()
+                {
+
+                    new SLTItem("5_0", GameData.aplication.gameText.GetText("TutTitle"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_1", "────────────────────────────────────────────────────────────",GameData.EmptyMethod, 1),
+                    new SLTItem("5_2", GameData.aplication.gameText.GetText("Tut5_2"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_3", GameData.aplication.gameText.GetText("Tut5_3"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_4", GameData.aplication.gameText.GetText("Tut5_4"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_5", MyGameShell.wall.ico.ToString(), GameData.EmptyMethod, 1),
+                    new SLTItem("5_6", GameData.aplication.gameText.GetText("Tut5_6"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_7", GameData.aplication.gameText.GetText("Tut5_7"), GameData.EmptyMethod, 4),
+                    new SLTItem("5_8", MyGameShell.zoneGround.ico.ToString(), GameData.EmptyMethod, 1),
+                    new SLTItem("5_9", GameData.aplication.gameText.GetText("Tut5_9"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_10", GameData.aplication.gameText.GetText("Tut5_10"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_11", GameData.aplication.gameText.GetText("Tut5_11"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_12", GameData.aplication.gameText.GetText("Tut5_12"), GameData.EmptyMethod, 4),
+                    new SLTItem("5_13", MyGameShell.slowDownGround.ico.ToString(), GameData.EmptyMethod, 1),
+                    new SLTItem("5_14", GameData.aplication.gameText.GetText("Tut5_14"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_15", GameData.aplication.gameText.GetText("Tut5_15"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_16", GameData.aplication.gameText.GetText("Tut5_16"), GameData.EmptyMethod, 4),
+                    new SLTItem("5_17", PricklyHedgehogs.basicIcon.ToString(), GameData.EmptyMethod, 1),
+                    new SLTItem("5_18", GameData.aplication.gameText.GetText("Tut5_18"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_19", GameData.aplication.gameText.GetText("Tut5_19"), GameData.EmptyMethod, 4),
+                    new SLTItem("5_20", "⌂", GameData.EmptyMethod, 1),
+                    new SLTItem("5_21", GameData.aplication.gameText.GetText("Tut5_21"), GameData.EmptyMethod, 1),
+                },
+            };
         }
     }
 
@@ -342,10 +390,10 @@ namespace KillTheZGame
 
         public int currentCityEnemy;
 
-        public StaticGameObject wall;
-        public StaticGameObject emptyWall;
-        public StaticGameObject zoneGround;
-        public EnemySlowDownTile slowDownGround;
+        public static StaticGameObject wall = new (Vector2.zero, GameData.gameLayerRef, '█', new List<string>() { GameData.gameIds["collision"] });
+        public static StaticGameObject emptyWall = new (Vector2.zero, GameData.gameLayerRef, '█');
+        public static StaticGameObject zoneGround = new (Vector2.zero, GameData.gameLayerRef, '▒');
+        public static EnemySlowDownTile slowDownGround = new (Vector2.zero, GameData.gameLayerRef, '░');
 
         public PricklyHedgehogs pricklyHedgehogs;
 
@@ -659,7 +707,7 @@ namespace KillTheZGame
 
             }
         }
-
+        
         public void DataOutput()
         {
             // game.gameGrid.AddDisposablePostProcessingText(new Vector2(0, GameData.myGameWindowHeight - 2), "\t\tIn this line is control Information for developer(can be ignore):" + game.gameObjects.Count + "   " + ShitrussiaTankZ.basicEnemyStopTicks + "   ");
@@ -670,6 +718,7 @@ namespace KillTheZGame
             game.gameGrid.AddDisposablePostProcessingText(new Vector2(gameObjectsLayer.layerStartPosition.x + 3, GameData.myGameWindowHeight - 2), "FPS:" + Math.Min((int)GameData.aplication.currentAverageFPS, game.UPS));
             game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) - 58, GameData.myGameWindowHeight - 4), "Current Time: " + game.time + "ms    Attack start time: " + levelPrepareTime + "ms");
             game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) + 6, GameData.myGameWindowHeight - 4), "Enemy left to spawn: " + levelEnemyCount + "    Enemy left to kill: " + enemyLeftToKill);
+            // game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) + 6, GameData.myGameWindowHeight - 3), GameData.virtualTime.ToString());
             
         }
         public void SirenCheck()
@@ -699,8 +748,6 @@ namespace KillTheZGame
 
         public void PressKey1() { ShitrussiaTankZ.basicEnemyStopTicks = (ShitrussiaTankZ.basicEnemyStopTicks <= 0) ?  0 : ShitrussiaTankZ.basicEnemyStopTicks - 1; }
         public void PressKey2() { ShitrussiaTankZ.basicEnemyStopTicks++; }
-        // public void PressKey3() { ShitrussiaTankZ.sameMoveCount = (ShitrussiaTankZ.sameMoveCount <= 0) ? 0 : ShitrussiaTankZ.sameMoveCount - 1; }
-        // public void PressKey4() { ShitrussiaTankZ.sameMoveCount++; }
         public void PressKey0() { GenerateEnemy(); }
         public void PressKeyEscape() { GoToMainMenu(); }
 
@@ -732,8 +779,19 @@ namespace KillTheZGame
 
             Console.Clear();
 
-            aplication.currentGameTabName = "LostCityTab";
+            GameData.lostCityTab.itemList = new List<SLTItem>()
+            {
+                new SLTItem("Message1", GameData.aplication.gameText.GetText("YouLost"), GameData.EmptyMethod, 0),
+                new SLTItem("GoToMenu", GameData.aplication.gameText.GetText("PressEscape"), GameData.EmptyMethod, 3),
+                new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("PressEnter"), GameData.EmptyMethod, 1)
+            };
+            GameData.lostCityTab.AlignToCenter();
+            GameData.lostCityTab.HeightAlignToCenter();
 
+            aplication.currentGameTabName = GameData.lostCityTab.name;
+
+            GameData.score = Math.Max(0, GameData.score - 500 * (GameData.cityNames.Count - GameData.currentCityIndex));
+            GameData.virtualTime = GameData.virtualTime.AddMonths(1);
         }
 
         public void CaptureCity()
@@ -742,8 +800,20 @@ namespace KillTheZGame
 
             Console.Clear();
 
-            aplication.currentGameTabName = "CaptureCityTab";
+            GameData.captureCityTab.itemList = new List<SLTItem>()
+            {
+                new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0), 
+                new SLTItem("Message2", GameData.aplication.gameText.GetText("YouWin"), GameData.EmptyMethod, 0),
+                new SLTItem("GoToMenu", GameData.aplication.gameText.GetText("PressEscape"), GameData.EmptyMethod, 3),
+                new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("PressEnter"), GameData.EmptyMethod, 1)
+            };
+            GameData.captureCityTab.AlignToCenter();
+            GameData.captureCityTab.HeightAlignToCenter();
 
+            aplication.currentGameTabName = GameData.captureCityTab.name;
+
+            GameData.score += 1000 * (GameData.currentCityIndex + 1);
+            GameData.virtualTime = GameData.virtualTime.AddMonths(1);
         }
     }
 
@@ -782,10 +852,6 @@ namespace KillTheZGame
         public static char basicDownChar = "\u001F".ToCharArray()[0];//'▼';
         public static char basicLeftChar = "\u0011".ToCharArray()[0];//'◄';
 
-        // public char basicUpChar = 'w';//'▲';
-        // public char basicRightChar = 'd';//'►'; 
-        // public char basicDownChar = 's';//'▼';
-        // public char basicLeftChar = 'a';//'◄';
 
         public Dictionary<Vector2, char> playerPoses;
         public Vector2 direction = Vector2.up;
@@ -820,7 +886,7 @@ namespace KillTheZGame
 
         public void Shot()
         {
-            if (shootIndex >= shootMaxIndex) { myGame.game.AddExistGameObject(new GoodBullet(myGame.game, layer, localPosition, direction)); shootIndex = 0; }
+            if (shootIndex >= shootMaxIndex) { myGame.game.AddExistGameObject(new GoodBullet(myGame.game, layer, localPosition, direction, GameData.gameIds["playerBullet"])); shootIndex = 0; }
         }
 
         public void PlantMine()
@@ -935,7 +1001,7 @@ namespace KillTheZGame
         public const char bulletIcon = '•';
         public Vector2 layerSize; 
         public Game game;
-        public GoodBullet(Game game_, GameLayer layer_, Vector2 pos, Vector2 dir_) : base("bullet" + KTZEngineAplication.GenerateProtectName(), layer_, pos, bulletIcon, new List<string>() { GameData.gameIds["bullet"], GameData.gameIds["playerBullet"] })
+        public GoodBullet(Game game_, GameLayer layer_, Vector2 pos, Vector2 dir_) : base("bullet" + KTZEngineAplication.GenerateProtectName(), layer_, pos, bulletIcon, new List<string>() { GameData.gameIds["bullet"] })
         {
             localPosition = pos;
             globalPosition = pos + layer.layerStartPosition;
@@ -945,7 +1011,16 @@ namespace KillTheZGame
             layerSize = new Vector2(layer.layerWidth, layer.layerHeight);
             game = game_;
         }
-
+        public GoodBullet(Game game_, GameLayer layer_, Vector2 pos, Vector2 dir_, string plusId) : base("bullet" + KTZEngineAplication.GenerateProtectName(), layer_, pos, bulletIcon, new List<string>() { GameData.gameIds["bullet"], plusId })
+        {
+            localPosition = pos;
+            globalPosition = pos + layer.layerStartPosition;
+            dir = dir_;
+            regularVelocity = dir;
+            icon = bulletIcon;
+            layerSize = new Vector2(layer.layerWidth, layer.layerHeight);
+            game = game_;
+        }
 
         public override void Update()
         {
@@ -1449,7 +1524,8 @@ namespace KillTheZGame
 
     public class PricklyHedgehogs : StaticGameObject
     {
-        public PricklyHedgehogs(Vector2 pos, GameLayer layer) : base(pos, layer, 'x', new List<string>() { GameData.gameIds["pricklyHedgehogs"] }) { }
+        public static char basicIcon = 'x';
+        public PricklyHedgehogs(Vector2 pos, GameLayer layer) : base(pos, layer, basicIcon, new List<string>() { GameData.gameIds["pricklyHedgehogs"] }) { }
     }
 
     public class EndGameTab : SelectListTab
@@ -1463,8 +1539,8 @@ namespace KillTheZGame
             keyManager.keyPressActions[ConsoleKey.Enter] = ContinueGame;
             keyManager.keyPressActions.Add(ConsoleKey.Spacebar, ContinueGame);
 
-            itemList.Add(new SLTItem("GoToMenu", "Press Escape to go back to menu", GameData.EmptyMethod, 3));
-            itemList.Add(new SLTItem("ContinueGame", "Press Enter or Space to continue game", GameData.EmptyMethod, 1));
+            itemList.Add(new SLTItem("GoToMenu", GameData.aplication.gameText.GetText("PressEscape"), GameData.EmptyMethod, 3));
+            itemList.Add(new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("PressEnter"), GameData.EmptyMethod, 1));
 
             AlignToCenter();
             HeightAlignToCenter();
@@ -1765,6 +1841,7 @@ namespace KillTheZGame
 
         public static EndGameTab lostCityTab;
         public static EndGameTab captureCityTab;
+        public static EndGameTab finalWinTab;
 
         // Game
         public static MyGameShell myGameShell;
@@ -1772,6 +1849,9 @@ namespace KillTheZGame
         public static int myGameWidth = 125;
         public static int myGameHeight = 60;
 
+        public static int score = 0;
+
+        public static DateTime virtualTime = new DateTime(2022, 4, 24);
 
         // Languages
         public static Language english;

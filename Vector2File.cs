@@ -69,7 +69,6 @@ namespace Vector2Namespace
         
         };
 
-
         public static List<Vector2> eightDirections = new()
         {
             right,
@@ -93,7 +92,7 @@ namespace Vector2Namespace
             { "downLeft", downLeft }
         };
 
-        public string Position(bool writeAxisNames = false)
+        public string ToString(bool writeAxisNames = false)
         {
             if (writeAxisNames)
             {
