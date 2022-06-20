@@ -48,8 +48,9 @@ namespace KillTheZGame
             GameData.english = new Language("en");
             GameData.ukraine = new Language("ua");
             GameData.poland = new Language("pl");
-            GameData.aplication.gameText = new GameText(GameData.ukraine.name, new List<Language>() { GameData.english, GameData.ukraine, GameData.poland });
-            TextInit();
+            
+            LanguagesInit();
+            
 
             GameData.originalMyGame = new MyGame(ref GameData.aplication, new Vector2(GameData.myGameWindowWidth, GameData.myGameWindowHeight), "Game", 40);
             GameData.myGameShell = new MyGameShell(ref GameData.originalMyGame, MyGameTabBehavior, new Vector2((int)((GameData.myGameWindowWidth - GameData.myGameWidth) / 2), (int)((GameData.myGameWindowHeight - GameData.myGameHeight) / 2)), new Vector2(GameData.myGameWidth, GameData.myGameHeight) );
@@ -67,6 +68,7 @@ namespace KillTheZGame
             GameData.aplication.tabsBehavior.Add(GameData.lostCityTab.name, LoseCityTab);
             GameData.aplication.tabsBehavior.Add(GameData.captureCityTab.name, CaptureCityTab);
 
+            TextInit();
         }
 
         public void MyAplicationStart()
@@ -105,8 +107,9 @@ namespace KillTheZGame
         public void LoseCityTab() { GameData.lostCityTab.Update(); GameData.lostCityTab.Draw(); }
         public void CaptureCityTab() { GameData.captureCityTab.Update(); GameData.captureCityTab.Draw(); }
 
-        public void TextInit()
+        public void LanguagesInit()
         {
+            GameData.aplication.gameText = new GameText(GameData.ukraine.name, new List<Language>() { GameData.english, GameData.ukraine, GameData.poland });
             GameData.aplication.gameText.AddSomeText(new Dictionary<string, Dictionary<string, string>>() 
             {
                 {"MainMenu", new Dictionary<string, string>() { { GameData.english.name, "Main Menu" }, { GameData.ukraine.name, "Головне Меню" }, { GameData.poland.name, "Menu Główne" } } },
@@ -181,8 +184,21 @@ namespace KillTheZGame
                 {"Tut5_19", new Dictionary<string, string>() { { GameData.english.name, "Biolaboratory" }, { GameData.ukraine.name, "Біолабораторія" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
                 {"Tut5_21", new Dictionary<string, string>() { { GameData.english.name, "A very common thing in the Ukrainian lands" }, { GameData.ukraine.name, "Дуже поширена річ в Українських краях" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
 
+                {"MineCount", new Dictionary<string, string>() { { GameData.english.name, "    Mine count: " }, { GameData.ukraine.name, "Кількість мін: " }, { GameData.poland.name, "    Mine count: " } } },
+                {"BayraktarAttackCount", new Dictionary<string, string>() { { GameData.english.name, "    Bayraktar attack count: " }, { GameData.ukraine.name, "    Доступно атак Байрактарів: " }, { GameData.poland.name, "    Bayraktar attack count: " } } },
+                {"CurrentTime", new Dictionary<string, string>() { { GameData.english.name, "Current Time: " }, { GameData.ukraine.name, "Поточний час: " }, { GameData.poland.name, "Current Time: " } } },
+                {"ms", new Dictionary<string, string>() { { GameData.english.name, "ms" }, { GameData.ukraine.name, "мс" }, { GameData.poland.name, "ms" } } },
+                {"AttackStartTime", new Dictionary<string, string>() { { GameData.english.name, "    Attack start time: " }, { GameData.ukraine.name, "    Час початку наступу: " }, { GameData.poland.name, "    Attack start time: " } } },
+                {"EnemyLeftSpawn", new Dictionary<string, string>() { { GameData.english.name, "Enemy left to spawn: " }, { GameData.ukraine.name, "Ворогів прибуде: " }, { GameData.poland.name, "Enemy left to spawn: " } } },
+                {"EnemyLeftKill", new Dictionary<string, string>() { { GameData.english.name, "    Enemy left to kill: " }, { GameData.ukraine.name, "    Ворогів залишилося вбити: " }, { GameData.poland.name, "    Enemy left to kill: " } } },
+                {"Score", new Dictionary<string, string>() { { GameData.english.name, "Score: " }, { GameData.ukraine.name, "Очки: " }, { GameData.poland.name, "Score: " } } },
+
             });
 
+            
+        }
+        public void TextInit()
+        {
             GameData.tutorailTabPages = new List<List<SLTItem>>()
             {
                 new List<SLTItem>()
@@ -284,6 +300,18 @@ namespace KillTheZGame
                     new SLTItem("5_21", GameData.aplication.gameText.GetText("Tut5_21"), GameData.EmptyMethod, 1),
                 },
             };
+
+            GameData.mainMenu.menuTab.itemList = new List<SLTItem>()
+            {
+                new SLTItem("StartGame", GameData.aplication.gameText.GetText("StartGame"), GameData.mainMenu.StartGame, 0),
+                new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("ContinueGame"), GameData.mainMenu.ContinueGame, 1),
+                new SLTItem("Tutorial", GameData.aplication.gameText.GetText("Tutorial"), GameData.mainMenu.Tutorial, 1),
+                new SLTItem("Settings", GameData.aplication.gameText.GetText("Settings"), GameData.mainMenu.Settings, 1),
+                new SLTItem("Credits", GameData.aplication.gameText.GetText("Credits"), GameData.mainMenu.Credits, 1),
+                new SLTItem("Exit", GameData.aplication.gameText.GetText("Exit"), GameData.mainMenu.Exit, 1)
+            };
+            GameData.mainMenu.menuTab.AlignToCenter();
+            GameData.mainMenu.menuTab.HeightAlignToCenter();
         }
     }
 
@@ -294,7 +322,7 @@ namespace KillTheZGame
 
 
         public MainMenu()
-        {
+        { 
             itemList = new List<SLTItem>()
             {
                 new SLTItem("StartGame", GameData.aplication.gameText.GetText("StartGame"), StartGame, 0),
@@ -311,12 +339,13 @@ namespace KillTheZGame
             menuTab.keyManager.keyPressActions.Add(ConsoleKey.Spacebar, menuTab.SelectItem);
         }
 
+
         public void StartGame() { InitGame(); RunGame(); }
         public void ContinueGame() { RunGame(); }
-        private void Tutorial() { OpenTutorial(); }
-        private void Settings() { }
-        private void Credits() { }
-        private void Exit() { GameData.aplication.isInAplication = false; }
+        public void Tutorial() { OpenTutorial(); }
+        public void Settings() { }
+        public void Credits() { }
+        public void Exit() { GameData.aplication.isInAplication = false; }
 
         public void InitGame() { GameData.myGameShell.Init(); }
 
@@ -638,7 +667,8 @@ namespace KillTheZGame
 
 
             game.keyManager.keyPressActions.Add(ConsoleKey.P, PressKeyP);
-            game.keyManager.keyPressActions.Add(ConsoleKey.T, PressKeyT);
+            game.keyManager.keyPressActions.Add(ConsoleKey.K, PressKeyK);
+            game.keyManager.keyPressActions.Add(ConsoleKey.L, PressKeyL);
             // game.keyManager.keyPressActions.Add(ConsoleKey.D3, PressKey3);
             // game.keyManager.keyPressActions.Add(ConsoleKey.D4, PressKey4);
         }
@@ -714,11 +744,11 @@ namespace KillTheZGame
 
             //game.gameGrid.AddDisposablePostProcessingText(new Vector2(0, GameData.myGameWindowHeight - 4), "\t\tFPS:" + Math.Min((int)GameData.aplication.currentAverageFPS, game.UPS) + "    Current Time: " + game.time + "ms    Attack start time: " + levelPrepareTime + "ms    Enemy left to spawn: " + levelEnemyCount + "    Enemy left to kill: " + enemyLeftToKill + "    Mine count: " + GameData.player.mineCount + "    Bayraktar attack count: " + bayraktarAttackCount);
 
-            game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) - 27, GameData.myGameWindowHeight - 2), "    Mine count: " + GameData.player.mineCount + "[" + GoodMine.icons[GoodMine.iconIndex] + "]    Bayraktar attack count: " + bayraktarAttackCount + "[" + SimpleBayraktarRocket.basicUpChar + "]");
+            game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) - 27, GameData.myGameWindowHeight - 2), GameData.aplication.gameText.GetText("MineCount") + GameData.player.mineCount + "[" + GoodMine.icons[GoodMine.iconIndex] + "]" + GameData.aplication.gameText.GetText("BayraktarAttackCount") + bayraktarAttackCount + "[" + SimpleBayraktarRocket.basicUpChar + "]");
             game.gameGrid.AddDisposablePostProcessingText(new Vector2(gameObjectsLayer.layerStartPosition.x + 3, GameData.myGameWindowHeight - 2), "FPS:" + Math.Min((int)GameData.aplication.currentAverageFPS, game.UPS));
-            game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) - 58, GameData.myGameWindowHeight - 4), "Current Time: " + game.time + "ms    Attack start time: " + levelPrepareTime + "ms");
-            game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) + 6, GameData.myGameWindowHeight - 4), "Enemy left to spawn: " + levelEnemyCount + "    Enemy left to kill: " + enemyLeftToKill);
-            // game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) + 6, GameData.myGameWindowHeight - 3), GameData.virtualTime.ToString());
+            game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) - 58, GameData.myGameWindowHeight - 4), GameData.aplication.gameText.GetText("CurrentTime") + game.time + GameData.aplication.gameText.GetText("ms") + GameData.aplication.gameText.GetText("AttackStartTime") + levelPrepareTime + GameData.aplication.gameText.GetText("ms"));
+            game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) + 6, GameData.myGameWindowHeight - 4), GameData.aplication.gameText.GetText("EnemyLeftSpawn") + levelEnemyCount + GameData.aplication.gameText.GetText("EnemyLeftKill") + enemyLeftToKill);
+            game.gameGrid.AddDisposablePostProcessingText(new Vector2(gameObjectsLayer.layerStartPosition.x + 3, GameData.myGameWindowHeight - 4), GameData.aplication.gameText.GetText("Score") + GameData.score.ToString());
             
         }
         public void SirenCheck()
@@ -743,7 +773,6 @@ namespace KillTheZGame
         public void PressSpacebarOrKeyV() { GameData.player.Shot(); }
         public void PressKeyE() { GameData.player.PlantMine(); }
         public void PressKeyP() { for (int i = 0; i < 1000; i++) { GenerateEnemy(); } }
-        public void PressKeyT() { game.AddExistGameObject(new ShitrussiaTankZ(this, gameObjectsLayer, new Vector2(KTZEngineAplication.random.Next(1, gameFieldSize.x - 1), 4))); levelEnemyCount = (levelEnemyCount <= 0) ? 0 : levelEnemyCount - 1; }
         public void PressKeyQ() { if (bayraktarAttackCount > 0) { GameData.player.bayraktarAttacksTimes += 3; bayraktarAttackCount--; } }
 
         public void PressKey1() { ShitrussiaTankZ.basicEnemyStopTicks = (ShitrussiaTankZ.basicEnemyStopTicks <= 0) ?  0 : ShitrussiaTankZ.basicEnemyStopTicks - 1; }
@@ -751,10 +780,13 @@ namespace KillTheZGame
         public void PressKey0() { GenerateEnemy(); }
         public void PressKeyEscape() { GoToMainMenu(); }
 
+        public void PressKeyK() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextInit(); }
+        public void PressKeyL() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextInit(); }
+
         public void PressKeyX() { CaptureCity(); }
         public void PressKeyZ() { LostCity(); }
 
-        public void GoToMainMenu() { Console.Clear(); ; aplication.currentGameTabName = "MainMenu"; }
+        public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
         public void GenerateEnemy() { game.AddExistGameObject(new ShitrussiaTankZ(this, gameObjectsLayer, new Vector2(KTZEngineAplication.random.Next(1, gameFieldSize.x - 1), gameFieldSize.y - 2))); levelEnemyCount = (levelEnemyCount <= 0)? 0 : levelEnemyCount - 1; }
 
         public void GenerateObjectAtGamePlaceRandom(int[,] virtualMap, GameObject obj)
@@ -1217,6 +1249,7 @@ namespace KillTheZGame
                 GameObject currBull = myGameShell.game.gameObjectsList.Find(o => o.id.Contains(GameData.gameIds["bullet"]) && o.globalPosition == globalPosition);
                 if (currBull != null)
                 {
+                    if (currBull.id.Contains(GameData.gameIds["playerBullet"])) { GameData.score++; }
                     myGameShell.game.DeleteGameObject(currBull.name);
                     GameData.bulletPositionList.Remove(globalPosition);
                     Die();
