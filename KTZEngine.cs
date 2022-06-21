@@ -86,9 +86,8 @@ namespace KTZEngine
 
             isInAplication = true;
 
-
-            Console.BackgroundColor = ConsoleBackgroundColor;
-            Console.ForegroundColor = ConsoleForegroundColor;
+            UpdateConsoleColors();
+            
 
             currentAverageFPS = 0;
             arrayOfFPS = new float[60];
@@ -97,6 +96,12 @@ namespace KTZEngine
 
         [SupportedOSPlatform("windows")]
         public void SetConsoleSizeOnWindows() { Console.SetWindowSize(windowWidth, windowHeight); Console.SetBufferSize(windowWidth, windowHeight); }
+
+        public void UpdateConsoleColors()
+        {
+            Console.BackgroundColor = ConsoleBackgroundColor;
+            Console.ForegroundColor = ConsoleForegroundColor;
+        }
 
         public void Update()
         {
@@ -386,7 +391,7 @@ namespace KTZEngine
             if (itemList.Count > 0) { selectedElemIndex = KTZMath.LoopNumberInInterval(selectedElemIndex, 0, itemList.Count - 1); }
         }
 
-        public void Draw()
+        public virtual void Draw()
         {
             Vector2 cursorPos = Vector2.zero;
             string leftSign;
@@ -477,7 +482,161 @@ namespace KTZEngine
         }
     }
 
+    ////─────────────────────────────────────────────────────────────────class SelectListTab─────────────────────────────────────────────────────────────────|
+    public class SelectSelectListTab : GameTab
+    {
+        public const int standartDistanceBetweenElements = 0;
+        public const string standartSelectItemRightSign = " >";
+        public const string standartSelectItemLeftSign = "< ";
 
+        public List<SSLTItem> itemList = new() { };
+        public int selectedElemIndex = 0;
+        public int distanceBetweenElements;
+        public string selectItemRightSign;
+        public string selectItemLeftSign;
+        public bool drawRightSign = true;
+        public bool drawLeftSign = true;
+
+        //─────────────────────────SelectListTab construcor─────────────────────────|
+        public SelectSelectListTab(KTZEngineAplication aplication_, List<SSLTItem> SSLTItemList, string name_, int ups_, string selectItemRightSign_ = standartSelectItemRightSign, string selectItemLeftSign_ = standartSelectItemLeftSign, int distanceBetweenElements_ = standartDistanceBetweenElements) : base(aplication_, name_, ups_)
+        {
+            itemList = SSLTItemList;
+            selectItemRightSign = selectItemRightSign_;
+            selectItemLeftSign = selectItemLeftSign_;
+            for (int i = 0; i < itemList.Count; i++) { itemList[i].orderNumber = i; }
+            distanceBetweenElements = distanceBetweenElements_;
+
+            keyManager = new KeyManager(new Dictionary<ConsoleKey, Action> {
+            {ConsoleKey.UpArrow, SelectPreviousElement },
+            {ConsoleKey.W, SelectPreviousElement },
+            {ConsoleKey.DownArrow, SelectNextElement },
+            {ConsoleKey.S, SelectNextElement },
+            {ConsoleKey.RightArrow, SelectRightItem },
+            {ConsoleKey.D, SelectRightItem },
+            {ConsoleKey.LeftArrow, SelectLeftItem },
+            {ConsoleKey.A, SelectLeftItem },
+            });
+        }
+
+        //─────────────────────────Methods─────────────────────────|
+        public override void Update()
+        {
+            if (itemList.Count > 0) { selectedElemIndex = KTZMath.LoopNumberInInterval(selectedElemIndex, 0, itemList.Count - 1); }
+            SSListTabUpdate();
+        }
+
+        public virtual void SSListTabUpdate() { }
+
+        public virtual void Draw()
+        {
+            Vector2 cursorPos = Vector2.zero;
+            string leftSign;
+            string rightSign;
+
+
+            foreach (SSLTItem item in itemList)
+            {
+                item.AlignItemToCenter();
+                leftSign = new string(' ', selectItemLeftSign.Length);
+                rightSign = new string(' ', selectItemRightSign.Length);
+                if (item.sideOffset - selectItemLeftSign.Length >= 0 && drawLeftSign && itemList.IndexOf(item) == selectedElemIndex) { leftSign = selectItemLeftSign; rightSign = selectItemRightSign; }
+                if (KTZEngineAplication.standartWindowWidth - item.sideOffset - item.variants[selectedElemIndex].text.Length - selectItemRightSign.Length >= 0 && drawRightSign && itemList.IndexOf(item) == selectedElemIndex) { rightSign = selectItemRightSign; }
+
+                cursorPos.y += item.topOffset + 1;
+                cursorPos.x = item.sideOffset - rightSign.Length;
+                Console.SetCursorPosition(cursorPos.x, cursorPos.y);
+
+                Console.WriteLine(item.title);
+
+                cursorPos.y += item.selectorTopOffset + 1;
+                cursorPos.x = item.sideOffset + item.selectorSideOffset - rightSign.Length;
+                Console.SetCursorPosition(cursorPos.x, cursorPos.y);
+
+                Console.WriteLine(leftSign + item.variants[item.selectedIndex].text + rightSign);
+            }
+
+        }
+
+        public void HeightAlignToCenter()
+        {
+            int listHeight = itemList.Count;
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                listHeight += itemList[i].topOffset;
+            }
+            if (listHeight > Console.BufferHeight) { Console.BufferHeight = listHeight; }
+
+            itemList[0].topOffset = (int)((Console.BufferHeight - listHeight * 1.5) / 2);
+        }
+
+        public void AlignToCenter()
+        {
+            foreach (var item in itemList)
+            {
+                item.sideOffset = (int)Math.Round((double)((KTZEngineAplication.windowWidth - item.variants[selectedElemIndex].text.Length) / 2));
+            }
+        }
+
+        public void SelectNextElement() { selectedElemIndex++; }
+        public void SelectPreviousElement() { selectedElemIndex--; }
+        public void SelectLeftItem() { itemList[selectedElemIndex].ChangeSelectIndex(-1); itemList[selectedElemIndex].variants[itemList[selectedElemIndex].selectedIndex].selectAction(); } 
+        public void SelectRightItem() { itemList[selectedElemIndex].ChangeSelectIndex(1); itemList[selectedElemIndex].variants[itemList[selectedElemIndex].selectedIndex].selectAction(); }
+        
+        //───────────────────────Methods End───────────────────────|
+    }
+
+    ////─────────────────────────────────────────────────────────────────class SLTItem─────────────────────────────────────────────────────────────────|
+    public class SSLTItem
+    {
+        public const int standartSideOffset = 0;
+        public const int standartTopOffset = 0;
+        public const int standartselectorOffset = 0;
+
+        public string name;
+        public string title;
+        public int orderNumber;
+        public int sideOffset;
+        public int topOffset;
+
+        public int selectorTopOffset;
+        public int selectorSideOffset;
+
+        public List<SSLTItemItem> variants;
+        public int selectedIndex = 0;
+
+        public SSLTItem(string name_, string title_, List<SSLTItemItem> variants_, int topOffset_ = standartTopOffset, int sideOffset_ = standartSideOffset, int selectorOffset_ = standartselectorOffset)
+        {
+            name = name_;
+            title = title_;
+            sideOffset = sideOffset_;
+            topOffset = topOffset_;
+            variants = variants_;
+            selectorTopOffset = selectorOffset_;
+        }
+
+        public void ChangeSelectIndex(int change)
+        {
+            selectedIndex += change;
+            selectedIndex = KTZMath.LoopNumberInInterval(selectedIndex, 0, variants.Count - 1);
+        }
+
+        public void AlignItemToCenter()
+        {
+            selectorSideOffset = (int)(title.Length / 2 - variants[selectedIndex].text.Length);
+        }
+    }
+
+    public class SSLTItemItem
+    {
+        public string text;
+        public Action selectAction;
+
+        public SSLTItemItem(string text_, Action activateMethod_)
+        {
+            text = text_;
+            selectAction = activateMethod_;
+        }
+    }
 
 
 

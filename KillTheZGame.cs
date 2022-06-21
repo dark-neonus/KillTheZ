@@ -47,7 +47,7 @@ namespace KillTheZGame
 
             GameData.english = new Language("en");
             GameData.ukraine = new Language("ua");
-            GameData.poland = new Language("pl");
+            GameData.polish = new Language("pl");
             
             LanguagesInit();
             
@@ -58,9 +58,10 @@ namespace KillTheZGame
 
             GameData.mainMenu = new MainMenu();
             GameData.tutorialMenu = new TutorialMenu();
-
+            GameData.settingsMenu = new SettingsMenu();
 
             GameData.aplication.tabsBehavior.Add(GameData.mainMenu.menuTab.name, MainMenuBehavior);
+            GameData.aplication.tabsBehavior.Add(GameData.settingsMenu.name, SettingsMenuBehavior);
 
             GameData.lostCityTab = new("LostCityTab", new List<SLTItem>() { new SLTItem("Message1", GameData.aplication.gameText.GetText("YouLost"), GameData.EmptyMethod, 0) });
             GameData.captureCityTab = new("CaptureCityTab", new List<SLTItem>() { new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0), new SLTItem("Message2", GameData.aplication.gameText.GetText("YouWin"), GameData.EmptyMethod, 0) });
@@ -103,95 +104,116 @@ namespace KillTheZGame
             GameData.mainMenu.menuTab.Draw();
             
         }
+        public void SettingsMenuBehavior()
+        {
+            GameData.settingsMenu.Update();
+            GameData.settingsMenu.Draw();
+
+        }
 
         public void LoseCityTab() { GameData.lostCityTab.Update(); GameData.lostCityTab.Draw(); }
         public void CaptureCityTab() { GameData.captureCityTab.Update(); GameData.captureCityTab.Draw(); }
 
         public void LanguagesInit()
         {
-            GameData.aplication.gameText = new GameText(GameData.ukraine.name, new List<Language>() { GameData.english, GameData.ukraine, GameData.poland });
+            GameData.aplication.gameText = new GameText(GameData.ukraine.name, new List<Language>() { GameData.english, GameData.ukraine, GameData.polish });
             GameData.aplication.gameText.AddSomeText(new Dictionary<string, Dictionary<string, string>>() 
             {
-                {"MainMenu", new Dictionary<string, string>() { { GameData.english.name, "Main Menu" }, { GameData.ukraine.name, "Головне Меню" }, { GameData.poland.name, "Menu Główne" } } },
-                {"StartGame", new Dictionary<string, string>() { { GameData.english.name, "New Game" }, { GameData.ukraine.name, "Нова гра" }, { GameData.poland.name, "Nowa gra" } } },
-                {"ContinueGame", new Dictionary<string, string>() { { GameData.english.name, "Continue Game" }, { GameData.ukraine.name, "Продовжити Гру" }, { GameData.poland.name, "Kontynuuj grę" } } },
-                {"Tutorial", new Dictionary<string, string>() { { GameData.english.name, "Tutorial" }, { GameData.ukraine.name, "Підручник" }, { GameData.poland.name, "Podręcznik" } } },
-                {"Settings", new Dictionary<string, string>() { { GameData.english.name, "Settings" }, { GameData.ukraine.name, "Налаштування" }, { GameData.poland.name, "Ustawienia" } } },
-                {"Credits", new Dictionary<string, string>() { { GameData.english.name, "Credits" }, { GameData.ukraine.name, "Автори" }, { GameData.poland.name, "Autorski" } } },
-                {"Exit", new Dictionary<string, string>() { { GameData.english.name, "Exit" }, { GameData.ukraine.name, "Вихід" }, { GameData.poland.name, "Wyjście" } } },
+                {"MainMenu", new Dictionary<string, string>() { { GameData.english.name, "Main Menu" }, { GameData.ukraine.name, "Головне Меню" }, { GameData.polish.name, "Menu Główne" } } },
+                {"StartGame", new Dictionary<string, string>() { { GameData.english.name, "New Game" }, { GameData.ukraine.name, "Нова гра" }, { GameData.polish.name, "Nowa gra" } } },
+                {"ContinueGame", new Dictionary<string, string>() { { GameData.english.name, "Continue Game" }, { GameData.ukraine.name, "Продовжити Гру" }, { GameData.polish.name, "Kontynuuj grę" } } },
+                {"Tutorial", new Dictionary<string, string>() { { GameData.english.name, "Tutorial" }, { GameData.ukraine.name, "Підручник" }, { GameData.polish.name, "Podręcznik" } } },
+                {"Settings", new Dictionary<string, string>() { { GameData.english.name, "Settings" }, { GameData.ukraine.name, "Налаштування" }, { GameData.polish.name, "Ustawienia" } } },
+                {"Credits", new Dictionary<string, string>() { { GameData.english.name, "Credits" }, { GameData.ukraine.name, "Автори" }, { GameData.polish.name, "Autorski" } } },
+                {"Exit", new Dictionary<string, string>() { { GameData.english.name, "Exit" }, { GameData.ukraine.name, "Вихід" }, { GameData.polish.name, "Wyjście" } } },
 
-                {"YouLost", new Dictionary<string, string>() { { GameData.english.name, "You lost the city" }, { GameData.ukraine.name, "Ви втратили місто" }, { GameData.poland.name, "KillTheZ tutorial" } } },
-                {"Congratulations", new Dictionary<string, string>() { { GameData.english.name, "Congratulations" }, { GameData.ukraine.name, "Вітаємо" }, { GameData.poland.name, "KillTheZ tutorial" } } },
-                {"YouWin", new Dictionary<string, string>() { { GameData.english.name, "You have captured the city" }, { GameData.ukraine.name, "Ви захопили місто" }, { GameData.poland.name, "KillTheZ tutorial" } } },
+
+                {"GameTheme", new Dictionary<string, string>() { { GameData.english.name, "Game Theme:" }, { GameData.ukraine.name, "Тема гри:" }, { GameData.polish.name, "Ustawienia" } } },
                 
-                {"PressEscape", new Dictionary<string, string>() { { GameData.english.name, "Press Escape to go back to menu" }, { GameData.ukraine.name, "Нажміть Escape щоб вийти в меню" }, { GameData.poland.name, "KillTheZ tutorial" } } },
-                {"PressEnter", new Dictionary<string, string>() { { GameData.english.name, "Press Enter or Space to continue game" }, { GameData.ukraine.name, "Нажміть Enter або Space(Укр.Пробіл) щоб продовжити гру" }, { GameData.poland.name, "KillTheZ tutorial" } } },
+                {"ThemeDark", new Dictionary<string, string>() { { GameData.english.name, "Dark" }, { GameData.ukraine.name, "Темна" }, { GameData.polish.name, "Dark" } } },
+                {"ThemeLight", new Dictionary<string, string>() { { GameData.english.name, "Light" }, { GameData.ukraine.name, "Світла" }, { GameData.polish.name, "Dark" } } },
+                {"ThemeDoom", new Dictionary<string, string>() { { GameData.english.name, "Doom" }, { GameData.ukraine.name, "Doom" }, { GameData.polish.name, "Doom" } } },
+                {"ThemeHell", new Dictionary<string, string>() { { GameData.english.name, "Hell" }, { GameData.ukraine.name, "Пекло" }, { GameData.polish.name, "Dark" } } },
+                {"ThemeHecker", new Dictionary<string, string>() { { GameData.english.name, "Hecker" }, { GameData.ukraine.name, "Хакер" }, { GameData.polish.name, "Dark" } } },
+                {"ThemePatriotic", new Dictionary<string, string>() { { GameData.english.name, "Patriotic" }, { GameData.ukraine.name, "Патріотична" }, { GameData.polish.name, "Patriotic" } } },
+                {"MyLittlePony", new Dictionary<string, string>() { { GameData.english.name, "MyLittlePony" }, { GameData.ukraine.name, "MyLittlePony" }, { GameData.polish.name, "MyLittlePony" } } },
+
+                {"GameLanguage", new Dictionary<string, string>() { { GameData.english.name, "Game Language:" }, { GameData.ukraine.name, "Мова гри:" }, { GameData.polish.name, "Autorski" } } },
+                {"ClearGameProgress", new Dictionary<string, string>() { { GameData.english.name, "Clear Game Progress" }, { GameData.ukraine.name, "Видалити Ігровий Прогрес" }, { GameData.polish.name, "Wyjście" } } },
 
 
-                {"TutTitle", new Dictionary<string, string>() { { GameData.english.name, "KillTheZ tutorial" }, { GameData.ukraine.name, "KillTheZ підручник" }, { GameData.poland.name, "KillTheZ tutorial" } } },
+                {"YouLost", new Dictionary<string, string>() { { GameData.english.name, "You lost the city" }, { GameData.ukraine.name, "Ви втратили місто" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"Congratulations", new Dictionary<string, string>() { { GameData.english.name, "Congratulations" }, { GameData.ukraine.name, "Вітаємо" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"YouWin", new Dictionary<string, string>() { { GameData.english.name, "You have captured the city" }, { GameData.ukraine.name, "Ви захопили місто" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                
+                {"PressEscape", new Dictionary<string, string>() { { GameData.english.name, "Press Escape to go back to menu" }, { GameData.ukraine.name, "Нажміть Escape щоб вийти в меню" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"PressEnter", new Dictionary<string, string>() { { GameData.english.name, "Press Enter or Space to continue game" }, { GameData.ukraine.name, "Нажміть Enter або Space(Укр.Пробіл) щоб продовжити гру" }, { GameData.polish.name, "KillTheZ tutorial" } } },
 
-                {"Tut1_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            1                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 1                Наступна Сторінка>" }, { GameData.poland.name, "<Previor Page            1                Next Page>" } } },
-                {"Tut1_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Mission ──────────────────" }, { GameData.ukraine.name, "────────────────── Місія ──────────────────" }, { GameData.poland.name, "────────────────── Mission ──────────────────" } } },
-                {"Tut1_4", new Dictionary<string, string>() { { GameData.english.name, "Your have only 2 main missions:" }, { GameData.ukraine.name, "У вас є тільки 2 основні місії:" }, { GameData.poland.name, "Your have only 2 main missions:" } } },
-                {"Tut1_5", new Dictionary<string, string>() { { GameData.english.name, "1) Capture moscow" }, { GameData.ukraine.name, "1) Захопити москву" }, { GameData.poland.name, "1) Capture moscow" } } },
-                {"Tut1_6", new Dictionary<string, string>() { { GameData.english.name, "2) Collect more scores" }, { GameData.ukraine.name, "2) Назбирати більше очок" }, { GameData.poland.name, "2) Collect more scores" } } },
-                {"Tut1_7", new Dictionary<string, string>() { { GameData.english.name, "Good luck!" }, { GameData.ukraine.name, "Удачі!" }, { GameData.poland.name, "Good luck" } } },
 
-                {"Tut2_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            2                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 2                Наступна Сторінка>" }, { GameData.poland.name, "<Previor Page            2                Next Page>" } } },
-                {"Tut2_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Player Control ──────────────────" }, { GameData.ukraine.name, "────────────────── Керування гравцем ──────────────────" }, { GameData.poland.name, "────────────────── Player Control ──────────────────" } } },
-                {"Tut2_4", new Dictionary<string, string>() { { GameData.english.name, "Player" }, { GameData.ukraine.name, "Гравець" }, { GameData.poland.name, "Player" } } },
-                {"Tut2_5", new Dictionary<string, string>() { { GameData.english.name, "Press D or Right Arrow to move right" }, { GameData.ukraine.name, "Нажміть D(Укр.В) або Стрілку Вправо щоб рухатися праворуч" }, { GameData.poland.name, "Press D or Right Arrow to move right" } } },
-                {"Tut2_7", new Dictionary<string, string>() { { GameData.english.name, "Press A or Left Arrow to move left" }, { GameData.ukraine.name, "Нажміть A(Укр.Ф) або Стрілку Вліво щоб рухатися ліворуч" }, { GameData.poland.name, "Press A or Left Arrow to move left" } } },
-                {"Tut2_9", new Dictionary<string, string>() { { GameData.english.name, "Press W or Up Arrow to move up" }, { GameData.ukraine.name, "Нажміть W(Укр.Ц) або Стрілку Вгору щоб рухатися вгору" }, { GameData.poland.name, "Press W or Up Arrow to move up" } } },
-                {"Tut2_11", new Dictionary<string, string>() { { GameData.english.name, "Press S or Down Arrow to move down" }, { GameData.ukraine.name, "Нажміть S(Укр.І) або Стрілку Вниз щоб рухатися вниз" }, { GameData.poland.name, "Press S or Down Arrow to move down" } } },
-                {"Tut2_13", new Dictionary<string, string>() { { GameData.english.name, "Press Space to shoot" }, { GameData.ukraine.name, "Нажміть Space(Укр.Пробіл) щоб стріляти" }, { GameData.poland.name, "Press Space to shoot" } } },
-                {"Tut2_15", new Dictionary<string, string>() { { GameData.english.name, "Press E to plant mine" }, { GameData.ukraine.name, "Нажміть E(Укр.У) щоб встановити міну" }, { GameData.poland.name, "Press E to place mine" } } },
-                {"Tut2_17", new Dictionary<string, string>() { { GameData.english.name, "Press Q to start Bayraktar attack" }, { GameData.ukraine.name, "Нажміть Q(Укр.Й) щоб почати атаку Байрактарів" }, { GameData.poland.name, "Press Q to start Bayraktar attack" } } },
+                {"TutTitle", new Dictionary<string, string>() { { GameData.english.name, "KillTheZ tutorial" }, { GameData.ukraine.name, "KillTheZ підручник" }, { GameData.polish.name, "KillTheZ tutorial" } } },
 
-                {"Tut3_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            3                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 3                Наступна Сторінка>" }, { GameData.poland.name, "<Previor Page            3                Next Page>" } } },
-                {"Tut3_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Companions ──────────────────" }, { GameData.ukraine.name, "────────────────── Напарники ──────────────────" }, { GameData.poland.name, "────────────────── Friends ──────────────────" } } },
-                {"Tut3_4", new Dictionary<string, string>() { { GameData.english.name, "Tractor driver Mykola" }, { GameData.ukraine.name, "Тракторист Микола" }, { GameData.poland.name, "Tractor driver Mykola" } } },
-                {"Tut3_6", new Dictionary<string, string>() { { GameData.english.name, "Tractor driver Mykola can easily eat enemy tanks with his tractor" }, { GameData.ukraine.name, "Тракторист Микола своїм трактором може з легкістю їсти ворожі танки" }, { GameData.poland.name, "Press D or Right Arrow to move left" } } },
-                {"Tut3_7", new Dictionary<string, string>() { { GameData.english.name, "He is usually slow and calm," }, { GameData.ukraine.name, "Зазвичай він повільний і спокійний," }, { GameData.poland.name, "Press A or Left Arrow to move left" } } },
-                {"Tut3_8", new Dictionary<string, string>() { { GameData.english.name, "but when he notices an enemy tank, that will change" }, { GameData.ukraine.name, "але коли він помітить ворожий танк, це зміниться" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut3_9", new Dictionary<string, string>() { { GameData.english.name, "Ukrainian soldiers" }, { GameData.ukraine.name, "Українські солдати" }, { GameData.poland.name, "Ukrainian soldiers" } } },
-                {"Tut3_11", new Dictionary<string, string>() { { GameData.english.name, "Valiant heroes who protect civilians from orcs" }, { GameData.ukraine.name, "Доблесні герої які захищають цивільних людей від орків" }, { GameData.poland.name, "Valiant heroes who protect civilians from orcs" } } },
-                {"Tut3_12", new Dictionary<string, string>() { { GameData.english.name, "These daredevils can:" }, { GameData.ukraine.name, "Ці сміливці можуть:" }, { GameData.poland.name, "These daredevils can:" } } },
-                {"Tut3_13", new Dictionary<string, string>() { { GameData.english.name, "1) Shoot the enemies at a distance of up to " }, { GameData.ukraine.name, "1) Стріляти у ворогів на відстані до " }, { GameData.poland.name, "1) Shoot the enemies at a distance of up to " } } },
-                {"Tut3_14", new Dictionary<string, string>() { { GameData.english.name, "2) Plant on the map flashing surprises for enemies" }, { GameData.ukraine.name, "2) Ставити на карті миготливі сюрпризи для ворогів" }, { GameData.poland.name, "2) Plant on the map flashing surprises for enemies" } } },
+                {"Tut1_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            1                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 1                Наступна Сторінка>" }, { GameData.polish.name, "<Previor Page            1                Next Page>" } } },
+                {"Tut1_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Mission ──────────────────" }, { GameData.ukraine.name, "────────────────── Місія ──────────────────" }, { GameData.polish.name, "────────────────── Mission ──────────────────" } } },
+                {"Tut1_4", new Dictionary<string, string>() { { GameData.english.name, "Your have only 2 main missions:" }, { GameData.ukraine.name, "У вас є тільки 2 основні місії:" }, { GameData.polish.name, "Your have only 2 main missions:" } } },
+                {"Tut1_5", new Dictionary<string, string>() { { GameData.english.name, "1) Capture moscow" }, { GameData.ukraine.name, "1) Захопити москву" }, { GameData.polish.name, "1) Capture moscow" } } },
+                {"Tut1_6", new Dictionary<string, string>() { { GameData.english.name, "2) Collect more scores" }, { GameData.ukraine.name, "2) Назбирати більше очок" }, { GameData.polish.name, "2) Collect more scores" } } },
+                {"Tut1_7", new Dictionary<string, string>() { { GameData.english.name, "Good luck!" }, { GameData.ukraine.name, "Удачі!" }, { GameData.polish.name, "Good luck" } } },
 
-                {"Tut4_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            4                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 4                Наступна Сторінка>" }, { GameData.poland.name, "<Previor Page            4                Next Page>" } } },
-                {"Tut4_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Enemy ──────────────────" }, { GameData.ukraine.name, "────────────────── Вороги ──────────────────" }, { GameData.poland.name, "────────────────── Friends ──────────────────" } } },
-                {"Tut4_4", new Dictionary<string, string>() { { GameData.english.name, "Shitty russian tank" }, { GameData.ukraine.name, "Лайняні російські танки" }, { GameData.poland.name, "Tractor driver Mykola" } } },
-                {"Tut4_6", new Dictionary<string, string>() { { GameData.english.name, "These tanks are cans that can barely drive" }, { GameData.ukraine.name, "Ці танки - це бляшанки, які ледве можуть їхати" }, { GameData.poland.name, "Press D or Right Arrow to move left" } } },
-                {"Tut4_7", new Dictionary<string, string>() { { GameData.english.name, "They can't do anything advanced for Ukrainian vehicles," }, { GameData.ukraine.name, "Вони не можуть зашкодити просунутій українській техніці," }, { GameData.poland.name, "Press A or Left Arrow to move left" } } },
-                {"Tut4_8", new Dictionary<string, string>() { { GameData.english.name, "and the only thing they realy can do is destroy a car" }, { GameData.ukraine.name, "і єдине, що вони реально можуть - це переїхати легкове авто," }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut4_9", new Dictionary<string, string>() { { GameData.english.name, "or drive to civilians in the yard" }, { GameData.ukraine.name, "або заїхати у двір мирним людям" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut2_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            2                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 2                Наступна Сторінка>" }, { GameData.polish.name, "<Previor Page            2                Next Page>" } } },
+                {"Tut2_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Player Control ──────────────────" }, { GameData.ukraine.name, "────────────────── Керування гравцем ──────────────────" }, { GameData.polish.name, "────────────────── Player Control ──────────────────" } } },
+                {"Tut2_4", new Dictionary<string, string>() { { GameData.english.name, "Player" }, { GameData.ukraine.name, "Гравець" }, { GameData.polish.name, "Player" } } },
+                {"Tut2_5", new Dictionary<string, string>() { { GameData.english.name, "Press D or Right Arrow to move right" }, { GameData.ukraine.name, "Нажміть D(Укр.В) або Стрілку Вправо щоб рухатися праворуч" }, { GameData.polish.name, "Press D or Right Arrow to move right" } } },
+                {"Tut2_7", new Dictionary<string, string>() { { GameData.english.name, "Press A or Left Arrow to move left" }, { GameData.ukraine.name, "Нажміть A(Укр.Ф) або Стрілку Вліво щоб рухатися ліворуч" }, { GameData.polish.name, "Press A or Left Arrow to move left" } } },
+                {"Tut2_9", new Dictionary<string, string>() { { GameData.english.name, "Press W or Up Arrow to move up" }, { GameData.ukraine.name, "Нажміть W(Укр.Ц) або Стрілку Вгору щоб рухатися вгору" }, { GameData.polish.name, "Press W or Up Arrow to move up" } } },
+                {"Tut2_11", new Dictionary<string, string>() { { GameData.english.name, "Press S or Down Arrow to move down" }, { GameData.ukraine.name, "Нажміть S(Укр.І) або Стрілку Вниз щоб рухатися вниз" }, { GameData.polish.name, "Press S or Down Arrow to move down" } } },
+                {"Tut2_13", new Dictionary<string, string>() { { GameData.english.name, "Press Space to shoot" }, { GameData.ukraine.name, "Нажміть Space(Укр.Пробіл) щоб стріляти" }, { GameData.polish.name, "Press Space to shoot" } } },
+                {"Tut2_15", new Dictionary<string, string>() { { GameData.english.name, "Press E to plant mine" }, { GameData.ukraine.name, "Нажміть E(Укр.У) щоб встановити міну" }, { GameData.polish.name, "Press E to place mine" } } },
+                {"Tut2_17", new Dictionary<string, string>() { { GameData.english.name, "Press Q to start Bayraktar attack" }, { GameData.ukraine.name, "Нажміть Q(Укр.Й) щоб почати атаку Байрактарів" }, { GameData.polish.name, "Press Q to start Bayraktar attack" } } },
 
-                {"Tut5_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            5                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 5                Наступна Сторінка>" }, { GameData.poland.name, "<Previor Page            5                Next Page>" } } },
-                {"Tut5_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Objects on map ──────────────────" }, { GameData.ukraine.name, "────────────────── Об'єкти на карті ──────────────────" }, { GameData.poland.name, "────────────────── Friends ──────────────────" } } },
-                {"Tut5_4", new Dictionary<string, string>() { { GameData.english.name, "House" }, { GameData.ukraine.name, "Будинок" }, { GameData.poland.name, "Tractor driver Mykola" } } },
-                {"Tut5_6", new Dictionary<string, string>() { { GameData.english.name, "A simple house used as a wall" }, { GameData.ukraine.name, "Простий будинок, який використовується як стіна" }, { GameData.poland.name, "Press D or Right Arrow to move left" } } },
-                {"Tut5_7", new Dictionary<string, string>() { { GameData.english.name, "City important zone" }, { GameData.ukraine.name, "Важлива міська зона" }, { GameData.poland.name, "Press A or Left Arrow to move left" } } },
-                {"Tut5_9", new Dictionary<string, string>() { { GameData.english.name, "Enemy spawns on top zone" }, { GameData.ukraine.name, "Вороги зявляються у верхній зоні" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_10", new Dictionary<string, string>() { { GameData.english.name, "If enemy reach the bottom zone" }, { GameData.ukraine.name, "Якщо ворог досягне нижньої зони," }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_11", new Dictionary<string, string>() { { GameData.english.name, "you lose the current city" }, { GameData.ukraine.name, "ви втрачаєте поточне місто" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_12", new Dictionary<string, string>() { { GameData.english.name, "Crater" }, { GameData.ukraine.name, "Кратер" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_14", new Dictionary<string, string>() { { GameData.english.name, "Consequences of the explosion of ruscists missiles" }, { GameData.ukraine.name, "Наслідки вибуху рашистських ракет" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_15", new Dictionary<string, string>() { { GameData.english.name, "Slows down enemies and your soldiers" }, { GameData.ukraine.name, "Сповільнює ворогів і ваших солдатів" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_16", new Dictionary<string, string>() { { GameData.english.name, "Hedgehog" }, { GameData.ukraine.name, "Їжачок" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_18", new Dictionary<string, string>() { { GameData.english.name, "Very useful thing" }, { GameData.ukraine.name, "Дуже корисна штука" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_19", new Dictionary<string, string>() { { GameData.english.name, "Biolaboratory" }, { GameData.ukraine.name, "Біолабораторія" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_21", new Dictionary<string, string>() { { GameData.english.name, "A very common thing in the Ukrainian lands" }, { GameData.ukraine.name, "Дуже поширена річ в Українських краях" }, { GameData.poland.name, "Press W or Up Arrow to move left" } } },
+                {"Tut3_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            3                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 3                Наступна Сторінка>" }, { GameData.polish.name, "<Previor Page            3                Next Page>" } } },
+                {"Tut3_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Companions ──────────────────" }, { GameData.ukraine.name, "────────────────── Напарники ──────────────────" }, { GameData.polish.name, "────────────────── Friends ──────────────────" } } },
+                {"Tut3_4", new Dictionary<string, string>() { { GameData.english.name, "Tractor driver Mykola" }, { GameData.ukraine.name, "Тракторист Микола" }, { GameData.polish.name, "Tractor driver Mykola" } } },
+                {"Tut3_6", new Dictionary<string, string>() { { GameData.english.name, "Tractor driver Mykola can easily eat enemy tanks with his tractor" }, { GameData.ukraine.name, "Тракторист Микола своїм трактором може з легкістю їсти ворожі танки" }, { GameData.polish.name, "Press D or Right Arrow to move left" } } },
+                {"Tut3_7", new Dictionary<string, string>() { { GameData.english.name, "He is usually slow and calm," }, { GameData.ukraine.name, "Зазвичай він повільний і спокійний," }, { GameData.polish.name, "Press A or Left Arrow to move left" } } },
+                {"Tut3_8", new Dictionary<string, string>() { { GameData.english.name, "but when he notices an enemy tank, that will change" }, { GameData.ukraine.name, "але коли він помітить ворожий танк, це зміниться" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut3_9", new Dictionary<string, string>() { { GameData.english.name, "Ukrainian soldiers" }, { GameData.ukraine.name, "Українські солдати" }, { GameData.polish.name, "Ukrainian soldiers" } } },
+                {"Tut3_11", new Dictionary<string, string>() { { GameData.english.name, "Valiant heroes who protect civilians from orcs" }, { GameData.ukraine.name, "Доблесні герої які захищають цивільних людей від орків" }, { GameData.polish.name, "Valiant heroes who protect civilians from orcs" } } },
+                {"Tut3_12", new Dictionary<string, string>() { { GameData.english.name, "These daredevils can:" }, { GameData.ukraine.name, "Ці сміливці можуть:" }, { GameData.polish.name, "These daredevils can:" } } },
+                {"Tut3_13", new Dictionary<string, string>() { { GameData.english.name, "1) Shoot the enemies at a distance of up to " }, { GameData.ukraine.name, "1) Стріляти у ворогів на відстані до " }, { GameData.polish.name, "1) Shoot the enemies at a distance of up to " } } },
+                {"Tut3_14", new Dictionary<string, string>() { { GameData.english.name, "2) Plant on the map flashing surprises for enemies" }, { GameData.ukraine.name, "2) Ставити на карті миготливі сюрпризи для ворогів" }, { GameData.polish.name, "2) Plant on the map flashing surprises for enemies" } } },
 
-                {"MineCount", new Dictionary<string, string>() { { GameData.english.name, "    Mine count: " }, { GameData.ukraine.name, "Кількість мін: " }, { GameData.poland.name, "    Mine count: " } } },
-                {"BayraktarAttackCount", new Dictionary<string, string>() { { GameData.english.name, "    Bayraktar attack count: " }, { GameData.ukraine.name, "    Доступно атак Байрактарів: " }, { GameData.poland.name, "    Bayraktar attack count: " } } },
-                {"CurrentTime", new Dictionary<string, string>() { { GameData.english.name, "Current Time: " }, { GameData.ukraine.name, "Поточний час: " }, { GameData.poland.name, "Current Time: " } } },
-                {"ms", new Dictionary<string, string>() { { GameData.english.name, "ms" }, { GameData.ukraine.name, "мс" }, { GameData.poland.name, "ms" } } },
-                {"AttackStartTime", new Dictionary<string, string>() { { GameData.english.name, "    Attack start time: " }, { GameData.ukraine.name, "    Час початку наступу: " }, { GameData.poland.name, "    Attack start time: " } } },
-                {"EnemyLeftSpawn", new Dictionary<string, string>() { { GameData.english.name, "Enemy left to spawn: " }, { GameData.ukraine.name, "Ворогів прибуде: " }, { GameData.poland.name, "Enemy left to spawn: " } } },
-                {"EnemyLeftKill", new Dictionary<string, string>() { { GameData.english.name, "    Enemy left to kill: " }, { GameData.ukraine.name, "    Ворогів залишилося вбити: " }, { GameData.poland.name, "    Enemy left to kill: " } } },
-                {"Score", new Dictionary<string, string>() { { GameData.english.name, "Score: " }, { GameData.ukraine.name, "Очки: " }, { GameData.poland.name, "Score: " } } },
+                {"Tut4_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            4                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 4                Наступна Сторінка>" }, { GameData.polish.name, "<Previor Page            4                Next Page>" } } },
+                {"Tut4_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Enemy ──────────────────" }, { GameData.ukraine.name, "────────────────── Вороги ──────────────────" }, { GameData.polish.name, "────────────────── Friends ──────────────────" } } },
+                {"Tut4_4", new Dictionary<string, string>() { { GameData.english.name, "Shitty russian tank" }, { GameData.ukraine.name, "Лайняні російські танки" }, { GameData.polish.name, "Tractor driver Mykola" } } },
+                {"Tut4_6", new Dictionary<string, string>() { { GameData.english.name, "These tanks are cans that can barely drive" }, { GameData.ukraine.name, "Ці танки - це бляшанки, які ледве можуть їхати" }, { GameData.polish.name, "Press D or Right Arrow to move left" } } },
+                {"Tut4_7", new Dictionary<string, string>() { { GameData.english.name, "They can't do anything advanced for Ukrainian vehicles," }, { GameData.ukraine.name, "Вони не можуть зашкодити просунутій українській техніці," }, { GameData.polish.name, "Press A or Left Arrow to move left" } } },
+                {"Tut4_8", new Dictionary<string, string>() { { GameData.english.name, "and the only thing they realy can do is destroy a car" }, { GameData.ukraine.name, "і єдине, що вони реально можуть - це переїхати легкове авто," }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut4_9", new Dictionary<string, string>() { { GameData.english.name, "or drive to civilians in the yard" }, { GameData.ukraine.name, "або заїхати у двір мирним людям" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+
+                {"Tut5_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            5                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 5                Наступна Сторінка>" }, { GameData.polish.name, "<Previor Page            5                Next Page>" } } },
+                {"Tut5_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Objects on map ──────────────────" }, { GameData.ukraine.name, "────────────────── Об'єкти на карті ──────────────────" }, { GameData.polish.name, "────────────────── Friends ──────────────────" } } },
+                {"Tut5_4", new Dictionary<string, string>() { { GameData.english.name, "House" }, { GameData.ukraine.name, "Будинок" }, { GameData.polish.name, "Tractor driver Mykola" } } },
+                {"Tut5_6", new Dictionary<string, string>() { { GameData.english.name, "A simple house used as a wall" }, { GameData.ukraine.name, "Простий будинок, який використовується як стіна" }, { GameData.polish.name, "Press D or Right Arrow to move left" } } },
+                {"Tut5_7", new Dictionary<string, string>() { { GameData.english.name, "City important zone" }, { GameData.ukraine.name, "Важлива міська зона" }, { GameData.polish.name, "Press A or Left Arrow to move left" } } },
+                {"Tut5_9", new Dictionary<string, string>() { { GameData.english.name, "Enemy spawns on top zone" }, { GameData.ukraine.name, "Вороги зявляються у верхній зоні" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_10", new Dictionary<string, string>() { { GameData.english.name, "If enemy reach the bottom zone" }, { GameData.ukraine.name, "Якщо ворог досягне нижньої зони," }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_11", new Dictionary<string, string>() { { GameData.english.name, "you lose the current city" }, { GameData.ukraine.name, "ви втрачаєте поточне місто" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_12", new Dictionary<string, string>() { { GameData.english.name, "Crater" }, { GameData.ukraine.name, "Кратер" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_14", new Dictionary<string, string>() { { GameData.english.name, "Consequences of the explosion of ruscists missiles" }, { GameData.ukraine.name, "Наслідки вибуху рашистських ракет" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_15", new Dictionary<string, string>() { { GameData.english.name, "Slows down enemies and your soldiers" }, { GameData.ukraine.name, "Сповільнює ворогів і ваших солдатів" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_16", new Dictionary<string, string>() { { GameData.english.name, "Hedgehog" }, { GameData.ukraine.name, "Їжачок" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_18", new Dictionary<string, string>() { { GameData.english.name, "Very useful thing" }, { GameData.ukraine.name, "Дуже корисна штука" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_19", new Dictionary<string, string>() { { GameData.english.name, "Biolaboratory" }, { GameData.ukraine.name, "Біолабораторія" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_21", new Dictionary<string, string>() { { GameData.english.name, "A very common thing in the Ukrainian lands" }, { GameData.ukraine.name, "Дуже поширена річ в Українських краях" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+
+                {"MineCount", new Dictionary<string, string>() { { GameData.english.name, "    Mine count: " }, { GameData.ukraine.name, "Кількість мін: " }, { GameData.polish.name, "    Mine count: " } } },
+                {"BayraktarAttackCount", new Dictionary<string, string>() { { GameData.english.name, "    Bayraktar attack count: " }, { GameData.ukraine.name, "    Доступно атак Байрактарів: " }, { GameData.polish.name, "    Bayraktar attack count: " } } },
+                {"CurrentTime", new Dictionary<string, string>() { { GameData.english.name, "Current Time: " }, { GameData.ukraine.name, "Поточний час: " }, { GameData.polish.name, "Current Time: " } } },
+                {"ms", new Dictionary<string, string>() { { GameData.english.name, "ms" }, { GameData.ukraine.name, "мс" }, { GameData.polish.name, "ms" } } },
+                {"AttackStartTime", new Dictionary<string, string>() { { GameData.english.name, "    Attack start time: " }, { GameData.ukraine.name, "    Час початку наступу: " }, { GameData.polish.name, "    Attack start time: " } } },
+                {"EnemyLeftSpawn", new Dictionary<string, string>() { { GameData.english.name, "Enemy left to spawn: " }, { GameData.ukraine.name, "Ворогів прибуде: " }, { GameData.polish.name, "Enemy left to spawn: " } } },
+                {"EnemyLeftKill", new Dictionary<string, string>() { { GameData.english.name, "    Enemy left to kill: " }, { GameData.ukraine.name, "    Ворогів залишилося вбити: " }, { GameData.polish.name, "    Enemy left to kill: " } } },
+                {"Score", new Dictionary<string, string>() { { GameData.english.name, "Score: " }, { GameData.ukraine.name, "Очки: " }, { GameData.polish.name, "Score: " } } },
 
             });
 
@@ -343,7 +365,7 @@ namespace KillTheZGame
         public void StartGame() { InitGame(); RunGame(); }
         public void ContinueGame() { RunGame(); }
         public void Tutorial() { OpenTutorial(); }
-        public void Settings() { }
+        public void Settings() { OpenSettings(); }
         public void Credits() { }
         public void Exit() { GameData.aplication.isInAplication = false; }
 
@@ -351,6 +373,7 @@ namespace KillTheZGame
 
         public void RunGame() { GameData.aplication.currentGameTabName = GameData.myGameShell.game.name; }
         public void OpenTutorial() { GameData.aplication.currentGameTabName = GameData.tutorialMenu.name; GameData.tutorialMenu.Open(); }
+        public void OpenSettings() { GameData.aplication.currentGameTabName = GameData.settingsMenu.name; GameData.settingsMenu.Open(); }
     }
 
     public class TutorialMenu : SelectListTab
@@ -369,8 +392,6 @@ namespace KillTheZGame
                 {ConsoleKey.LeftArrow, PressKeyLeftOrA},
                 {ConsoleKey.A, PressKeyLeftOrA}
             };
-
-            
         }
 
         public void Open()
@@ -392,9 +413,61 @@ namespace KillTheZGame
         public void PressKeyRightOrD() { GoToRightPage(); }
         public void PressKeyLeftOrA() { GoToLeftPage(); }
 
-        public void GoToMainMenu() { Console.Clear(); ; aplication.currentGameTabName = "MainMenu"; }
+        public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
         public void GoToRightPage() { currentTutorialPage++; currentTutorialPage = KTZMath.LoopNumberInInterval(currentTutorialPage, 0, pages.Count - 1); Console.Clear(); UpdateTutMenu(); }
         public void GoToLeftPage() { currentTutorialPage--; currentTutorialPage = KTZMath.LoopNumberInInterval(currentTutorialPage, 0, pages.Count - 1); Console.Clear(); UpdateTutMenu(); }
+    }
+
+    public class SettingsMenu : SelectSelectListTab
+    {
+
+        public SettingsMenu() : base(GameData.aplication, new List<SSLTItem>(), "SettingsMenu", 20, distanceBetweenElements_:1)
+        {
+            keyManager.keyPressActions.Add(ConsoleKey.Escape, PressKeyEscape);
+            itemList = new List<SSLTItem>()
+            {
+                new SSLTItem("GameTheme", GameData.aplication.gameText.GetText("GameTheme"),
+                    new List<SSLTItemItem>()
+                    {
+                        new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeDark"), SetThemeDark),
+                        new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeLight"), SetThemeLight),
+                        new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeDoom"), SetThemeDoom),
+                        new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeHell"), SetThemeHell),
+                        new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeHecker"), SetThemeHecker),
+                        new SSLTItemItem(GameData.aplication.gameText.GetText("ThemePatriotic"), SetThemePatriotic),
+                        new SSLTItemItem(GameData.aplication.gameText.GetText("MyLittlePony"), SetThemePony)
+                    }, selectorOffset_:1
+                ),
+                new SSLTItem("Language", GameData.aplication.gameText.GetText("GameLanguage"),
+                    new List<SSLTItemItem>()
+                    {
+                        new SSLTItemItem("Українська", SetLangUkraine),
+                        new SSLTItemItem("English", SetLangEnglish),
+                        new SSLTItemItem("Polski", SetLangPolish)
+                    }, selectorOffset_:1
+                )
+            };
+            AlignToCenter();
+            HeightAlignToCenter();
+        }
+
+        public void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextInit(); }
+        public void SetLangEnglish() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextInit(); }
+        public void SetLangPolish() { GameData.aplication.gameText.currentLanguageName = GameData.polish.name; GameShell.aplic.TextInit(); }
+
+        public void SetThemeDark() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Gray; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public void SetThemeLight() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Gray; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Black; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
+        public void SetThemeDoom() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkRed; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
+        public void SetThemeHell() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkRed; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Red; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
+        public void SetThemeHecker() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Green; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
+        public void SetThemePatriotic() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkBlue; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkYellow; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
+        public void SetThemePony() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Magenta; GameData.aplication.ConsoleForegroundColor = ConsoleColor.White; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
+
+        public void Open() { selectedElemIndex = 0; Console.Clear(); }
+
+        public void PressKeyEscape() { GoToMainMenu(); }
+
+        public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
     }
 
     public class MyGameShell
@@ -553,6 +626,7 @@ namespace KillTheZGame
             foreach (StaticGameObject obj in staticObjectsLayer.staticObjects) 
             { 
                 if (obj.id.Contains(GameData.gameIds["collision"]) && obj.ico == wall.ico) { GameData.wallPositionList.Add(obj.globalPosition); } 
+                if (obj.ico == wall.ico) { GameData.allWallPositionList.Add(obj.globalPosition); }
                 if (obj.id.Contains(GameData.gameIds["pricklyHedgehogs"])) { GameData.pricklyHedgehogsPositionList.Add(obj.globalPosition); }
                 if (obj.id.Contains(GameData.gameIds["enemySlowDown"])) { GameData.slowdownPositionList.Add(obj.globalPosition); }
             }
@@ -756,7 +830,7 @@ namespace KillTheZGame
             if (updateIndex % sirenChangeTickCount == 0) { isSirenDraw = !isSirenDraw; }
             if (GameData.isDanger && isSirenDraw)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = GameData.dangerColor;
                 for (int y = 1; y < staticObjectsLayer.layerStartPosition.y; y++)
                 {
                     game.PostProcessing(new Vector2(0, y), new string(zoneGround.ico, GameData.myGameWindowWidth));
@@ -943,7 +1017,7 @@ namespace KillTheZGame
             List<Vector2> blockedDir = new ();
             for (int dirI = 0; dirI < Vector2.eightDirections.Count; dirI++)
             {
-                for (int checkIdI = 0; checkIdI < collisionCheckIds.Count && !blockedDir.Contains(Vector2.eightDirections[dirI]); checkIdI++) { if (GameData.wallPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.collisionIdPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.pricklyHedgehogsPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.minePositionList.Contains(globalPosition + Vector2.eightDirections[dirI]))
+                for (int checkIdI = 0; checkIdI < collisionCheckIds.Count && !blockedDir.Contains(Vector2.eightDirections[dirI]); checkIdI++) { if (GameData.wallPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.collisionIdPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.pricklyHedgehogsPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.minePositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.enemyPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]))
                     { blockedDir.Add(Vector2.eightDirections[dirI]); continue; } }
             }
             
@@ -1220,7 +1294,7 @@ namespace KillTheZGame
             if (isCloseToTarget && GameData.aplication.currentGameTabName == "Game")
             {
                 enemyStopTicks = 30 + GameData.currentCityIndex * 2;
-                Console.BackgroundColor = ConsoleColor.Red;
+                Console.BackgroundColor = GameData.dangerColor;
                 GameData.myGameShell.game.PostProcessing(globalPosition, 'Z');
                 Console.BackgroundColor = GameData.aplication.ConsoleBackgroundColor;
             }
@@ -1499,8 +1573,9 @@ namespace KillTheZGame
 
             for (int dirI = 0; dirI < Vector2.fourDirections.Count; dirI++)
             {
-                if (GameData.wallPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || GameData.collisionIdPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || GameData.minePositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || GameData.pricklyHedgehogsPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || globalPosition + dirI == GameData.player.globalPosition) 
-                { blockedDir.Add(Vector2.fourDirections[dirI]); break; }             } 
+                if (GameData.allWallPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || GameData.collisionIdPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || GameData.minePositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || GameData.pricklyHedgehogsPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || globalPosition + dirI == GameData.player.globalPosition) 
+                { blockedDir.Add(Vector2.fourDirections[dirI]); break; }             
+            } 
              
 
             return blockedDir;
@@ -1869,6 +1944,7 @@ namespace KillTheZGame
 
         // Menu
         public static MainMenu mainMenu;
+        public static SettingsMenu settingsMenu;
 
         public static TutorialMenu tutorialMenu;
 
@@ -1889,7 +1965,7 @@ namespace KillTheZGame
         // Languages
         public static Language english;
         public static Language ukraine;
-        public static Language poland;
+        public static Language polish;
 
         public static Dictionary<string, string> gameIds = new() 
         { { "collision", "Collision" }, { "player", "Player" }, 
@@ -1925,6 +2001,7 @@ namespace KillTheZGame
         public static int currentCityIndex = 3;
 
         public static List<Vector2> wallPositionList = new() { };
+        public static List<Vector2> allWallPositionList = new() { };
         public static List<Vector2> collisionIdPositionList = new() { };
         public static List<Vector2> enemyPositionList = new() { };
         public static List<Vector2> minePositionList = new() { };
@@ -1940,6 +2017,7 @@ namespace KillTheZGame
         public static UkraineTraktorMykola traktorMykola;
 
         public static bool isDanger;
+        public static ConsoleColor dangerColor;
         public static void EmptyMethod() { } 
     }
 
