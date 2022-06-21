@@ -69,7 +69,7 @@ namespace KillTheZGame
             GameData.aplication.tabsBehavior.Add(GameData.lostCityTab.name, LoseCityTab);
             GameData.aplication.tabsBehavior.Add(GameData.captureCityTab.name, CaptureCityTab);
 
-            TextInit();
+            TextUpdate();
         }
 
         public void MyAplicationStart()
@@ -131,15 +131,17 @@ namespace KillTheZGame
                 {"GameTheme", new Dictionary<string, string>() { { GameData.english.name, "Game Theme:" }, { GameData.ukraine.name, "Тема гри:" }, { GameData.polish.name, "Ustawienia" } } },
                 
                 {"ThemeDark", new Dictionary<string, string>() { { GameData.english.name, "Dark" }, { GameData.ukraine.name, "Темна" }, { GameData.polish.name, "Dark" } } },
-                {"ThemeLight", new Dictionary<string, string>() { { GameData.english.name, "Light" }, { GameData.ukraine.name, "Світла" }, { GameData.polish.name, "Dark" } } },
+                {"ThemeLight", new Dictionary<string, string>() { { GameData.english.name, "Light" }, { GameData.ukraine.name, "Світла" }, { GameData.polish.name, "Light" } } },
                 {"ThemeDoom", new Dictionary<string, string>() { { GameData.english.name, "Doom" }, { GameData.ukraine.name, "Doom" }, { GameData.polish.name, "Doom" } } },
-                {"ThemeHell", new Dictionary<string, string>() { { GameData.english.name, "Hell" }, { GameData.ukraine.name, "Пекло" }, { GameData.polish.name, "Dark" } } },
-                {"ThemeHecker", new Dictionary<string, string>() { { GameData.english.name, "Hecker" }, { GameData.ukraine.name, "Хакер" }, { GameData.polish.name, "Dark" } } },
+                {"ThemeHell", new Dictionary<string, string>() { { GameData.english.name, "Hell" }, { GameData.ukraine.name, "Пекло" }, { GameData.polish.name, "Hell" } } },
+                {"ThemeHecker", new Dictionary<string, string>() { { GameData.english.name, "Hecker" }, { GameData.ukraine.name, "Хакер" }, { GameData.polish.name, "Hecker" } } },
                 {"ThemePatriotic", new Dictionary<string, string>() { { GameData.english.name, "Patriotic" }, { GameData.ukraine.name, "Патріотична" }, { GameData.polish.name, "Patriotic" } } },
                 {"MyLittlePony", new Dictionary<string, string>() { { GameData.english.name, "MyLittlePony" }, { GameData.ukraine.name, "MyLittlePony" }, { GameData.polish.name, "MyLittlePony" } } },
 
                 {"GameLanguage", new Dictionary<string, string>() { { GameData.english.name, "Game Language:" }, { GameData.ukraine.name, "Мова гри:" }, { GameData.polish.name, "Autorski" } } },
                 {"ClearGameProgress", new Dictionary<string, string>() { { GameData.english.name, "Clear Game Progress" }, { GameData.ukraine.name, "Видалити Ігровий Прогрес" }, { GameData.polish.name, "Wyjście" } } },
+                
+                {"PressEnterSpaceDeleteData", new Dictionary<string, string>() { { GameData.english.name, "Press Enter or Space to clear game progress" }, { GameData.ukraine.name, "Натисніть Enter або Space(Укр.Пробіл) щоб очистити прогрес гри" }, { GameData.polish.name, "Press Enter or Space to clear game progress" } } },
 
 
                 {"YouLost", new Dictionary<string, string>() { { GameData.english.name, "You lost the city" }, { GameData.ukraine.name, "Ви втратили місто" }, { GameData.polish.name, "KillTheZ tutorial" } } },
@@ -148,6 +150,8 @@ namespace KillTheZGame
                 
                 {"PressEscape", new Dictionary<string, string>() { { GameData.english.name, "Press Escape to go back to menu" }, { GameData.ukraine.name, "Нажміть Escape щоб вийти в меню" }, { GameData.polish.name, "KillTheZ tutorial" } } },
                 {"PressEnter", new Dictionary<string, string>() { { GameData.english.name, "Press Enter or Space to continue game" }, { GameData.ukraine.name, "Нажміть Enter або Space(Укр.Пробіл) щоб продовжити гру" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+
+                {"SettTitle", new Dictionary<string, string>() { { GameData.english.name, "KillTheZ settings" }, { GameData.ukraine.name, "KillTheZ настройки" }, { GameData.polish.name, "KillTheZ settings" } } },
 
 
                 {"TutTitle", new Dictionary<string, string>() { { GameData.english.name, "KillTheZ tutorial" }, { GameData.ukraine.name, "KillTheZ підручник" }, { GameData.polish.name, "KillTheZ tutorial" } } },
@@ -219,7 +223,7 @@ namespace KillTheZGame
 
             
         }
-        public void TextInit()
+        public void TextUpdate()
         {
             GameData.tutorailTabPages = new List<List<SLTItem>>()
             {
@@ -323,29 +327,27 @@ namespace KillTheZGame
                 },
             };
 
-            GameData.mainMenu.menuTab.itemList = new List<SLTItem>()
-            {
-                new SLTItem("StartGame", GameData.aplication.gameText.GetText("StartGame"), GameData.mainMenu.StartGame, 0),
-                new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("ContinueGame"), GameData.mainMenu.ContinueGame, 1),
-                new SLTItem("Tutorial", GameData.aplication.gameText.GetText("Tutorial"), GameData.mainMenu.Tutorial, 1),
-                new SLTItem("Settings", GameData.aplication.gameText.GetText("Settings"), GameData.mainMenu.Settings, 1),
-                new SLTItem("Credits", GameData.aplication.gameText.GetText("Credits"), GameData.mainMenu.Credits, 1),
-                new SLTItem("Exit", GameData.aplication.gameText.GetText("Exit"), GameData.mainMenu.Exit, 1)
-            };
-            GameData.mainMenu.menuTab.AlignToCenter();
-            GameData.mainMenu.menuTab.HeightAlignToCenter();
+            GameData.mainMenu.TextUpdate();
+            GameData.settingsMenu.TextUpdate();
         }
     }
 
     public class MainMenu
     {
         public SelectListTab menuTab;
-        public List<SLTItem> itemList;
-
 
         public MainMenu()
-        { 
-            itemList = new List<SLTItem>()
+        {
+            
+            menuTab = new SelectListTab(GameData.aplication, new List<SLTItem>(), "MainMenu", 20);
+            TextUpdate();
+            menuTab.keyManager.keyPressActions.Add(ConsoleKey.Escape, Exit);
+            menuTab.keyManager.keyPressActions.Add(ConsoleKey.Spacebar, menuTab.SelectItem);
+        }
+
+        public void TextUpdate()
+        {
+            menuTab.itemList = new List<SLTItem>()
             {
                 new SLTItem("StartGame", GameData.aplication.gameText.GetText("StartGame"), StartGame, 0),
                 new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("ContinueGame"), ContinueGame, 1),
@@ -354,13 +356,9 @@ namespace KillTheZGame
                 new SLTItem("Credits", GameData.aplication.gameText.GetText("Credits"), Credits, 1),
                 new SLTItem("Exit", GameData.aplication.gameText.GetText("Exit"), Exit, 1)
             };
-            menuTab = new SelectListTab(GameData.aplication, itemList, "MainMenu", 20);
             menuTab.AlignToCenter();
             menuTab.HeightAlignToCenter();
-            menuTab.keyManager.keyPressActions.Add(ConsoleKey.Escape, Exit);
-            menuTab.keyManager.keyPressActions.Add(ConsoleKey.Spacebar, menuTab.SelectItem);
         }
-
 
         public void StartGame() { InitGame(); RunGame(); }
         public void ContinueGame() { RunGame(); }
@@ -420,7 +418,7 @@ namespace KillTheZGame
 
     public class SettingsMenu : SelectSelectListTab
     {
-
+        public int windowWidthCenter = (int)(GameData.myGameWindowWidth / 2);
         public SettingsMenu() : base(GameData.aplication, new List<SSLTItem>(), "SettingsMenu", 20, distanceBetweenElements_:1)
         {
             keyManager.keyPressActions.Add(ConsoleKey.Escape, PressKeyEscape);
@@ -444,19 +442,67 @@ namespace KillTheZGame
                         new SSLTItemItem("Українська", SetLangUkraine),
                         new SSLTItemItem("English", SetLangEnglish),
                         new SSLTItemItem("Polski", SetLangPolish)
-                    }, selectorOffset_:1
+                    }, 3, selectorOffset_:1
+                ),
+                new SSLTItem("ClearGameProgress", GameData.aplication.gameText.GetText("ClearGameProgress"),
+                    new List<SSLTItemItem>()
+                    {
+                        new SSLTItemItem(GameData.aplication.gameText.GetText("PressEnterSpaceDeleteData"), ClearGameData),
+                    }, 3, selectorOffset_:1
                 )
             };
+
             AlignToCenter();
-            HeightAlignToCenter();
+
+            itemList[0].topOffset = 6;
         }
 
-        public void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextInit(); }
-        public void SetLangEnglish() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextInit(); }
-        public void SetLangPolish() { GameData.aplication.gameText.currentLanguageName = GameData.polish.name; GameShell.aplic.TextInit(); }
+        public override void Draw()
+        {
+            base.Draw();
+            DrawAtCenterWithClear(GameData.aplication.gameText.GetText("SettTitle"), 2);
+            DrawAtCenterWithClear(new string('─', 20) + " " + GameData.aplication.gameText.GetText("Settings") + " " + new string('─', 20), 4);
+
+        }
+        public void DrawAtCenterWithClear(string text, int y)
+        {
+            Console.SetCursorPosition(0, y);
+            Console.Write(new string(' ', GameData.myGameWindowWidth - 1));
+            Console.SetCursorPosition(windowWidthCenter - (int)(text.Length / 2), y);
+            Console.Write(text);
+        }
+
+        public void TextUpdate()
+        {
+            itemList[0].title = GameData.aplication.gameText.GetText("GameTheme");
+
+            itemList[0].variants[0].text = GameData.aplication.gameText.GetText("ThemeDark");
+            itemList[0].variants[1].text = GameData.aplication.gameText.GetText("ThemeLight");
+            itemList[0].variants[2].text = GameData.aplication.gameText.GetText("ThemeDoom");
+            itemList[0].variants[3].text = GameData.aplication.gameText.GetText("ThemeHell");
+            itemList[0].variants[4].text = GameData.aplication.gameText.GetText("ThemeHecker");
+            itemList[0].variants[5].text = GameData.aplication.gameText.GetText("ThemePatriotic");
+            itemList[0].variants[6].text = GameData.aplication.gameText.GetText("MyLittlePony");
+
+
+            itemList[1].title = GameData.aplication.gameText.GetText("GameLanguage");
+
+
+            itemList[2].title = GameData.aplication.gameText.GetText("ClearGameProgress");
+
+            itemList[2].variants[0].text = GameData.aplication.gameText.GetText("PressEnterSpaceDeleteData");
+
+            AlignToCenter();
+        }
+
+        public void ClearGameData() { }
+
+        public void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate(); }
+        public void SetLangEnglish() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextUpdate(); }
+        public void SetLangPolish() { GameData.aplication.gameText.currentLanguageName = GameData.polish.name; GameShell.aplic.TextUpdate(); }
 
         public void SetThemeDark() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Gray; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
-        public void SetThemeLight() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Gray; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Black; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
+        public void SetThemeLight() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.White; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Black; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
         public void SetThemeDoom() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkRed; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
         public void SetThemeHell() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkRed; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Red; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
         public void SetThemeHecker() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Green; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
@@ -854,8 +900,8 @@ namespace KillTheZGame
         public void PressKey0() { GenerateEnemy(); }
         public void PressKeyEscape() { GoToMainMenu(); }
 
-        public void PressKeyK() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextInit(); }
-        public void PressKeyL() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextInit(); }
+        public void PressKeyK() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate(); }
+        public void PressKeyL() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextUpdate(); }
 
         public void PressKeyX() { CaptureCity(); }
         public void PressKeyZ() { LostCity(); }
@@ -898,6 +944,7 @@ namespace KillTheZGame
 
             GameData.score = Math.Max(0, GameData.score - 500 * (GameData.cityNames.Count - GameData.currentCityIndex));
             GameData.virtualTime = GameData.virtualTime.AddMonths(1);
+            EndGame();
         }
 
         public void CaptureCity()
@@ -920,6 +967,12 @@ namespace KillTheZGame
 
             GameData.score += 1000 * (GameData.currentCityIndex + 1);
             GameData.virtualTime = GameData.virtualTime.AddMonths(1);
+            EndGame();
+        }
+
+        public void EndGame()
+        {
+            game.gameObjects.Clear();
         }
     }
 
@@ -2017,7 +2070,7 @@ namespace KillTheZGame
         public static UkraineTraktorMykola traktorMykola;
 
         public static bool isDanger;
-        public static ConsoleColor dangerColor;
+        public static ConsoleColor dangerColor = ConsoleColor.Red;
         public static void EmptyMethod() { } 
     }
 

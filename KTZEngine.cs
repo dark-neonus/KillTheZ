@@ -497,6 +497,7 @@ namespace KTZEngine
         public bool drawRightSign = true;
         public bool drawLeftSign = true;
 
+
         //─────────────────────────SelectListTab construcor─────────────────────────|
         public SelectSelectListTab(KTZEngineAplication aplication_, List<SSLTItem> SSLTItemList, string name_, int ups_, string selectItemRightSign_ = standartSelectItemRightSign, string selectItemLeftSign_ = standartSelectItemLeftSign, int distanceBetweenElements_ = standartDistanceBetweenElements) : base(aplication_, name_, ups_)
         {
@@ -507,6 +508,8 @@ namespace KTZEngine
             distanceBetweenElements = distanceBetweenElements_;
 
             keyManager = new KeyManager(new Dictionary<ConsoleKey, Action> {
+            {ConsoleKey.Enter, ActivateCurrentElement },
+            {ConsoleKey.Spacebar, ActivateCurrentElement },
             {ConsoleKey.UpArrow, SelectPreviousElement },
             {ConsoleKey.W, SelectPreviousElement },
             {ConsoleKey.DownArrow, SelectNextElement },
@@ -516,6 +519,7 @@ namespace KTZEngine
             {ConsoleKey.LeftArrow, SelectLeftItem },
             {ConsoleKey.A, SelectLeftItem },
             });
+
         }
 
         //─────────────────────────Methods─────────────────────────|
@@ -540,18 +544,21 @@ namespace KTZEngine
                 leftSign = new string(' ', selectItemLeftSign.Length);
                 rightSign = new string(' ', selectItemRightSign.Length);
                 if (item.sideOffset - selectItemLeftSign.Length >= 0 && drawLeftSign && itemList.IndexOf(item) == selectedElemIndex) { leftSign = selectItemLeftSign; rightSign = selectItemRightSign; }
-                if (KTZEngineAplication.standartWindowWidth - item.sideOffset - item.variants[selectedElemIndex].text.Length - selectItemRightSign.Length >= 0 && drawRightSign && itemList.IndexOf(item) == selectedElemIndex) { rightSign = selectItemRightSign; }
+                if (KTZEngineAplication.standartWindowWidth - item.sideOffset - item.variants[item.selectedIndex].text.Length - selectItemRightSign.Length >= 0 && drawRightSign && itemList.IndexOf(item) == selectedElemIndex) { rightSign = selectItemRightSign; }
 
                 cursorPos.y += item.topOffset + 1;
-                cursorPos.x = item.sideOffset - rightSign.Length;
-                Console.SetCursorPosition(cursorPos.x, cursorPos.y);
+                cursorPos.x = item.sideOffset;
 
+                Console.SetCursorPosition(0, cursorPos.y);
+                Console.Write(new string(' ', KTZEngineAplication.windowWidth - 1));
+                Console.SetCursorPosition(cursorPos.x, cursorPos.y);
                 Console.WriteLine(item.title);
 
                 cursorPos.y += item.selectorTopOffset + 1;
                 cursorPos.x = item.sideOffset + item.selectorSideOffset - rightSign.Length;
+                Console.SetCursorPosition(0, cursorPos.y);
+                Console.Write(new string(' ', KTZEngineAplication.windowWidth - 1));
                 Console.SetCursorPosition(cursorPos.x, cursorPos.y);
-
                 Console.WriteLine(leftSign + item.variants[item.selectedIndex].text + rightSign);
             }
 
@@ -559,6 +566,7 @@ namespace KTZEngine
 
         public void HeightAlignToCenter()
         {
+            itemList[0].topOffset = 0;
             int listHeight = itemList.Count;
             for (int i = 0; i < itemList.Count; i++)
             {
@@ -573,15 +581,15 @@ namespace KTZEngine
         {
             foreach (var item in itemList)
             {
-                item.sideOffset = (int)Math.Round((double)((KTZEngineAplication.windowWidth - item.variants[selectedElemIndex].text.Length) / 2));
+                item.sideOffset = (int)Math.Round((double)((KTZEngineAplication.windowWidth - item.title.Length) / 2));
             }
         }
 
         public void SelectNextElement() { selectedElemIndex++; }
         public void SelectPreviousElement() { selectedElemIndex--; }
-        public void SelectLeftItem() { itemList[selectedElemIndex].ChangeSelectIndex(-1); itemList[selectedElemIndex].variants[itemList[selectedElemIndex].selectedIndex].selectAction(); } 
-        public void SelectRightItem() { itemList[selectedElemIndex].ChangeSelectIndex(1); itemList[selectedElemIndex].variants[itemList[selectedElemIndex].selectedIndex].selectAction(); }
-        
+        public void SelectLeftItem() { itemList[selectedElemIndex].ChangeSelectIndex(-1); ActivateCurrentElement(); } 
+        public void SelectRightItem() { itemList[selectedElemIndex].ChangeSelectIndex(1); ActivateCurrentElement(); }
+        public void ActivateCurrentElement() { itemList[selectedElemIndex].variants[itemList[selectedElemIndex].selectedIndex].selectAction(); }
         //───────────────────────Methods End───────────────────────|
     }
 
@@ -622,7 +630,7 @@ namespace KTZEngine
 
         public void AlignItemToCenter()
         {
-            selectorSideOffset = (int)(title.Length / 2 - variants[selectedIndex].text.Length);
+            selectorSideOffset = (int)((title.Length - variants[selectedIndex].text.Length) / 2);
         }
     }
 
