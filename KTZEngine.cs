@@ -416,6 +416,7 @@ namespace KTZEngine
 
         public void HeightAlignToCenter()
         {
+            itemList[0].topOffset = 0;
             int listHeight = itemList.Count;
             for (int i = 0; i < itemList.Count; i++)
             {

@@ -66,8 +66,14 @@ namespace KillTheZGame
             GameData.lostCityTab = new("LostCityTab", new List<SLTItem>() { new SLTItem("Message1", GameData.aplication.gameText.GetText("YouLost"), GameData.EmptyMethod, 0) });
             GameData.captureCityTab = new("CaptureCityTab", new List<SLTItem>() { new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0), new SLTItem("Message2", GameData.aplication.gameText.GetText("YouWin"), GameData.EmptyMethod, 0) });
 
-            GameData.aplication.tabsBehavior.Add(GameData.lostCityTab.name, LoseCityTab);
-            GameData.aplication.tabsBehavior.Add(GameData.captureCityTab.name, CaptureCityTab);
+            GameData.finalWinTab = new FinalWinTab();
+            GameData.aplication.tabsBehavior.Add(GameData.finalWinTab.name, FinalWinTabBehavior);
+            GameData.moscowDecideFateTab = new DecideFateTab();
+            GameData.aplication.tabsBehavior.Add(GameData.moscowDecideFateTab.name, DecidemoscowFateTabBehavior);
+
+
+            GameData.aplication.tabsBehavior.Add(GameData.lostCityTab.name, LoseCityTabBehavior);
+            GameData.aplication.tabsBehavior.Add(GameData.captureCityTab.name, CaptureCityTabBehavior);
 
             TextUpdate();
         }
@@ -108,11 +114,23 @@ namespace KillTheZGame
         {
             GameData.settingsMenu.Update();
             GameData.settingsMenu.Draw();
-
         }
 
-        public void LoseCityTab() { GameData.lostCityTab.Update(); GameData.lostCityTab.Draw(); }
-        public void CaptureCityTab() { GameData.captureCityTab.Update(); GameData.captureCityTab.Draw(); }
+        public void LoseCityTabBehavior() { GameData.lostCityTab.Update(); GameData.lostCityTab.Draw(); }
+        public void CaptureCityTabBehavior() { GameData.captureCityTab.Update(); GameData.captureCityTab.Draw(); }
+
+
+        public void FinalWinTabBehavior()
+        {
+            GameData.finalWinTab.Update();
+            GameData.finalWinTab.Draw();
+        }
+        public void DecidemoscowFateTabBehavior()
+        {
+            GameData.moscowDecideFateTab.Update();
+            GameData.moscowDecideFateTab.Draw();
+        }
+        
 
         public void LanguagesInit()
         {
@@ -126,6 +144,9 @@ namespace KillTheZGame
                 {"Settings", new Dictionary<string, string>() { { GameData.english.name, "Settings" }, { GameData.ukraine.name, "Налаштування" }, { GameData.polish.name, "Ustawienia" } } },
                 {"Credits", new Dictionary<string, string>() { { GameData.english.name, "Credits" }, { GameData.ukraine.name, "Автори" }, { GameData.polish.name, "Autorski" } } },
                 {"Exit", new Dictionary<string, string>() { { GameData.english.name, "Exit" }, { GameData.ukraine.name, "Вихід" }, { GameData.polish.name, "Wyjście" } } },
+
+                {"FateDestroymoscow", new Dictionary<string, string>() { { GameData.english.name, "Destroy moscow [ plus 100000 to score ]" }, { GameData.ukraine.name, "Стрерти москву з лиця землі [ плюс 100000 до очок ]" }, { GameData.polish.name, "Destroy moscow [ plus 100000 to score ]" } } },
+                {"FateUkrainianizemoscow", new Dictionary<string, string>() { { GameData.english.name, "Ukrainianize moscow [ colony will multiply score by 1.3 times ]" }, { GameData.ukraine.name, "Українізувати москву [ колонія примножить очки у 1.3 рази ]" }, { GameData.polish.name, "Ukrainianize moscow [ colony will multiply score by 1.3 times ]" } } },
 
 
                 {"GameTheme", new Dictionary<string, string>() { { GameData.english.name, "Game Theme:" }, { GameData.ukraine.name, "Тема гри:" }, { GameData.polish.name, "Ustawienia" } } },
@@ -147,14 +168,19 @@ namespace KillTheZGame
                 {"YouLost", new Dictionary<string, string>() { { GameData.english.name, "You lost the city" }, { GameData.ukraine.name, "Ви втратили місто" }, { GameData.polish.name, "KillTheZ tutorial" } } },
                 {"Congratulations", new Dictionary<string, string>() { { GameData.english.name, "Congratulations" }, { GameData.ukraine.name, "Вітаємо" }, { GameData.polish.name, "KillTheZ tutorial" } } },
                 {"YouWin", new Dictionary<string, string>() { { GameData.english.name, "You have captured the city" }, { GameData.ukraine.name, "Ви захопили місто" }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                
+
+                {"YouCapturemoscow", new Dictionary<string, string>() { { GameData.english.name, "You capture moscow" }, { GameData.ukraine.name, "Ви захопили москву" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"YouFinWinWar", new Dictionary<string, string>() { { GameData.english.name, "and you finally win war" }, { GameData.ukraine.name, "і ви нарешті виграли війну" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+
+
                 {"PressEscape", new Dictionary<string, string>() { { GameData.english.name, "Press Escape to go back to menu" }, { GameData.ukraine.name, "Нажміть Escape щоб вийти в меню" }, { GameData.polish.name, "KillTheZ tutorial" } } },
                 {"PressEnter", new Dictionary<string, string>() { { GameData.english.name, "Press Enter or Space to continue game" }, { GameData.ukraine.name, "Нажміть Enter або Space(Укр.Пробіл) щоб продовжити гру" }, { GameData.polish.name, "KillTheZ tutorial" } } },
 
-                {"SettTitle", new Dictionary<string, string>() { { GameData.english.name, "KillTheZ settings" }, { GameData.ukraine.name, "KillTheZ настройки" }, { GameData.polish.name, "KillTheZ settings" } } },
+                {"PressEnterToContinue", new Dictionary<string, string>() { { GameData.english.name, "Press Enter or Space to continue" }, { GameData.ukraine.name, "Нажміть Enter або Space(Укр.Пробіл) щоб продовжити" }, { GameData.polish.name, "KillTheZ settings" } } },
 
 
                 {"TutTitle", new Dictionary<string, string>() { { GameData.english.name, "KillTheZ tutorial" }, { GameData.ukraine.name, "KillTheZ підручник" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"SettTitle", new Dictionary<string, string>() { { GameData.english.name, "KillTheZ settings" }, { GameData.ukraine.name, "KillTheZ настройки" }, { GameData.polish.name, "KillTheZ settings" } } },
 
                 {"Tut1_2", new Dictionary<string, string>() { { GameData.english.name, "<Previor Page            1                Next Page>" }, { GameData.ukraine.name, "<Минула Сторінка                 1                Наступна Сторінка>" }, { GameData.polish.name, "<Previor Page            1                Next Page>" } } },
                 {"Tut1_3", new Dictionary<string, string>() { { GameData.english.name, "────────────────── Mission ──────────────────" }, { GameData.ukraine.name, "────────────────── Місія ──────────────────" }, { GameData.polish.name, "────────────────── Mission ──────────────────" } } },
@@ -200,15 +226,14 @@ namespace KillTheZGame
                 {"Tut5_6", new Dictionary<string, string>() { { GameData.english.name, "A simple house used as a wall" }, { GameData.ukraine.name, "Простий будинок, який використовується як стіна" }, { GameData.polish.name, "Press D or Right Arrow to move left" } } },
                 {"Tut5_7", new Dictionary<string, string>() { { GameData.english.name, "City important zone" }, { GameData.ukraine.name, "Важлива міська зона" }, { GameData.polish.name, "Press A or Left Arrow to move left" } } },
                 {"Tut5_9", new Dictionary<string, string>() { { GameData.english.name, "Enemy spawns on top zone" }, { GameData.ukraine.name, "Вороги зявляються у верхній зоні" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_10", new Dictionary<string, string>() { { GameData.english.name, "If enemy reach the bottom zone" }, { GameData.ukraine.name, "Якщо ворог досягне нижньої зони," }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_11", new Dictionary<string, string>() { { GameData.english.name, "you lose the current city" }, { GameData.ukraine.name, "ви втрачаєте поточне місто" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_12", new Dictionary<string, string>() { { GameData.english.name, "Crater" }, { GameData.ukraine.name, "Кратер" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_14", new Dictionary<string, string>() { { GameData.english.name, "Consequences of the explosion of ruscists missiles" }, { GameData.ukraine.name, "Наслідки вибуху рашистських ракет" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_15", new Dictionary<string, string>() { { GameData.english.name, "Slows down enemies and your soldiers" }, { GameData.ukraine.name, "Сповільнює ворогів і ваших солдатів" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_16", new Dictionary<string, string>() { { GameData.english.name, "Hedgehog" }, { GameData.ukraine.name, "Їжачок" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_18", new Dictionary<string, string>() { { GameData.english.name, "Very useful thing" }, { GameData.ukraine.name, "Дуже корисна штука" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_19", new Dictionary<string, string>() { { GameData.english.name, "Biolaboratory" }, { GameData.ukraine.name, "Біолабораторія" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
-                {"Tut5_21", new Dictionary<string, string>() { { GameData.english.name, "A very common thing in the Ukrainian lands" }, { GameData.ukraine.name, "Дуже поширена річ в Українських краях" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_10", new Dictionary<string, string>() { { GameData.english.name, "If enemy reach the bottom zone you lose the current city" }, { GameData.ukraine.name, "Якщо ворог досягне нижньої зони, ви втрачаєте поточне місто" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_11", new Dictionary<string, string>() { { GameData.english.name, "Crater" }, { GameData.ukraine.name, "Кратер" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_13", new Dictionary<string, string>() { { GameData.english.name, "Consequences of the explosion of ruscists missiles" }, { GameData.ukraine.name, "Наслідки вибуху рашистських ракет" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_14", new Dictionary<string, string>() { { GameData.english.name, "Slows down enemies and your soldiers" }, { GameData.ukraine.name, "Сповільнює ворогів і ваших солдатів" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_15", new Dictionary<string, string>() { { GameData.english.name, "Hedgehog" }, { GameData.ukraine.name, "Їжачок" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_17", new Dictionary<string, string>() { { GameData.english.name, "Very useful thing" }, { GameData.ukraine.name, "Дуже корисна штука" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_18", new Dictionary<string, string>() { { GameData.english.name, "Biolaboratory" }, { GameData.ukraine.name, "Біолабораторія" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
+                {"Tut5_20", new Dictionary<string, string>() { { GameData.english.name, "A very common thing in the Ukrainian lands" }, { GameData.ukraine.name, "Дуже поширена річ в Українських краях" }, { GameData.polish.name, "Press W or Up Arrow to move left" } } },
 
                 {"MineCount", new Dictionary<string, string>() { { GameData.english.name, "    Mine count: " }, { GameData.ukraine.name, "Кількість мін: " }, { GameData.polish.name, "    Mine count: " } } },
                 {"BayraktarAttackCount", new Dictionary<string, string>() { { GameData.english.name, "    Bayraktar attack count: " }, { GameData.ukraine.name, "    Доступно атак Байрактарів: " }, { GameData.polish.name, "    Bayraktar attack count: " } } },
@@ -309,26 +334,47 @@ namespace KillTheZGame
                     new SLTItem("5_4", GameData.aplication.gameText.GetText("Tut5_4"), GameData.EmptyMethod, 1),
                     new SLTItem("5_5", MyGameShell.wall.ico.ToString(), GameData.EmptyMethod, 1),
                     new SLTItem("5_6", GameData.aplication.gameText.GetText("Tut5_6"), GameData.EmptyMethod, 1),
-                    new SLTItem("5_7", GameData.aplication.gameText.GetText("Tut5_7"), GameData.EmptyMethod, 4),
+                    new SLTItem("5_7", GameData.aplication.gameText.GetText("Tut5_7"), GameData.EmptyMethod, 2),
                     new SLTItem("5_8", MyGameShell.zoneGround.ico.ToString(), GameData.EmptyMethod, 1),
                     new SLTItem("5_9", GameData.aplication.gameText.GetText("Tut5_9"), GameData.EmptyMethod, 1),
                     new SLTItem("5_10", GameData.aplication.gameText.GetText("Tut5_10"), GameData.EmptyMethod, 1),
-                    new SLTItem("5_11", GameData.aplication.gameText.GetText("Tut5_11"), GameData.EmptyMethod, 1),
-                    new SLTItem("5_12", GameData.aplication.gameText.GetText("Tut5_12"), GameData.EmptyMethod, 4),
-                    new SLTItem("5_13", MyGameShell.slowDownGround.ico.ToString(), GameData.EmptyMethod, 1),
+                    new SLTItem("5_11", GameData.aplication.gameText.GetText("Tut5_11"), GameData.EmptyMethod, 2),
+                    new SLTItem("5_12", MyGameShell.slowDownGround.ico.ToString(), GameData.EmptyMethod, 1),
+                    new SLTItem("5_13", GameData.aplication.gameText.GetText("Tut5_13"), GameData.EmptyMethod, 1),
                     new SLTItem("5_14", GameData.aplication.gameText.GetText("Tut5_14"), GameData.EmptyMethod, 1),
-                    new SLTItem("5_15", GameData.aplication.gameText.GetText("Tut5_15"), GameData.EmptyMethod, 1),
-                    new SLTItem("5_16", GameData.aplication.gameText.GetText("Tut5_16"), GameData.EmptyMethod, 4),
-                    new SLTItem("5_17", PricklyHedgehogs.basicIcon.ToString(), GameData.EmptyMethod, 1),
-                    new SLTItem("5_18", GameData.aplication.gameText.GetText("Tut5_18"), GameData.EmptyMethod, 1),
-                    new SLTItem("5_19", GameData.aplication.gameText.GetText("Tut5_19"), GameData.EmptyMethod, 4),
-                    new SLTItem("5_20", "⌂", GameData.EmptyMethod, 1),
-                    new SLTItem("5_21", GameData.aplication.gameText.GetText("Tut5_21"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_15", GameData.aplication.gameText.GetText("Tut5_15"), GameData.EmptyMethod, 2),
+                    new SLTItem("5_16", PricklyHedgehogs.basicIcon.ToString(), GameData.EmptyMethod, 1),
+                    new SLTItem("5_17", GameData.aplication.gameText.GetText("Tut5_17"), GameData.EmptyMethod, 1),
+                    new SLTItem("5_18", GameData.aplication.gameText.GetText("Tut5_18"), GameData.EmptyMethod, 2),
+                    new SLTItem("5_19", "⌂", GameData.EmptyMethod, 1),
+                    new SLTItem("5_20", GameData.aplication.gameText.GetText("Tut5_20"), GameData.EmptyMethod, 1),
                 },
             };
 
             GameData.mainMenu.TextUpdate();
             GameData.settingsMenu.TextUpdate();
+
+            GameData.finalWinTab.TextUpdate();
+            GameData.moscowDecideFateTab.TextUpdate();
+
+            GameData.captureCityTab.itemList = new List<SLTItem>()
+            {
+                new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0),
+                new SLTItem("Message2", GameData.aplication.gameText.GetText("YouWin"), GameData.EmptyMethod, 0),
+                new SLTItem("GoToMenu", GameData.aplication.gameText.GetText("PressEscape"), GameData.EmptyMethod, 3),
+                new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("PressEnter"), GameData.EmptyMethod, 1)
+            };
+            GameData.captureCityTab.AlignToCenter();
+            GameData.captureCityTab.HeightAlignToCenter();
+            GameData.lostCityTab.itemList = new List<SLTItem>()
+            {
+                new SLTItem("Message1", GameData.aplication.gameText.GetText("YouLost"), GameData.EmptyMethod, 0),
+                new SLTItem("GoToMenu", GameData.aplication.gameText.GetText("PressEscape"), GameData.EmptyMethod, 3),
+                new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("PressEnter"), GameData.EmptyMethod, 1)
+            };
+            GameData.lostCityTab.AlignToCenter();
+            GameData.lostCityTab.HeightAlignToCenter();
+
         }
     }
 
@@ -430,8 +476,8 @@ namespace KillTheZGame
                         new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeDark"), SetThemeDark),
                         new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeLight"), SetThemeLight),
                         new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeDoom"), SetThemeDoom),
-                        new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeHell"), SetThemeHell),
                         new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeHecker"), SetThemeHecker),
+                        new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeHell"), SetThemeHell),
                         new SSLTItemItem(GameData.aplication.gameText.GetText("ThemePatriotic"), SetThemePatriotic),
                         new SSLTItemItem(GameData.aplication.gameText.GetText("MyLittlePony"), SetThemePony)
                     }, selectorOffset_:1
@@ -504,8 +550,8 @@ namespace KillTheZGame
         public void SetThemeDark() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Gray; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
         public void SetThemeLight() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.White; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Black; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
         public void SetThemeDoom() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkRed; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
-        public void SetThemeHell() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkRed; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Red; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
         public void SetThemeHecker() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Green; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
+        public void SetThemeHell() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkRed; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Red; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
         public void SetThemePatriotic() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkBlue; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkYellow; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
         public void SetThemePony() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Magenta; GameData.aplication.ConsoleForegroundColor = ConsoleColor.White; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
 
@@ -514,6 +560,29 @@ namespace KillTheZGame
         public void PressKeyEscape() { GoToMainMenu(); }
 
         public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
+    }
+
+    public class DecideFateTab : SelectListTab
+    {
+
+        public DecideFateTab() : base(GameData.aplication, new List<SLTItem>(), "moscowDecideFateTab", 20)
+        {
+            itemList = new List<SLTItem>() { new SLTItem("DestroyFate", "Destroy moscow", Destroymoscow), new SLTItem("Ukrainianizemoscow", "UkrainianizeMoscow", Ukrainianizemoscow, 3) };
+            keyManager.keyPressActions.Add(ConsoleKey.Spacebar, SelectItem);
+            TextUpdate();
+        }
+
+        public void TextUpdate()
+        {
+            itemList[0].text = GameData.aplication.gameText.GetText("FateDestroymoscow");
+            itemList[1].text = GameData.aplication.gameText.GetText("FateUkrainianizemoscow");
+
+            AlignToCenter();
+            HeightAlignToCenter();
+        }
+
+        public void Destroymoscow() { GameData.score += 100000; Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
+        public void Ukrainianizemoscow() { GameData.score = (int)(GameData.score * 1.3);Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
     }
 
     public class MyGameShell
@@ -564,6 +633,9 @@ namespace KillTheZGame
         public bool isSirenDraw = false;
         public int sirenChangeTickCount = 10;
 
+        public bool isWin = false;
+        public bool isLose = false;
+
         public MyGameShell(ref MyGame game_, Action TabBehavior_, Vector2 gameStartPos_, Vector2 gameSize, bool isInitable = true) 
         { 
             origGame = game_;
@@ -601,6 +673,9 @@ namespace KillTheZGame
 
             aplication.gameTabs.Add(game.name, game);
             aplication.tabsBehavior.Add(game.name, TabBehavior);
+
+            isWin = false;
+            isLose = false;
 
             game.gameGrid.layers.Clear();
             game.gameObjects.Clear();
@@ -903,8 +978,8 @@ namespace KillTheZGame
         public void PressKeyK() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate(); }
         public void PressKeyL() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextUpdate(); }
 
-        public void PressKeyX() { CaptureCity(); }
-        public void PressKeyZ() { LostCity(); }
+        public void PressKeyX() { isWin = true; }
+        public void PressKeyZ() { isLose = true; }
 
         public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
         public void GenerateEnemy() { game.AddExistGameObject(new ShitrussiaTankZ(this, gameObjectsLayer, new Vector2(KTZEngineAplication.random.Next(1, gameFieldSize.x - 1), gameFieldSize.y - 2))); levelEnemyCount = (levelEnemyCount <= 0)? 0 : levelEnemyCount - 1; }
@@ -921,24 +996,17 @@ namespace KillTheZGame
         }
         public void GameResultCheck()
         {
-            if (GameData.enemyPositionList.FindAll(o => o.y < gameObjectsLayer.layerStartPosition + KTZMapsGeneration.zoneHeight - 2).Count > 0 && GameData.currentCityIndex != 0) { LostCity(); GameData.isDanger = false; Console.Clear(); }
-            else if (enemyLeftToKill <= 0) { CaptureCity(); }
+            if ((GameData.enemyPositionList.FindAll(o => o.y < gameObjectsLayer.layerStartPosition + KTZMapsGeneration.zoneHeight - 2).Count > 0 && GameData.currentCityIndex != 0) || isLose) { LostCity(); GameData.isDanger = false; Console.Clear(); }
+            else if (enemyLeftToKill <= 0 || isWin)
+            {
+                if (GameData.currentCityIndex == GameData.cityNames.Count - 2) { Capturemoscow(); }
+                else { CaptureCity(); }
+            }
         }
 
         public void LostCity()
         {
             GameData.currentCityIndex = (GameData.currentCityIndex > 0) ? GameData.currentCityIndex - 1 : GameData.currentCityIndex;
-
-            Console.Clear();
-
-            GameData.lostCityTab.itemList = new List<SLTItem>()
-            {
-                new SLTItem("Message1", GameData.aplication.gameText.GetText("YouLost"), GameData.EmptyMethod, 0),
-                new SLTItem("GoToMenu", GameData.aplication.gameText.GetText("PressEscape"), GameData.EmptyMethod, 3),
-                new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("PressEnter"), GameData.EmptyMethod, 1)
-            };
-            GameData.lostCityTab.AlignToCenter();
-            GameData.lostCityTab.HeightAlignToCenter();
 
             aplication.currentGameTabName = GameData.lostCityTab.name;
 
@@ -951,18 +1019,6 @@ namespace KillTheZGame
         {
             GameData.currentCityIndex = (GameData.currentCityIndex < GameData.cityNames.Count - 2) ? GameData.currentCityIndex + 1 : GameData.currentCityIndex;
 
-            Console.Clear();
-
-            GameData.captureCityTab.itemList = new List<SLTItem>()
-            {
-                new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0), 
-                new SLTItem("Message2", GameData.aplication.gameText.GetText("YouWin"), GameData.EmptyMethod, 0),
-                new SLTItem("GoToMenu", GameData.aplication.gameText.GetText("PressEscape"), GameData.EmptyMethod, 3),
-                new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("PressEnter"), GameData.EmptyMethod, 1)
-            };
-            GameData.captureCityTab.AlignToCenter();
-            GameData.captureCityTab.HeightAlignToCenter();
-
             aplication.currentGameTabName = GameData.captureCityTab.name;
 
             GameData.score += 1000 * (GameData.currentCityIndex + 1);
@@ -970,9 +1026,20 @@ namespace KillTheZGame
             EndGame();
         }
 
+        public void Capturemoscow()
+        {
+            aplication.currentGameTabName = GameData.finalWinTab.name;
+
+            GameData.virtualTime = GameData.virtualTime.AddMonths(1);
+            EndGame();
+        }
+
         public void EndGame()
         {
+            Console.Clear();
             game.gameObjects.Clear();
+            isWin = false;
+            isLose = false;
         }
     }
 
@@ -1070,8 +1137,13 @@ namespace KillTheZGame
             List<Vector2> blockedDir = new ();
             for (int dirI = 0; dirI < Vector2.eightDirections.Count; dirI++)
             {
-                for (int checkIdI = 0; checkIdI < collisionCheckIds.Count && !blockedDir.Contains(Vector2.eightDirections[dirI]); checkIdI++) { if (GameData.wallPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.collisionIdPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.pricklyHedgehogsPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.minePositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || GameData.enemyPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]))
-                    { blockedDir.Add(Vector2.eightDirections[dirI]); continue; } }
+                
+                if (GameData.wallPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || 
+                    GameData.collisionIdPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) ||
+                    GameData.pricklyHedgehogsPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || 
+                    GameData.minePositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || 
+                    GameData.enemyPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]))
+                { blockedDir.Add(Vector2.eightDirections[dirI]); continue; } 
             }
             
             return blockedDir;
@@ -1556,7 +1628,7 @@ namespace KillTheZGame
         public int moveIndex = 0;
         public int moveTick = 0;
         public static int sameMoveCount = 6;
-        public static int NickolaStopTicks = 30;
+        public static int NickolaStopTicks = 20;
         public static int attackMaxLength = 6;
 
         public Vector2 targetPos;
@@ -1605,12 +1677,8 @@ namespace KillTheZGame
                 moveTick++;
             }
 
-            BulletEat();
-
-            if (disposableVelocity != Vector2.zero || isAttack)
-            {
-                statBlockDir = StaticObjectsCollisionDetect();
-            }
+            statBlockDir = StaticObjectsCollisionDetect(); 
+            
             moveIndex = (disposableVelocity != Vector2.zero && moveIndex <= 0) ? NickolaStopTicks : moveIndex - 1;
 
             blockedDirections = statBlockDir;
@@ -1619,16 +1687,27 @@ namespace KillTheZGame
             IconAnimation();
         }
 
+        public override void AfterUpdate()
+        {
+            BulletEat();
+        }
+
         public List<Vector2> StaticObjectsCollisionDetect()
         {
             List<Vector2> blockedDir = new();
 
-
             for (int dirI = 0; dirI < Vector2.fourDirections.Count; dirI++)
             {
-                if (GameData.allWallPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || GameData.collisionIdPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || GameData.minePositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || GameData.pricklyHedgehogsPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || globalPosition + dirI == GameData.player.globalPosition) 
-                { blockedDir.Add(Vector2.fourDirections[dirI]); break; }             
-            } 
+
+                if (GameData.wallPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) ||
+                    GameData.collisionIdPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) ||
+                    GameData.pricklyHedgehogsPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) ||
+                    GameData.minePositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) ||
+                    globalPosition + Vector2.fourDirections[dirI] == GameData.player.globalPosition)
+                { blockedDir.Add(Vector2.fourDirections[dirI]); continue; }
+            }
+
+            if (GameData.allWallPositionList.Contains(globalPosition)) { globalPosition = Vector2.upRight; }
              
 
             return blockedDir;
@@ -1671,10 +1750,17 @@ namespace KillTheZGame
             }
         }
 
-        public void BulletEat ()
+        public void BulletEat()
         {
-            GameObject bulletCollision = myGame.game.gameObjectsList.Find(o => (o.id.Contains(GameData.gameIds["bullet"])) && o.globalPosition == globalPosition);
-            if (bulletCollision != null) { disposableVelocity = (disposableVelocity.Direction.x != bulletCollision.finalVelocity.Direction.x ^ disposableVelocity.Direction.y != bulletCollision.finalVelocity.Direction.y) ? disposableVelocity + bulletCollision.finalVelocity : disposableVelocity; myGame.game.DeleteGameObject(bulletCollision.name); }
+            if (GameData.bulletPositionList.Contains(globalPosition))
+            {
+                GameObject bulletCollision = myGame.game.gameObjectsList.Find(o => (o.id.Contains(GameData.gameIds["bullet"])) && o.globalPosition == globalPosition);
+                if (bulletCollision != null)
+                {
+                    disposableVelocity = (disposableVelocity.Direction.x != bulletCollision.finalVelocity.Direction.x ^ disposableVelocity.Direction.y != bulletCollision.finalVelocity.Direction.y) ? disposableVelocity + bulletCollision.finalVelocity : disposableVelocity;
+                    myGame.game.DeleteGameObject(bulletCollision.name);
+                }
+            }
         }
     }
 
@@ -1709,6 +1795,40 @@ namespace KillTheZGame
 
         public void GoToMenu() { Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
         public void ContinueGame() { GameData.mainMenu.StartGame(); }
+    }
+
+    public class FinalWinTab : EndGameTab
+    {
+        public FinalWinTab() : base("FinalWinTab", new List<SLTItem>() )
+        {
+            keyManager.keyPressActions = new Dictionary<ConsoleKey, Action>() { { ConsoleKey.Enter, PressEnterOrSpace }, { ConsoleKey.Spacebar, PressEnterOrSpace } };
+            TextUpdate();
+        }
+
+        public void Open()
+        {
+            TextUpdate();
+        }
+
+        public void TextUpdate()
+        {
+            itemList = new List<SLTItem>() 
+            { 
+                new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0), 
+                new SLTItem("Message2", GameData.aplication.gameText.GetText("YouCapturemoscow"), GameData.EmptyMethod, 0), 
+                new SLTItem("Message3", GameData.aplication.gameText.GetText("YouFinWinWar"), GameData.EmptyMethod, 0), 
+                new SLTItem("Message4", GameData.aplication.gameText.GetText("PressEnterToContinue"), GameData.EmptyMethod, 0) 
+            };
+
+            AlignToCenter();
+            HeightAlignToCenter();
+        }
+
+        public void PressEnterOrSpace()
+        {
+            Console.Clear();
+            GameData.aplication.currentGameTabName = GameData.moscowDecideFateTab.name;
+        }
     }
 
     public class UkraineSoldier : GameObject
@@ -1835,7 +1955,6 @@ namespace KillTheZGame
         public override void AfterUpdate()
         {
             BulletEat();
-            // GameData.myGameShell.game.PostProcessing(localPosition, '*');
         }
 
         public List<Vector2> StaticObjectsCollisionDetect()
@@ -2003,7 +2122,8 @@ namespace KillTheZGame
 
         public static EndGameTab lostCityTab;
         public static EndGameTab captureCityTab;
-        public static EndGameTab finalWinTab;
+        public static FinalWinTab finalWinTab;
+        public static DecideFateTab moscowDecideFateTab;
 
         // Game
         public static MyGameShell myGameShell;
