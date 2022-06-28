@@ -70,7 +70,8 @@ namespace KillTheZGame
             GameData.aplication.tabsBehavior.Add(GameData.finalWinTab.name, FinalWinTabBehavior);
             GameData.moscowDecideFateTab = new DecideFateTab();
             GameData.aplication.tabsBehavior.Add(GameData.moscowDecideFateTab.name, DecidemoscowFateTabBehavior);
-
+            GameData.warStartTab = new WarStartTab();
+            GameData.aplication.tabsBehavior.Add(GameData.warStartTab.name, WarStartTabTabBehavior);
 
             GameData.aplication.tabsBehavior.Add(GameData.lostCityTab.name, LoseCityTabBehavior);
             GameData.aplication.tabsBehavior.Add(GameData.captureCityTab.name, CaptureCityTabBehavior);
@@ -130,7 +131,11 @@ namespace KillTheZGame
             GameData.moscowDecideFateTab.Update();
             GameData.moscowDecideFateTab.Draw();
         }
-        
+        public void WarStartTabTabBehavior()
+        {
+            GameData.warStartTab.Update();
+            GameData.warStartTab.Draw();
+        }
 
         public void LanguagesInit()
         {
@@ -177,21 +182,22 @@ namespace KillTheZGame
                 {"YouCapturemoscow", new Dictionary<string, string>() { { GameData.english.name, "Today you capture moscow" }, { GameData.ukraine.name, "Сьогодні ви захопили москву" }, { GameData.polish.name, "KillTheZ tutorial" } } },
                 {"YouFinWinWar", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "і ви нарешті виграли війну, яка почалася " }, { GameData.polish.name, "KillTheZ tutorial" } } },
 
-                {"StartWar1", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "І усі жили добре, до " }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar2", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "Цього дня група релігійно-політичних фанатиків на чолі з вождем," }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar3", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "які недавно почали збиратися зграями в північно-східній частині Азії," }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar4", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "вирішили, що їм не подобаються сусіди, кращі за них" }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar5", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "і почали почастинно загарбувати території нашої держави." }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar6", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "Цього разу, українці знали чиї це нащадки і довго не чекали щоб дати відсіч." }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar7", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "Оскільки фанатиків було дуже багато і їм було байдуже на свої життя," }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar7", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "люди памятаючі історію згадали, що схожа ситуація вже відбувалася" }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar7", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "і за кілька днів знайшли на складах вас - штучний інтелект," }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar7", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "який був розроблений давніше професійними українськими програмістами" }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar7", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "і запущений у новітню бойову машину" }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar7", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "спеціально для винищення великих груп орків." }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar7", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "Тепер ваша нова задача - це захопити найважливіше місце їхнього скупчення," }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar7", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "а саме багатокілометровий відкритий храм із фанатично пдібраною назвою - москва" }, { GameData.polish.name, "KillTheZ tutorial" } } },
-                {"StartWar7", new Dictionary<string, string>() { { GameData.english.name, "and you finally won the war that started in " }, { GameData.ukraine.name, "Удачі!" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar1", new Dictionary<string, string>() { { GameData.english.name, "All the destroyed cities were rebuilt and the people returned home" }, { GameData.ukraine.name, "Всі зруйновані міста були відбудовані, а люди повернуті додому" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar2", new Dictionary<string, string>() { { GameData.english.name, "And everyone lived well, until " }, { GameData.ukraine.name, "І усі жили добре, до " }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar3", new Dictionary<string, string>() { { GameData.english.name, "On this day, a group of religious and political fanatics led by the leader," }, { GameData.ukraine.name, "Цього дня група релігійно-політичних фанатиків на чолі з вождем," }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar4", new Dictionary<string, string>() { { GameData.english.name, "which have recently begun to gather in flocks in northeastern Asia," }, { GameData.ukraine.name, "які недавно почали збиратися зграями в північно-східній частині Азії," }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar5", new Dictionary<string, string>() { { GameData.english.name, "decided that they did not like neighbors better than them" }, { GameData.ukraine.name, "вирішили, що їм не подобаються сусіди, кращі за них" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar6", new Dictionary<string, string>() { { GameData.english.name, "and began to partially seize the territory of our state." }, { GameData.ukraine.name, "і почали почастинно загарбувати території нашої держави." }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar7", new Dictionary<string, string>() { { GameData.english.name, "This time, the Ukrainians knew whose descendants they were and did not wait long to fight back." }, { GameData.ukraine.name, "Цього разу, українці знали чиї це нащадки і довго не чекали щоб дати відсіч." }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar8", new Dictionary<string, string>() { { GameData.english.name, "Because there were so many fanatics and they didn't care about their lives," }, { GameData.ukraine.name, "Оскільки фанатиків було дуже багато і їм було байдуже на свої життя," }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar9", new Dictionary<string, string>() { { GameData.english.name, "people who remember the history that a similar situation had already occurred" }, { GameData.ukraine.name, "люди памятаючі історію згадали, що схожа ситуація вже відбувалася" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar10", new Dictionary<string, string>() { { GameData.english.name, "and in a few days they found you in warehouses - artificial intelligence," }, { GameData.ukraine.name, "і за кілька днів знайшли на складах вас - штучний інтелект," }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar11", new Dictionary<string, string>() { { GameData.english.name, "which was developed earlier by professional Ukrainian programmers" }, { GameData.ukraine.name, "який був розроблений давніше професійними українськими програмістами" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar12", new Dictionary<string, string>() { { GameData.english.name, "and launched into the latest combat vehicle" }, { GameData.ukraine.name, "і запущений у новітню бойову машину" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar13", new Dictionary<string, string>() { { GameData.english.name, "specifically for the extermination of large groups of orcs." }, { GameData.ukraine.name, "спеціально для винищення великих груп орків." }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar14", new Dictionary<string, string>() { { GameData.english.name, "Now your new task is to capture the most important place of their accumulation," }, { GameData.ukraine.name, "Тепер ваша нова задача - це захопити найважливіше місце їхнього скупчення," }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar15", new Dictionary<string, string>() { { GameData.english.name, "namely, a multi-kilometer open temple with a fanatically chosen name - moscow" }, { GameData.ukraine.name, "а саме багатокілометровий відкритий храм із фанатично підібраною назвою - москва" }, { GameData.polish.name, "KillTheZ tutorial" } } },
+                {"StartWar16", new Dictionary<string, string>() { { GameData.english.name, "Good luck!" }, { GameData.ukraine.name, "Удачі!" }, { GameData.polish.name, "KillTheZ tutorial" } } },
 
 
 
@@ -479,7 +485,7 @@ namespace KillTheZGame
         public void PressKeyRightOrD() { GoToRightPage(); }
         public void PressKeyLeftOrA() { GoToLeftPage(); }
 
-        public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
+        public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
         public void GoToRightPage() { currentTutorialPage++; currentTutorialPage = KTZMath.LoopNumberInInterval(currentTutorialPage, 0, pages.Count - 1); Console.Clear(); UpdateTutMenu(); }
         public void GoToLeftPage() { currentTutorialPage--; currentTutorialPage = KTZMath.LoopNumberInInterval(currentTutorialPage, 0, pages.Count - 1); Console.Clear(); UpdateTutMenu(); }
     }
@@ -581,7 +587,7 @@ namespace KillTheZGame
 
         public void PressKeyEscape() { GoToMainMenu(); }
 
-        public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
+        public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
     }
 
     public class DecideFateTab : SelectListTab
@@ -611,8 +617,22 @@ namespace KillTheZGame
             SettingsMenu.DrawAtCenterWithClear(GameData.aplication.gameText.GetText("NowDecideFatemoscow"), itemList[0].topOffset - 5);
         }
 
-        public void Destroymoscow() { GameData.score += 100000; Console.Clear(); aplication.currentGameTabName = "MainMenu"; RestartWar(); }
-        public void Ukrainianizemoscow() { GameData.score = (int)(GameData.score * 1.3);Console.Clear(); aplication.currentGameTabName = "MainMenu"; RestartWar(); }
+        public void Destroymoscow() 
+        { 
+            GameData.score += 100000; 
+            Console.Clear();
+            RestartWar();
+            aplication.currentGameTabName = GameData.warStartTab.name; 
+            GameData.warStartTab.TextUpdate();
+        }
+        public void Ukrainianizemoscow() 
+        { 
+            GameData.score = (int)(GameData.score * 1.3);
+            Console.Clear();
+            RestartWar();
+            aplication.currentGameTabName = GameData.warStartTab.name; 
+            GameData.warStartTab.TextUpdate();
+        }
 
         public void RestartWar()
         {
@@ -1022,7 +1042,7 @@ namespace KillTheZGame
         public void PressKeyX() { isWin = true; }
         public void PressKeyZ() { isLose = true; }
 
-        public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
+        public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
         public void GenerateEnemy() { game.AddExistGameObject(new ShitrussiaTankZ(this, gameObjectsLayer, new Vector2(KTZEngineAplication.random.Next(1, gameFieldSize.x - 1), gameFieldSize.y - 2))); levelEnemyCount = (levelEnemyCount <= 0)? 0 : levelEnemyCount - 1; }
 
         public void GenerateObjectAtGamePlaceRandom(int[,] virtualMap, GameObject obj)
@@ -1833,7 +1853,7 @@ namespace KillTheZGame
             HeightAlignToCenter();
         }
 
-        public void GoToMenu() { Console.Clear(); aplication.currentGameTabName = "MainMenu"; }
+        public void GoToMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
         public void ContinueGame() { GameData.mainMenu.StartGame(); }
     }
 
@@ -1870,22 +1890,32 @@ namespace KillTheZGame
 
     public class WarStartTab : EndGameTab
     {
-        public WarStartTab() : base("FinalWinTab", new List<SLTItem>())
+        public WarStartTab() : base("warStartTab", new List<SLTItem>())
         {
             keyManager.keyPressActions = new Dictionary<ConsoleKey, Action>() { { ConsoleKey.Enter, PressEnterOrSpace }, { ConsoleKey.Escape, PressEnterOrSpace }, { ConsoleKey.Spacebar, PressEnterOrSpace } };
             TextUpdate();
         }
 
-
         public void TextUpdate()
         {
             itemList = new List<SLTItem>()
             {
-                new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0),
-                new SLTItem("Message2", GameData.aplication.gameText.GetText("Today") + GameData.virtualTime.ToShortDateString() + GameData.aplication.gameText.GetText("IsHistoricDay"), GameData.EmptyMethod, 2),
-                new SLTItem("Message3", GameData.aplication.gameText.GetText("YouCapturemoscow"), GameData.EmptyMethod, 2),
-                new SLTItem("Message4", GameData.aplication.gameText.GetText("YouFinWinWar") + GameData.warStartVirtualTime.ToShortDateString(), GameData.EmptyMethod, 2),
-                new SLTItem("Message5", GameData.aplication.gameText.GetText("PressEnterToContinue"), GameData.EmptyMethod, 7)
+                new SLTItem("Message1", GameData.aplication.gameText.GetText("StartWar1"), GameData.EmptyMethod, 0),
+                new SLTItem("Message2", GameData.aplication.gameText.GetText("StartWar2") + GameData.warStartVirtualTime.ToShortDateString(), GameData.EmptyMethod, 0),
+                new SLTItem("Message3", GameData.aplication.gameText.GetText("StartWar3"), GameData.EmptyMethod, 3),
+                new SLTItem("Message4", GameData.aplication.gameText.GetText("StartWar4"), GameData.EmptyMethod, 0),
+                new SLTItem("Message5", GameData.aplication.gameText.GetText("StartWar5"), GameData.EmptyMethod, 0),
+                new SLTItem("Message6", GameData.aplication.gameText.GetText("StartWar6"), GameData.EmptyMethod, 0),
+                new SLTItem("Message7", GameData.aplication.gameText.GetText("StartWar7"), GameData.EmptyMethod, 2),
+                new SLTItem("Message8", GameData.aplication.gameText.GetText("StartWar8"), GameData.EmptyMethod, 0),
+                new SLTItem("Message9", GameData.aplication.gameText.GetText("StartWar9"), GameData.EmptyMethod, 0),
+                new SLTItem("Message10", GameData.aplication.gameText.GetText("StartWar10"), GameData.EmptyMethod, 0),
+                new SLTItem("Message11", GameData.aplication.gameText.GetText("StartWar11"), GameData.EmptyMethod, 0),
+                new SLTItem("Message12", GameData.aplication.gameText.GetText("StartWar12"), GameData.EmptyMethod, 0),
+                new SLTItem("Message13", GameData.aplication.gameText.GetText("StartWar13"), GameData.EmptyMethod, 0),
+                new SLTItem("Message14", GameData.aplication.gameText.GetText("StartWar14"), GameData.EmptyMethod, 2),
+                new SLTItem("Message15", GameData.aplication.gameText.GetText("StartWar15"), GameData.EmptyMethod, 0),
+                new SLTItem("Message16", GameData.aplication.gameText.GetText("StartWar16"), GameData.EmptyMethod, 3),
             };
 
             AlignToCenter();
@@ -1895,7 +1925,7 @@ namespace KillTheZGame
         public void PressEnterOrSpace()
         {
             Console.Clear();
-            GameData.aplication.currentGameTabName = GameData.moscowDecideFateTab.name;
+            GameData.aplication.currentGameTabName = GameData.mainMenu.menuTab.name;
         }
     }
 
@@ -2194,6 +2224,7 @@ namespace KillTheZGame
         public static EndGameTab captureCityTab;
         public static FinalWinTab finalWinTab;
         public static DecideFateTab moscowDecideFateTab;
+        public static WarStartTab warStartTab;
 
         // Game
         public static MyGameShell myGameShell;
