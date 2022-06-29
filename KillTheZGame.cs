@@ -59,9 +59,11 @@ namespace KillTheZGame
             GameData.mainMenu = new MainMenu();
             GameData.tutorialMenu = new TutorialMenu();
             GameData.settingsMenu = new SettingsMenu();
+            GameData.creditsTab = new CreditsTab();
 
             GameData.aplication.tabsBehavior.Add(GameData.mainMenu.menuTab.name, MainMenuBehavior);
             GameData.aplication.tabsBehavior.Add(GameData.settingsMenu.name, SettingsMenuBehavior);
+            GameData.aplication.tabsBehavior.Add(GameData.creditsTab.name, CreditsTabBehavior);
 
             GameData.lostCityTab = new("LostCityTab", new List<SLTItem>() { new SLTItem("Message1", GameData.aplication.gameText.GetText("YouLost"), GameData.EmptyMethod, 0) });
             GameData.captureCityTab = new("CaptureCityTab", new List<SLTItem>() { new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0), new SLTItem("Message2", GameData.aplication.gameText.GetText("YouWin"), GameData.EmptyMethod, 0) });
@@ -115,6 +117,11 @@ namespace KillTheZGame
         {
             GameData.settingsMenu.Update();
             GameData.settingsMenu.Draw();
+        }
+        public void CreditsTabBehavior()
+        {
+            GameData.creditsTab.Update();
+            GameData.creditsTab.Draw();
         }
 
         public void LoseCityTabBehavior() { GameData.lostCityTab.Update(); GameData.lostCityTab.Draw(); }
@@ -381,6 +388,7 @@ namespace KillTheZGame
 
             GameData.mainMenu.TextUpdate();
             GameData.settingsMenu.TextUpdate();
+            GameData.creditsTab.TextUpdate();
 
             GameData.finalWinTab.TextUpdate();
             GameData.moscowDecideFateTab.TextUpdate();
@@ -438,7 +446,7 @@ namespace KillTheZGame
         public void ContinueGame() { RunGame(); }
         public void Tutorial() { OpenTutorial(); }
         public void Settings() { OpenSettings(); }
-        public void Credits() { }
+        public void Credits() { OpenCredits(); }
         public void Exit() { GameData.aplication.isInAplication = false; }
 
         public void InitGame() { GameData.myGameShell.Init(); }
@@ -446,6 +454,7 @@ namespace KillTheZGame
         public void RunGame() { GameData.aplication.currentGameTabName = GameData.myGameShell.game.name; }
         public void OpenTutorial() { GameData.aplication.currentGameTabName = GameData.tutorialMenu.name; GameData.tutorialMenu.Open(); }
         public void OpenSettings() { GameData.aplication.currentGameTabName = GameData.settingsMenu.name; GameData.settingsMenu.Open(); }
+        public void OpenCredits() { GameData.aplication.currentGameTabName = GameData.creditsTab.name; Console.Clear(); }
     }
 
     public class TutorialMenu : SelectListTab
@@ -590,6 +599,34 @@ namespace KillTheZGame
         public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
     }
 
+    public class CreditsTab : JustTextTab
+    {
+
+        public CreditsTab() : base("CreditsTab", new List<SLTItem>())
+        {
+            keyManager.keyPressActions = new Dictionary<ConsoleKey, Action>() { { ConsoleKey.Escape, GoToMenu } };
+            TextUpdate();
+        }
+
+        public void TextUpdate()
+        {
+            itemList = new List<SLTItem>()
+            {
+                new SLTItem("Message1", GameData.aplication.gameText.GetText("StartWar1"), GameData.EmptyMethod, 0),
+                new SLTItem("Message2", "Lol is here", GameData.EmptyMethod, 3),
+            };
+
+            AlignToCenter();
+            HeightAlignToCenter();
+        }
+
+        public void GoToMenu()
+        {
+            Console.Clear();
+            GameData.aplication.currentGameTabName = GameData.mainMenu.menuTab.name;
+        }
+    }
+
     public class DecideFateTab : SelectListTab
     {
 
@@ -643,8 +680,7 @@ namespace KillTheZGame
 
         }
     }
-
-    
+        
 
     public class MyGameShell
     {
@@ -1835,10 +1871,10 @@ namespace KillTheZGame
         public PricklyHedgehogs(Vector2 pos, GameLayer layer) : base(pos, layer, basicIcon, new List<string>() { GameData.gameIds["pricklyHedgehogs"] }) { }
     }
 
-    public class EndGameTab : SelectListTab
+    public class JustTextTab : SelectListTab
     {
 
-        public EndGameTab(string tabName, List<SLTItem> outputText) : base(GameData.aplication, outputText, tabName, 1) 
+        public JustTextTab(string tabName, List<SLTItem> outputText) : base(GameData.aplication, outputText, tabName, 1) 
         {
             selectItemLeftSign = "";
             selectItemRightSign = "";
@@ -1857,7 +1893,7 @@ namespace KillTheZGame
         public void ContinueGame() { GameData.mainMenu.StartGame(); }
     }
 
-    public class FinalWinTab : EndGameTab
+    public class FinalWinTab : JustTextTab
     {
         public FinalWinTab() : base("FinalWinTab", new List<SLTItem>() )
         {
@@ -1888,7 +1924,7 @@ namespace KillTheZGame
         }
     }
 
-    public class WarStartTab : EndGameTab
+    public class WarStartTab : JustTextTab
     {
         public WarStartTab() : base("warStartTab", new List<SLTItem>())
         {
@@ -1916,6 +1952,7 @@ namespace KillTheZGame
                 new SLTItem("Message14", GameData.aplication.gameText.GetText("StartWar14"), GameData.EmptyMethod, 2),
                 new SLTItem("Message15", GameData.aplication.gameText.GetText("StartWar15"), GameData.EmptyMethod, 0),
                 new SLTItem("Message16", GameData.aplication.gameText.GetText("StartWar16"), GameData.EmptyMethod, 3),
+                new SLTItem("Message17", GameData.aplication.gameText.GetText("PressEnterToContinue"), GameData.EmptyMethod, 3),
             };
 
             AlignToCenter();
@@ -2216,12 +2253,13 @@ namespace KillTheZGame
 
         // Menu
         public static MainMenu mainMenu;
-        public static SettingsMenu settingsMenu;
 
         public static TutorialMenu tutorialMenu;
+        public static SettingsMenu settingsMenu;
+        public static CreditsTab creditsTab;
 
-        public static EndGameTab lostCityTab;
-        public static EndGameTab captureCityTab;
+        public static JustTextTab lostCityTab;
+        public static JustTextTab captureCityTab;
         public static FinalWinTab finalWinTab;
         public static DecideFateTab moscowDecideFateTab;
         public static WarStartTab warStartTab;
@@ -2242,6 +2280,10 @@ namespace KillTheZGame
         public static Language english;
         public static Language ukraine;
         public static Language polish;
+
+        public static string nameNazar = "Nazar Pasichnyk";
+        public static string namePavlo = "Pavlo surname";
+        public static string nameRoman = "Roman surname";
 
         public static Dictionary<string, string> gameIds = new() 
         { { "collision", "Collision" }, { "player", "Player" }, 
