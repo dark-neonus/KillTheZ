@@ -588,8 +588,22 @@ namespace KTZEngine
 
         public void SelectNextElement() { selectedElemIndex++; }
         public void SelectPreviousElement() { selectedElemIndex--; }
-        public void SelectLeftItem() { itemList[selectedElemIndex].ChangeSelectIndex(-1); ActivateCurrentElement(); } 
-        public void SelectRightItem() { itemList[selectedElemIndex].ChangeSelectIndex(1); ActivateCurrentElement(); }
+        public void SelectLeftItem() 
+        {
+            itemList[selectedElemIndex].ChangeSelectIndex(-1);
+            if (itemList[selectedElemIndex].isActivateWhenVisible)
+            {
+                ActivateCurrentElement();
+            }
+        } 
+        public void SelectRightItem() 
+        {
+            itemList[selectedElemIndex].ChangeSelectIndex(1);
+            if (itemList[selectedElemIndex].isActivateWhenVisible)
+            {
+                ActivateCurrentElement();
+            }
+        }
         public void ActivateCurrentElement() { itemList[selectedElemIndex].variants[itemList[selectedElemIndex].selectedIndex].selectAction(); }
         //───────────────────────Methods End───────────────────────|
     }
@@ -613,7 +627,9 @@ namespace KTZEngine
         public List<SSLTItemItem> variants;
         public int selectedIndex = 0;
 
-        public SSLTItem(string name_, string title_, List<SSLTItemItem> variants_, int topOffset_ = standartTopOffset, int sideOffset_ = standartSideOffset, int selectorOffset_ = standartselectorOffset)
+        public bool isActivateWhenVisible = true;
+
+        public SSLTItem(string name_, string title_, List<SSLTItemItem> variants_, int topOffset_ = standartTopOffset, int sideOffset_ = standartSideOffset, int selectorOffset_ = standartselectorOffset, bool isActivateWhenVisible_ = true)
         {
             name = name_;
             title = title_;
@@ -621,6 +637,7 @@ namespace KTZEngine
             topOffset = topOffset_;
             variants = variants_;
             selectorTopOffset = selectorOffset_;
+            isActivateWhenVisible = isActivateWhenVisible_;
         }
 
         public void ChangeSelectIndex(int change)
