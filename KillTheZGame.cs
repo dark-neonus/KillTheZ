@@ -372,7 +372,7 @@ namespace KillTheZGame
                     {
                         new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeDark"), SetThemeDark),
                         new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeLight"), SetThemeLight),
-                        new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeDoom"), SetThemeDoom),
+                        new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeBloodMoon"), SetThemeDoom),
                         new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeHecker"), SetThemeHecker),
                         new SSLTItemItem(GameData.aplication.gameText.GetText("ThemeHell"), SetThemeHell),
                         new SSLTItemItem(GameData.aplication.gameText.GetText("ThemePatriotic"), SetThemePatriotic),
@@ -429,9 +429,9 @@ namespace KillTheZGame
 
             itemList[0].variants[0].text = GameData.aplication.gameText.GetText("ThemeDark");
             itemList[0].variants[1].text = GameData.aplication.gameText.GetText("ThemeLight");
-            itemList[0].variants[2].text = GameData.aplication.gameText.GetText("ThemeDoom");
-            itemList[0].variants[3].text = GameData.aplication.gameText.GetText("ThemeHell");
-            itemList[0].variants[4].text = GameData.aplication.gameText.GetText("ThemeHecker");
+            itemList[0].variants[2].text = GameData.aplication.gameText.GetText("ThemeBloodMoon");
+            itemList[0].variants[3].text = GameData.aplication.gameText.GetText("ThemeHecker");
+            itemList[0].variants[4].text = GameData.aplication.gameText.GetText("ThemeHell");
             itemList[0].variants[5].text = GameData.aplication.gameText.GetText("ThemePatriotic");
             itemList[0].variants[6].text = GameData.aplication.gameText.GetText("MyLittlePony");
 
