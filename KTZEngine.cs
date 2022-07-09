@@ -12,7 +12,6 @@ using Vector2 = Vector2Namespace.Vector2;
 
 namespace KTZEngine
 {
-    ////─────────────────────────────────────────────────────────────────class KTZEngineAplication─────────────────────────────────────────────────────────────────|
     public class KTZEngineAplication
     {
         // Standart Values
@@ -54,7 +53,6 @@ namespace KTZEngine
         public ConsoleColor ConsoleBackgroundColor = ConsoleColor.Black;
         public ConsoleColor ConsoleForegroundColor = ConsoleColor.Gray;
 
-        //─────────────────────────KTZEngineAplication construcor─────────────────────────|
         public KTZEngineAplication(int windowW = standartWindowWidth, int windowH = standartWindowHeight, string windowTitle_ = standartWindowTitle, Dictionary<string, Action> tabsBehavior_ = null, bool _consoleResizable = standartConsoleResizable)
         {
             windowWidth = windowW;
@@ -65,8 +63,6 @@ namespace KTZEngine
         }
 
 
-        //─────────────────────────Methods─────────────────────────|
-        // Init
         public void Init()
         {
             Console.Title = windowTitle;
@@ -142,11 +138,9 @@ namespace KTZEngine
         {
             return KTZEngineAplication.random.NextDouble().ToString() + KTZEngineAplication.random.Next(Int32.MinValue + 1, Int32.MaxValue - 1).ToString();
         }
-        //───────────────────────Methods End───────────────────────|
 
     }
 
-    ////─────────────────────────────────────────────────────────────────class GameTab─────────────────────────────────────────────────────────────────|
     public class GameTab
     {
         public KTZEngineAplication aplication;
@@ -175,7 +169,6 @@ namespace KTZEngine
 
         public KeyManager keyManager;
 
-        //─────────────────────────GameTab construcor─────────────────────────|
         public GameTab(KTZEngineAplication aplication_, string name_, int ups_ = 1)
         {
             aplication = aplication_;
@@ -188,7 +181,6 @@ namespace KTZEngine
             keyManager = new KeyManager();
         }
 
-        //─────────────────────────Methods─────────────────────────|
         public void PreUpdateTab()
         {
             PreUpdate();
@@ -196,9 +188,6 @@ namespace KTZEngine
 
         public void UpdateTab()
         {
-            // frameInd++;
-            // if (frameInd >= deu) { frameInd = 0; }
-            //Console.WriteLine("Name: {0}\tUPS: {1}", name, ups);
 
             Update();
             keyManager.Update();
@@ -217,24 +206,20 @@ namespace KTZEngine
 
 
 
-        //───────────────────────Methods End───────────────────────|
 
     }
-    ////─────────────────────────────────────────────────────────────────class DataBlocksTab─────────────────────────────────────────────────────────────────|
     public class DataBlocksTab : GameTab
     {
         public Grid grid;
         public Dictionary<string, DBTTextField> textFields = new () { };
         public Dictionary<string, DBTVerticalList> verticalLists = new () { };
 
-        //─────────────────────────DataBlocksTab construcor─────────────────────────|
         public DataBlocksTab(KTZEngineAplication game_, string name_, int ups_, char emptyChar_ = ' ') : base(game_, name_, ups_)
         {
             aplication = game_;
             grid = new Grid(name, Vector2.zero, KTZEngineAplication.windowWidth, KTZEngineAplication.windowHeight, emptyChar_);
         }
 
-        //─────────────────────────Methods─────────────────────────|
         public void Start() { }
         public override void Update() { }
 
@@ -250,9 +235,7 @@ namespace KTZEngine
             verticalLists.Add(verticalList.name, verticalList);
             return verticalList;
         }
-        //───────────────────────Methods End───────────────────────|
     }
-    ////─────────────────────────────────────────────────────────────────class DBTTextField─────────────────────────────────────────────────────────────────|
     public class DBTTextField
     {
         public Vector2 position;
@@ -260,7 +243,6 @@ namespace KTZEngine
         public string text;
         public int width;
 
-        //─────────────────────────DataBlocksTab construcor─────────────────────────|
         public DBTTextField(string name_, Vector2 pos, string text_)
         {
             name = name_;
@@ -269,7 +251,6 @@ namespace KTZEngine
             width = text.Length;
         }
 
-        //─────────────────────────Methods─────────────────────────|
         public void DrawOnGrid(ref Grid grid)
         {
             for (int x = 0; x < width; x++)
@@ -280,9 +261,7 @@ namespace KTZEngine
                 }
             }
         }
-        //───────────────────────Methods End───────────────────────|
     }
-    ////─────────────────────────────────────────────────────────────────class DBTVerticalList─────────────────────────────────────────────────────────────────|
     public class DBTVerticalList
     {
         public const string standartSeparator = ")";
@@ -294,7 +273,6 @@ namespace KTZEngine
         public int width;
         public int height;
 
-        //─────────────────────────DataBlocksTab construcor─────────────────────────|
         public DBTVerticalList(string name_, Vector2 pos, List<string> listOfLines)
         {
             name = name_;
@@ -305,7 +283,6 @@ namespace KTZEngine
             height = lineList.Count;
         }
 
-        //─────────────────────────Methods─────────────────────────|
         public void DrawOnGrid(ref Grid grid)
         {
             for (int y = 0; y < height; y++)
@@ -349,10 +326,8 @@ namespace KTZEngine
                 else { lineList[i] = textListForElem[i] + separator + origLineList[i]; }
             }
         }
-        //───────────────────────Methods End───────────────────────|
     }
 
-    ////─────────────────────────────────────────────────────────────────class SelectListTab─────────────────────────────────────────────────────────────────|
     public class SelectListTab : GameTab
     {
         public const int standartDistanceBetweenElements = 1;
@@ -455,7 +430,6 @@ namespace KTZEngine
         //───────────────────────Methods End───────────────────────|
     }
 
-    ////─────────────────────────────────────────────────────────────────class SLTItem─────────────────────────────────────────────────────────────────|
     public class SLTItem
     {
         public const int standartSideOffset = 0;
@@ -483,7 +457,6 @@ namespace KTZEngine
         }
     }
 
-    ////─────────────────────────────────────────────────────────────────class SelectListTab─────────────────────────────────────────────────────────────────|
     public class SelectSelectListTab : GameTab
     {
         public const int standartDistanceBetweenElements = 0;
@@ -608,7 +581,6 @@ namespace KTZEngine
         //───────────────────────Methods End───────────────────────|
     }
 
-    ////─────────────────────────────────────────────────────────────────class SLTItem─────────────────────────────────────────────────────────────────|
     public class SSLTItem
     {
         public const int standartSideOffset = 0;
@@ -667,7 +639,6 @@ namespace KTZEngine
 
 
 
-    ////─────────────────────────────────────────────────────────────────class ConsoleEvents─────────────────────────────────────────────────────────────────|
     public static class ConsoleEvents
     {
         public static ConsoleKey? GetKey()
@@ -676,20 +647,18 @@ namespace KTZEngine
             else { return null; }
         }
     }
-    ////─────────────────────────────────────────────────────────────────struct Languages─────────────────────────────────────────────────────────────────|
+
     public class Language
     {
         public string name;
         public Dictionary<string, string> dictionary = new () { };
 
-        //─────────────────────────Language construcor─────────────────────────|
         public Language(string languageName)
         {
             name = languageName;
         }
     }
 
-    ////─────────────────────────────────────────────────────────────────class ConsoleEvents─────────────────────────────────────────────────────────────────|
     public class GameText
     {
         public Dictionary<string, Language> languages = new () { };
@@ -737,7 +706,6 @@ namespace KTZEngine
 
     }
 
-    ////─────────────────────────────────────────────────────────────────class Grid─────────────────────────────────────────────────────────────────|
     public class Grid
     {
         public const char standartEmptyChar = ' ';
@@ -749,7 +717,6 @@ namespace KTZEngine
         public int Height;
         public char emptyChar;
 
-        //─────────────────────────Grid construcor─────────────────────────|
         public Grid(string name_, Vector2 startPosition_, int gridW, int gridH, char emptyChar_=standartEmptyChar)
         {
             name = name_;
@@ -761,7 +728,6 @@ namespace KTZEngine
             Clear();
         }
 
-        //─────────────────────────Methods─────────────────────────|
         public void Clear()
         {
             for (int x = 0; x < Width; x++)
@@ -809,60 +775,9 @@ namespace KTZEngine
             Console.Write(outString.ToString((Height - 1) * Width, Width - 1));
 
 
-            // Console.SetCursorPosition(0, 0);
-            // Console.Write(outString.ToString(0, KTZEngineAplication.standartWindowWidth * conBuffHeight - 1));
-            // Console.SetCursorPosition(0, 0);
-
-
         }
-
-
-
-        public void Draw1()
-        {
-            int conBuffHeight = Math.Min(Height, Console.BufferHeight);
-            System.Text.StringBuilder outString = new();
-            if (KTZMath.IsCubeVectorInFieldVector(startPosition, Width, Height, Vector2.zero, KTZEngineAplication.standartWindowWidth, KTZEngineAplication.standartWindowHeight))
-            {
-                for (int y = conBuffHeight - 1; y >= 0; y--)
-                {
-                    for (int x = 0; x < Math.Min(Width, KTZEngineAplication.standartWindowWidth); x++)
-                    {
-                        outString.Append(grid[x, y]);
-                        
-                        // outputString += grid[x, y];
-                    }
-                }
-            }
-
-            
-            // Console.Clear();
-            //Console.Write(outString.ToString(0, outString.Length - 1));
-        }
-
-        /*
-        public void DrawOnAnotherGrid(ref Grid fieldGrid, bool ignoreEmptyChar = true)
-        {
-            if (KTZMath.IsCubeVectorInFieldVector(startPosition, Width, Height, fieldGrid.startPosition, fieldGrid.Width, fieldGrid.Height))
-            {
-                for (int x = 0; x < Width; x++)
-                {
-                    for (int y = 0; y < Height; y++)
-                    {
-                        if ((grid[x, y] != emptyChar || (grid[x, y] == emptyChar && !ignoreEmptyChar)) && KTZMath.IsInInterval(new Vector2(startPosition.x + x, startPosition.y + y), fieldGrid.startPosition, fieldGrid.startPosition + new Vector2(fieldGrid.Width, fieldGrid.Height)))
-                        {
-                            fieldGrid.grid[startPosition.x + x, startPosition.y + y] = grid[x, y];
-                        }
-                    }
-                }
-            }
-
-        }
-        */
-        //───────────────────────Methods End───────────────────────|
     }
 
-    ////─────────────────────────────────────────────────────────────────class KeyManager─────────────────────────────────────────────────────────────────|
     public class KeyManager
     {
         public Dictionary<ConsoleKey, Action> keyPressActions = new () { };
@@ -875,7 +790,6 @@ namespace KTZEngine
             if (Console.KeyAvailable)
             {
                 pressedKey = ConsoleEvents.GetKey();
-                // pressedKey = ConsoleEvents.GetKey();
 
                 foreach (var keyAndAction in keyPressActions)
                 {
@@ -895,11 +809,3 @@ namespace KTZEngine
     }
     
 }
-
-///////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////Optimizate all game tabs//////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////Add read book game tab///////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////

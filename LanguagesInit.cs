@@ -23,7 +23,7 @@ namespace KillTheZGame
 
                 {"FateDestroymoscow", new Dictionary<string, string>() { { GameData.english.name, "Destroy [ plus 100000 to score ]" }, { GameData.ukraine.name, "Стрерти з лиця землі [ плюс 100000 до очок ]" }, { GameData.polish.name, "Zniszcz [ plus 100000 do wynik ]" } } },
                 {"FateUkrainianizemoscow", new Dictionary<string, string>() { { GameData.english.name, "Ukrainianize [ colony will multiply score by 1.3 times ]" }, { GameData.ukraine.name, "Українізувати [ колонія примножить очки у 1.3 рази ]" }, { GameData.polish.name, "Ukrainizuj [ kolonia pomnoży wynik 1,3 razy ]" } } },
-
+                
 
                 {"GameTheme", new Dictionary<string, string>() { { GameData.english.name, "Game Theme:" }, { GameData.ukraine.name, "Тема гри:" }, { GameData.polish.name, "Motyw gry:" } } },
 

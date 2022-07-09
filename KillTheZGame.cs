@@ -1140,6 +1140,11 @@ namespace KillTheZGame
             if (bayraktarAttacksTimes > 0 && shootIndex > shootMaxIndex - 1) { BayraktarRocketAttack(); bayraktarAttacksTimes--; shootIndex = 0; }
         }
 
+        public override void AfterUpdate()
+        {
+            BulletEat();
+        }
+
         public List<Vector2> ObjectsCollisionCheck()
         {
             List<Vector2> blockedDir = new ();
@@ -1229,6 +1234,19 @@ namespace KillTheZGame
                     // tY = KTZEngineAplication.random.Next(KTZMapsGeneration.zoneHeight, KTZMapsGeneration.zoneHeight + 3);
                     tY = plusOffsetY + (KTZMapsGeneration.zoneHeight + i) * q;
                     GameData.myGameShell.game.AddExistGameObject(new SimpleBayraktarRocket(GameData.myGameShell.game, layer, new Vector2(startX, tY), new Vector2(tX, tY), Vector2.left));
+                }
+            }
+        }
+
+        public void BulletEat()
+        {
+            if (GameData.bulletPositionList.Contains(globalPosition))
+            {
+                GameObject bulletCollision = myGame.game.gameObjectsList.Find(o => (o.id.Contains(GameData.gameIds["bullet"])) && o.globalPosition == globalPosition);
+                if (bulletCollision != null)
+                {
+                    disposableVelocity = (disposableVelocity.Direction.x != bulletCollision.finalVelocity.Direction.x ^ disposableVelocity.Direction.y != bulletCollision.finalVelocity.Direction.y) ? disposableVelocity + bulletCollision.finalVelocity : disposableVelocity;
+                    myGame.game.DeleteGameObject(bulletCollision.name);
                 }
             }
         }
@@ -1643,7 +1661,9 @@ namespace KillTheZGame
         public Vector2 directionToTarget;
         public bool isAttack = false;
 
-        
+        public ulong attackTime = 0;
+        public ulong attackMaxTime = 20;
+
         public static char[] icons = new char[] { 'O', 'O', 'o', '—', '—', '—', '—', 'o', 'O', 'O' };
         public int iconIndex = 0;
         public int animationTick = 0;
@@ -1742,8 +1762,14 @@ namespace KillTheZGame
                 }
             }
             if (globalPosition == targetPos) { isAttack = false; }
-            if (isAttack) { disposableVelocity = directionToTarget; animationMaxTick = animationMaxTickRage; }
-            else { animationMaxTick = animationMaxTickNormal; }
+            if (isAttack) 
+            { 
+                disposableVelocity = directionToTarget; 
+                animationMaxTick = animationMaxTickRage; 
+                attackTime++; 
+                if (attackTime > attackMaxTime) { isAttack = false; attackTime = 0; animationMaxTick = animationMaxTickNormal; }
+            }
+            else if (animationMaxTick != animationMaxTickNormal) { animationMaxTick = animationMaxTickNormal; }
         }
 
         public void IconAnimation()
