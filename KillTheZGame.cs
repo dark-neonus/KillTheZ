@@ -57,8 +57,10 @@ namespace KillTheZGame
 
             GameData.mainMenu = new MainMenu();
             GameData.tutorialMenu = new TutorialMenu();
-            GameData.settingsMenu = new SettingsMenu();
             GameData.creditsTab = new CreditsTab();
+            GameData.settingsMenu = new SettingsMenu();
+
+            DataManager.LoadData();
 
             GameData.aplication.tabsBehavior.Add(GameData.mainMenu.menuTab.name, MainMenuBehavior);
             GameData.aplication.tabsBehavior.Add(GameData.settingsMenu.name, SettingsMenuBehavior);
@@ -250,26 +252,38 @@ namespace KillTheZGame
             GameData.settingsMenu.TextUpdate();
             GameData.creditsTab.TextUpdate();
 
-            GameData.finalWinTab.TextUpdate();
-            GameData.moscowDecideFateTab.TextUpdate();
+            if (GameData.finalWinTab != null) 
+            { 
+                GameData.finalWinTab.TextUpdate(); 
+            }
+            if (GameData.moscowDecideFateTab != null)
+            {
+                GameData.moscowDecideFateTab.TextUpdate();
+            }
 
-            GameData.captureCityTab.itemList = new List<SLTItem>()
+            if (GameData.captureCityTab != null)
+            {
+                GameData.captureCityTab.itemList = new List<SLTItem>()
             {
                 new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0),
                 new SLTItem("Message2", GameData.aplication.gameText.GetText("YouWin"), GameData.EmptyMethod, 0),
                 new SLTItem("GoToMenu", GameData.aplication.gameText.GetText("PressEscape"), GameData.EmptyMethod, 3),
                 new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("PressEnter"), GameData.EmptyMethod, 1)
             };
-            GameData.captureCityTab.AlignToCenter();
-            GameData.captureCityTab.HeightAlignToCenter();
-            GameData.lostCityTab.itemList = new List<SLTItem>()
+                GameData.captureCityTab.AlignToCenter();
+                GameData.captureCityTab.HeightAlignToCenter();
+            }
+            if (GameData.lostCityTab != null)
+            {
+                GameData.lostCityTab.itemList = new List<SLTItem>()
             {
                 new SLTItem("Message1", GameData.aplication.gameText.GetText("YouLost"), GameData.EmptyMethod, 0),
                 new SLTItem("GoToMenu", GameData.aplication.gameText.GetText("PressEscape"), GameData.EmptyMethod, 3),
                 new SLTItem("ContinueGame", GameData.aplication.gameText.GetText("PressEnter"), GameData.EmptyMethod, 1)
             };
-            GameData.lostCityTab.AlignToCenter();
-            GameData.lostCityTab.HeightAlignToCenter();
+                GameData.lostCityTab.AlignToCenter();
+                GameData.lostCityTab.HeightAlignToCenter();
+            }
 
         }
     }
@@ -307,7 +321,7 @@ namespace KillTheZGame
         public void Tutorial() { OpenTutorial(); }
         public void Settings() { OpenSettings(); }
         public void Credits() { OpenCredits(); }
-        public void Exit() { GameData.aplication.isInAplication = false; }
+        public void Exit() { DataManager.SaveData() ; GameData.aplication.isInAplication = false; }
 
         public void InitGame() { GameData.myGameShell.Init(); }
 
@@ -472,7 +486,7 @@ namespace KillTheZGame
             myProcess.Start();
         }
 
-        public void ClearGameData() { }
+        public void ClearGameData() { DataManager.RestartData(); }
 
         public void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate(); }
         public void SetLangEnglish() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextUpdate(); }
@@ -589,6 +603,7 @@ namespace KillTheZGame
             GameData.warStartVirtualTime = new DateTime(GameData.virtualTime.Year + GameData.yearsOfPeace, 4, 24);
             GameData.virtualTime = GameData.warStartVirtualTime.AddDays(KTZEngineAplication.random.Next(1, 10));
             GameData.currentCityIndex = 3;
+            DataManager.SaveData();
 
         }
     }
@@ -1048,6 +1063,7 @@ namespace KillTheZGame
             game.gameObjects.Clear();
             isWin = false;
             isLose = false;
+            DataManager.SaveData();
         }
     }
 
