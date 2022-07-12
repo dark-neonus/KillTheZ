@@ -153,6 +153,13 @@ namespace KillTheZGame
                 {"EnemyLeftKill", new Dictionary<string, string>() { { GameData.english.name, "    Enemy left to kill: " }, { GameData.ukraine.name, "    Ворогів залишилося вбити: " }, { GameData.polish.name, "   Wróg pozostawiony do zabicia: " } } },
                 {"Score", new Dictionary<string, string>() { { GameData.english.name, "Score: " }, { GameData.ukraine.name, "Очки: " }, { GameData.polish.name, "Wynik: " } } },
 
+                {"Yes", new Dictionary<string, string>() { { GameData.english.name, "Yes" }, { GameData.ukraine.name, "Так" }, { GameData.polish.name, "Tak" } } },
+                {"No", new Dictionary<string, string>() { { GameData.english.name, "No" }, { GameData.ukraine.name, "Ні" }, { GameData.polish.name, "Nie" } } },
+
+                {"NewGameQuestion", new Dictionary<string, string>() { { GameData.english.name, "Are you sure? You will lose progress on the current city" }, { GameData.ukraine.name, "Ви впевнені? Ви втратите прогрес на поточному місті" }, { GameData.polish.name, "Jesteś pewny? Stracisz postępy w obecnym mieście" } } },
+                {"ExitGameQuestion", new Dictionary<string, string>() { { GameData.english.name, "Are you sure you want to exit? Unfinished levels will be lost" }, { GameData.ukraine.name, "Ви впевнені, що хочете вийти? Незакінчені рівні буду втрачені" }, { GameData.polish.name, "Czy jesteś pewny że chcesz wyjść? Niedokończone poziomy zostaną utracone" } } },
+                {"ClearDataQuestion", new Dictionary<string, string>() { { GameData.english.name, "Are you sure you want to clear the progress? You will restart the game with default settings" }, { GameData.ukraine.name, "Ви впевнені, що хочете очистити прогрес? Ви почнете гру заново з стандартними настройками" }, { GameData.polish.name, "Czy na pewno chcesz wyczyścić postęp? Zrestartujesz grę z domyślnymi ustawieniami" } } },
+
             });
 
         }

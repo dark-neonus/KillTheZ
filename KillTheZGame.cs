@@ -60,11 +60,14 @@ namespace KillTheZGame
             GameData.creditsTab = new CreditsTab();
             GameData.settingsMenu = new SettingsMenu();
 
+            GameData.yesNoTab = new YesNoTab();
+
             DataManager.LoadData();
 
             GameData.aplication.tabsBehavior.Add(GameData.mainMenu.menuTab.name, MainMenuBehavior);
             GameData.aplication.tabsBehavior.Add(GameData.settingsMenu.name, SettingsMenuBehavior);
             GameData.aplication.tabsBehavior.Add(GameData.creditsTab.name, CreditsTabBehavior);
+            GameData.aplication.tabsBehavior.Add(GameData.yesNoTab.name, YesNoTabBehavior);
 
             GameData.lostCityTab = new("LostCityTab", new List<SLTItem>() { new SLTItem("Message1", GameData.aplication.gameText.GetText("YouLost"), GameData.EmptyMethod, 0) });
             GameData.captureCityTab = new("CaptureCityTab", new List<SLTItem>() { new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0), new SLTItem("Message2", GameData.aplication.gameText.GetText("YouWin"), GameData.EmptyMethod, 0) });
@@ -127,6 +130,8 @@ namespace KillTheZGame
 
         public void LoseCityTabBehavior() { GameData.lostCityTab.Update(); GameData.lostCityTab.Draw(); }
         public void CaptureCityTabBehavior() { GameData.captureCityTab.Update(); GameData.captureCityTab.Draw(); }
+
+        public void YesNoTabBehavior() { GameData.yesNoTab.Update(); GameData.yesNoTab.Draw(); }
 
 
         public void FinalWinTabBehavior()
@@ -316,15 +321,25 @@ namespace KillTheZGame
         }
 
         public void StartGame() {
-            
-            InitGame(); 
-            RunGame(); 
+            GameData.yesNoTab.GetAnswer(GameData.aplication.gameText.GetText("NewGameQuestion"), menuTab.name, GameData.EmptyMethod, NewGame);
         }
+        public void NewGame()
+        {
+            InitGame();
+            RunGame();
+        }
+
         public void ContinueGame() { RunGame(); }
         public void Tutorial() { OpenTutorial(); }
         public void Settings() { OpenSettings(); }
         public void Credits() { OpenCredits(); }
-        public void Exit() { DataManager.SaveData() ; GameData.aplication.isInAplication = false; }
+        public void Exit() 
+        {
+            DataManager.SaveData();
+            GameData.yesNoTab.GetAnswer(GameData.aplication.gameText.GetText("ExitGameQuestion"), menuTab.name, GameData.EmptyMethod, CloseGame);
+        }
+
+        public void CloseGame() { GameData.aplication.isInAplication = false; }
 
         public void InitGame() { GameData.myGameShell.Init(); }
 
@@ -495,7 +510,10 @@ namespace KillTheZGame
             myProcess.Start();
         }
 
-        public void ClearGameData() { DataManager.RestartData(); }
+        public void ClearGameData()
+        {
+            GameData.yesNoTab.GetAnswer(GameData.aplication.gameText.GetText("ClearDataQuestion"), name, GameData.EmptyMethod, DataManager.RestartData);
+        }
 
         public void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate();  }
         public void SetLangEnglish() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextUpdate(); }
@@ -885,20 +903,18 @@ namespace KillTheZGame
 
             game.keyManager.keyPressActions.Add(ConsoleKey.Escape, PressKeyEscape);
 
-            game.keyManager.keyPressActions.Add(ConsoleKey.X, PressKeyX);
-            game.keyManager.keyPressActions.Add(ConsoleKey.Z, PressKeyZ);
+            // game.keyManager.keyPressActions.Add(ConsoleKey.X, PressKeyX);
+            // game.keyManager.keyPressActions.Add(ConsoleKey.Z, PressKeyZ);
+               
+            // game.keyManager.keyPressActions.Add(ConsoleKey.D0, PressKey0);
+            // game.keyManager.keyPressActions.Add(ConsoleKey.D1, PressKey1);
+            // game.keyManager.keyPressActions.Add(ConsoleKey.D2, PressKey2);
 
-            game.keyManager.keyPressActions.Add(ConsoleKey.D0, PressKey0);
-            game.keyManager.keyPressActions.Add(ConsoleKey.D1, PressKey1);
-            game.keyManager.keyPressActions.Add(ConsoleKey.D2, PressKey2);
 
 
-
-            game.keyManager.keyPressActions.Add(ConsoleKey.P, PressKeyP);
-            game.keyManager.keyPressActions.Add(ConsoleKey.K, PressKeyK);
-            game.keyManager.keyPressActions.Add(ConsoleKey.L, PressKeyL);
-            // game.keyManager.keyPressActions.Add(ConsoleKey.D3, PressKey3);
-            // game.keyManager.keyPressActions.Add(ConsoleKey.D4, PressKey4);
+            // game.keyManager.keyPressActions.Add(ConsoleKey.P, PressKeyP);
+            // game.keyManager.keyPressActions.Add(ConsoleKey.K, PressKeyK);
+            // game.keyManager.keyPressActions.Add(ConsoleKey.L, PressKeyL);
         }
 
         public void PreUpdate()
@@ -1000,19 +1016,16 @@ namespace KillTheZGame
         public void PressKeyLeftOrA() { GameData.player.MoveLeft(); }
         public void PressSpacebarOrKeyV() { GameData.player.Shot(); }
         public void PressKeyE() { GameData.player.PlantMine(); }
-        public void PressKeyP() { for (int i = 0; i < 1000; i++) { GenerateEnemy(); } }
+        // public void PressKeyP() { for (int i = 0; i < 1000; i++) { GenerateEnemy(); } }
         public void PressKeyQ() { if (bayraktarAttackCount > 0) { GameData.player.bayraktarAttacksTimes += 3; bayraktarAttackCount--; } }
 
-        public void PressKey1() { ShitrussiaTankZ.basicEnemyStopTicks = (ShitrussiaTankZ.basicEnemyStopTicks <= 0) ?  0 : ShitrussiaTankZ.basicEnemyStopTicks - 1; }
-        public void PressKey2() { ShitrussiaTankZ.basicEnemyStopTicks++; }
-        public void PressKey0() { GenerateEnemy(); }
+        // public void PressKey1() { ShitrussiaTankZ.basicEnemyStopTicks = (ShitrussiaTankZ.basicEnemyStopTicks <= 0) ?  0 : ShitrussiaTankZ.basicEnemyStopTicks - 1; }
+        // public void PressKey2() { ShitrussiaTankZ.basicEnemyStopTicks++; }
+        // public void PressKey0() { GenerateEnemy(); }
         public void PressKeyEscape() { GoToMainMenu(); }
 
-        public void PressKeyK() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate(); }
-        public void PressKeyL() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextUpdate(); }
-
-        public void PressKeyX() { isWin = true; }
-        public void PressKeyZ() { isLose = true; }
+        // public void PressKeyX() { isWin = true; }
+        // public void PressKeyZ() { isLose = true; }
 
         public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
         public void GenerateEnemy() { game.AddExistGameObject(new ShitrussiaTankZ(this, gameObjectsLayer, new Vector2(KTZEngineAplication.random.Next(1, gameFieldSize.x - 1), gameFieldSize.y - 2))); levelEnemyCount = (levelEnemyCount <= 0)? 0 : levelEnemyCount - 1; }
@@ -1853,7 +1866,7 @@ namespace KillTheZGame
         }
 
         public void GoToMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
-        public void ContinueGame() { GameData.mainMenu.StartGame(); }
+        public void ContinueGame() { GameData.mainMenu.NewGame(); }
     }
 
     public class FinalWinTab : JustTextTab
@@ -1934,25 +1947,31 @@ namespace KillTheZGame
         public bool selectedBool = false;
         public string callerTabName;
 
+        public Action NoAction;
+        public Action YesAction;
+
         public YesNoTab() : base(GameData.aplication, new List<SLTItem>() { }, KTZEngineAplication.GenerateProtectName() + "YesNoTab", 20)
         {
             itemList = new List<SLTItem>()
             {
-                new SLTItem("OptionNo", "No", SelectNo),
-                new SLTItem("OptionYes", "Yes", SelectYes),
+                new SLTItem("OptionNo", GameData.aplication.gameText.GetText("No"), SelectNo),
+                new SLTItem("OptionYes", GameData.aplication.gameText.GetText("Yes"), SelectYes, 2),
             };
+            keyManager.keyPressActions.Add(ConsoleKey.Escape, SelectNo);
+            keyManager.keyPressActions.Add(ConsoleKey.Spacebar, SelectItem);
         }
 
-        public void EndChoice()
+        public void GetAnswer(string question, string callerTabName_, Action NoAction_, Action YesAction_)
         {
-            GameData.aplication.currentGameTabName = callerTabName;
+            NoAction = NoAction_;
+            YesAction = YesAction_;
             Console.Clear();
-        }
-
-        public void GetAnswer(string question, string callerTabName_)
-        {
+            itemList = new List<SLTItem>() { new SLTItem("OptionNo", GameData.aplication.gameText.GetText("No"), SelectNo),  new SLTItem("OptionYes", GameData.aplication.gameText.GetText("Yes"), SelectYes, 2), };
+            AlignToCenter();
+            HeightAlignToCenter();
+            selectedElemIndex = 0;
             regularPostProcessingData.Clear();
-            regularPostProcessingData.Add(new KeyValuePair<Vector2, string>(new Vector2((int)((GameData.myGameWindowWidth - question.Length) / 2), 3), question));
+            regularPostProcessingData.Add(new KeyValuePair<Vector2, string>(new Vector2((int)((GameData.myGameWindowWidth - question.Length) / 2), itemList[0].topOffset - 3), question));
             callerTabName = callerTabName_;
             GameData.aplication.currentGameTabName = name;
         }
@@ -1960,13 +1979,17 @@ namespace KillTheZGame
         public void SelectNo()
         {
             selectedBool = false;
-            EndChoice();
+            GameData.aplication.currentGameTabName = callerTabName;
+            Console.Clear();
+            NoAction();
         }
 
         public void SelectYes()
         {
             selectedBool = true;
-            EndChoice();
+            GameData.aplication.currentGameTabName = callerTabName;
+            Console.Clear();
+            YesAction();
         }
     } 
 
@@ -2259,6 +2282,8 @@ namespace KillTheZGame
         public static TutorialMenu tutorialMenu;
         public static SettingsMenu settingsMenu;
         public static CreditsTab creditsTab;
+
+        public static YesNoTab yesNoTab;
 
         public static JustTextTab lostCityTab;
         public static JustTextTab captureCityTab;
