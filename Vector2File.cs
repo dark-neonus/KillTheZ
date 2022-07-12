@@ -58,7 +58,7 @@ namespace Vector2Namespace
             upRight,
             upLeft,
             downRight,
-            downLeft 
+            downLeft
         };
         public static Dictionary<string, Vector2> namedDiagonalDirections = new()
         {
@@ -66,7 +66,7 @@ namespace Vector2Namespace
             { "upLeft", upLeft },
             { "downRight", downRight },
             { "downLeft", downLeft }
-        
+
         };
 
         public static List<Vector2> eightDirections = new()
@@ -104,9 +104,9 @@ namespace Vector2Namespace
             }
         }
 
-        public void RotationToRight90(int times=1)
+        public void RotationToRight90(int times = 1)
         {
-            if (times != 0) 
+            if (times != 0)
             {
                 int x_;
                 int y_;

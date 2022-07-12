@@ -1,11 +1,10 @@
-﻿using System;
-using System.Text;
+﻿using KTZEngine;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-
-using KTZEngine;
+using System.Text;
 using Vector2 = Vector2Namespace.Vector2;
 
 
@@ -13,15 +12,15 @@ namespace KillTheZGame
 {
     public class GameShell
     {
-        public static KillTheZGame aplic = new ();
+        public static KillTheZGame aplic = new();
         public static void Main() { aplic.MainProtector(); }
     }
 
     public class KillTheZGame
     {
-        
 
-        public void MyAplicationInit() 
+
+        public void MyAplicationInit()
         {
 
             Console.CursorVisible = false;
@@ -52,8 +51,8 @@ namespace KillTheZGame
 
 
             GameData.originalMyGame = new MyGame(ref GameData.aplication, new Vector2(GameData.myGameWindowWidth, GameData.myGameWindowHeight), "Game", 40);
-            GameData.myGameShell = new MyGameShell(ref GameData.originalMyGame, MyGameTabBehavior, new Vector2((int)((GameData.myGameWindowWidth - GameData.myGameWidth) / 2), (int)((GameData.myGameWindowHeight - GameData.myGameHeight) / 2)), new Vector2(GameData.myGameWidth, GameData.myGameHeight) );
-            
+            GameData.myGameShell = new MyGameShell(ref GameData.originalMyGame, MyGameTabBehavior, new Vector2((int)((GameData.myGameWindowWidth - GameData.myGameWidth) / 2), (int)((GameData.myGameWindowHeight - GameData.myGameHeight) / 2)), new Vector2(GameData.myGameWidth, GameData.myGameHeight));
+
 
             GameData.mainMenu = new MainMenu();
             GameData.tutorialMenu = new TutorialMenu();
@@ -115,7 +114,7 @@ namespace KillTheZGame
         {
             GameData.mainMenu.menuTab.Update();
             GameData.mainMenu.menuTab.Draw();
-            
+
         }
         public void SettingsMenuBehavior()
         {
@@ -257,9 +256,9 @@ namespace KillTheZGame
             GameData.settingsMenu.TextUpdate();
             GameData.creditsTab.TextUpdate();
 
-            if (GameData.finalWinTab != null) 
-            { 
-                GameData.finalWinTab.TextUpdate(); 
+            if (GameData.finalWinTab != null)
+            {
+                GameData.finalWinTab.TextUpdate();
             }
             if (GameData.moscowDecideFateTab != null)
             {
@@ -320,7 +319,8 @@ namespace KillTheZGame
             menuTab.HeightAlignToCenter();
         }
 
-        public void StartGame() {
+        public void StartGame()
+        {
             GameData.yesNoTab.GetAnswer(GameData.aplication.gameText.GetText("NewGameQuestion"), menuTab.name, GameData.EmptyMethod, NewGame);
         }
         public void NewGame()
@@ -333,7 +333,7 @@ namespace KillTheZGame
         public void Tutorial() { OpenTutorial(); }
         public void Settings() { OpenSettings(); }
         public void Credits() { OpenCredits(); }
-        public void Exit() 
+        public void Exit()
         {
             DataManager.SaveData();
             GameData.yesNoTab.GetAnswer(GameData.aplication.gameText.GetText("ExitGameQuestion"), menuTab.name, GameData.EmptyMethod, CloseGame);
@@ -353,7 +353,7 @@ namespace KillTheZGame
     {
         public int currentTutorialPage = 0;
 
-        List<List<SLTItem>> pages = new () { };
+        List<List<SLTItem>> pages = new() { };
 
         public TutorialMenu() : base(GameData.aplication, new List<SLTItem>(), "TutorialMenu", 10, "", "", 1)
         {
@@ -394,7 +394,7 @@ namespace KillTheZGame
     public class SettingsMenu : SelectSelectListTab
     {
         public int windowWidthCenter = (int)(GameData.myGameWindowWidth / 2);
-        public SettingsMenu() : base(GameData.aplication, new List<SSLTItem>(), "SettingsMenu", 20, distanceBetweenElements_:1)
+        public SettingsMenu() : base(GameData.aplication, new List<SSLTItem>(), "SettingsMenu", 20, distanceBetweenElements_: 1)
         {
             keyManager.keyPressActions.Add(ConsoleKey.Escape, PressKeyEscape);
             itemList = new List<SSLTItem>()
@@ -488,22 +488,22 @@ namespace KillTheZGame
             AlignToCenter();
         }
 
-        public void DonateNationalBank() 
+        public void DonateNationalBank()
         {
             Process myProcess = new Process();
             myProcess.StartInfo.UseShellExecute = true;
             myProcess.StartInfo.FileName = "https://bank.gov.ua/ua/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi";
             myProcess.Start();
         }
-        public void DonateComeBackAlive() 
-        { 
+        public void DonateComeBackAlive()
+        {
             Process myProcess = new Process();
             myProcess.StartInfo.UseShellExecute = true;
             myProcess.StartInfo.FileName = "https://savelife.in.ua/donate/";
             myProcess.Start();
         }
-        public void DonateHospitallers() 
-        { 
+        public void DonateHospitallers()
+        {
             Process myProcess = new Process();
             myProcess.StartInfo.UseShellExecute = true;
             myProcess.StartInfo.FileName = "https://balistyka.ua/pidtrymai?fbclid=IwAR3tobBzTTPokPlzRVBXfX6sX772z_wSxoXdxdrzEXhZrlHayMIrp-Mz0g8";
@@ -515,17 +515,17 @@ namespace KillTheZGame
             GameData.yesNoTab.GetAnswer(GameData.aplication.gameText.GetText("ClearDataQuestion"), name, GameData.EmptyMethod, DataManager.RestartData);
         }
 
-        public void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate();  }
+        public void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate(); }
         public void SetLangEnglish() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextUpdate(); }
         public void SetLangPolish() { GameData.aplication.gameText.currentLanguageName = GameData.polish.name; GameShell.aplic.TextUpdate(); }
 
         public void SetThemeDark() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Gray; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
-        public void SetThemeLight() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.White; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Black; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
-        public void SetThemeDoom() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkRed; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
-        public void SetThemeHecker() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Green; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
-        public void SetThemeHell() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkRed; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Red; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
-        public void SetThemePatriotic() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkBlue; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkYellow; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
-        public void SetThemePony() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Magenta; GameData.aplication.ConsoleForegroundColor = ConsoleColor.White; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear();}
+        public void SetThemeLight() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.White; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Black; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public void SetThemeDoom() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkRed; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public void SetThemeHecker() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Green; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public void SetThemeHell() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkRed; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Red; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public void SetThemePatriotic() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkBlue; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkYellow; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public void SetThemePony() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Magenta; GameData.aplication.ConsoleForegroundColor = ConsoleColor.White; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
 
         public void Open() { selectedElemIndex = 0; Console.Clear(); }
 
@@ -533,7 +533,7 @@ namespace KillTheZGame
 
         public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
     }
- 
+
     public class CreditsTab : JustTextTab
     {
         public static int linesLen = 15;
@@ -607,20 +607,20 @@ namespace KillTheZGame
             SettingsMenu.DrawAtCenterWithClear(GameData.aplication.gameText.GetText("NowDecideFatemoscow"), itemList[0].topOffset - 5);
         }
 
-        public void Destroymoscow() 
-        { 
-            GameData.score += 100000; 
+        public void Destroymoscow()
+        {
+            GameData.score += 100000;
             Console.Clear();
             RestartWar();
-            aplication.currentGameTabName = GameData.warStartTab.name; 
+            aplication.currentGameTabName = GameData.warStartTab.name;
             GameData.warStartTab.TextUpdate();
         }
-        public void Ukrainianizemoscow() 
-        { 
+        public void Ukrainianizemoscow()
+        {
             GameData.score = (int)(GameData.score * 1.3);
             Console.Clear();
             RestartWar();
-            aplication.currentGameTabName = GameData.warStartTab.name; 
+            aplication.currentGameTabName = GameData.warStartTab.name;
             GameData.warStartTab.TextUpdate();
         }
 
@@ -634,7 +634,7 @@ namespace KillTheZGame
 
         }
     }
-        
+
 
     public class MyGameShell
     {
@@ -658,10 +658,10 @@ namespace KillTheZGame
 
         public int currentCityEnemy;
 
-        public static StaticGameObject wall = new (Vector2.zero, GameData.gameLayerRef, '█', new List<string>() { GameData.gameIds["collision"] });
-        public static StaticGameObject emptyWall = new (Vector2.zero, GameData.gameLayerRef, '█');
-        public static StaticGameObject zoneGround = new (Vector2.zero, GameData.gameLayerRef, '▒');
-        public static EnemySlowDownTile slowDownGround = new (Vector2.zero, GameData.gameLayerRef, '░');
+        public static StaticGameObject wall = new(Vector2.zero, GameData.gameLayerRef, '█', new List<string>() { GameData.gameIds["collision"] });
+        public static StaticGameObject emptyWall = new(Vector2.zero, GameData.gameLayerRef, '█');
+        public static StaticGameObject zoneGround = new(Vector2.zero, GameData.gameLayerRef, '▒');
+        public static EnemySlowDownTile slowDownGround = new(Vector2.zero, GameData.gameLayerRef, '░');
 
         public PricklyHedgehogs pricklyHedgehogs;
 
@@ -687,8 +687,8 @@ namespace KillTheZGame
         public bool isWin = false;
         public bool isLose = false;
 
-        public MyGameShell(ref MyGame game_, Action TabBehavior_, Vector2 gameStartPos_, Vector2 gameSize, bool isInitable = true) 
-        { 
+        public MyGameShell(ref MyGame game_, Action TabBehavior_, Vector2 gameStartPos_, Vector2 gameSize, bool isInitable = true)
+        {
             origGame = game_;
             origGameName = origGame.name;
 
@@ -746,7 +746,7 @@ namespace KillTheZGame
 
             ShitrussiaTankZ.basicEnemyStopTicks = 40 - GameData.currentCityIndex * 5;
 
-            bayraktarAttackCount = (int)((GameData.currentCityIndex)/1.5) + 1;
+            bayraktarAttackCount = (int)((GameData.currentCityIndex) / 1.5) + 1;
 
             MapInit();
 
@@ -788,22 +788,22 @@ namespace KillTheZGame
                 GenerateEnemy();
             }
             */
-            
+
             UkraineSoldier.stupidPositionToBlock = new() { };
 
             GameData.wallPositionList = new() { };
             GameData.pricklyHedgehogsPositionList = new() { };
             GameData.slowdownPositionList = new() { };
 
-            foreach (StaticGameObject obj in staticObjectsLayer.staticObjects) 
-            { 
-                if (obj.id.Contains(GameData.gameIds["collision"]) && obj.ico == wall.ico) { GameData.wallPositionList.Add(obj.globalPosition); } 
+            foreach (StaticGameObject obj in staticObjectsLayer.staticObjects)
+            {
+                if (obj.id.Contains(GameData.gameIds["collision"]) && obj.ico == wall.ico) { GameData.wallPositionList.Add(obj.globalPosition); }
                 if (obj.ico == wall.ico) { GameData.allWallPositionList.Add(obj.globalPosition); }
                 if (obj.id.Contains(GameData.gameIds["pricklyHedgehogs"])) { GameData.pricklyHedgehogsPositionList.Add(obj.globalPosition); }
                 if (obj.id.Contains(GameData.gameIds["enemySlowDown"])) { GameData.slowdownPositionList.Add(obj.globalPosition); }
             }
-            
-            UkraineSoldier.cornersPos = new List<Vector2>() { Vector2.upRight * 1 + gameObjectsLayer.layerStartPosition, new Vector2(gameObjectsLayer.layerWidth - 2, 1) + gameObjectsLayer.layerStartPosition,new Vector2(1, gameObjectsLayer.layerHeight - 2) + gameObjectsLayer.layerStartPosition, new Vector2(gameObjectsLayer.layerWidth - 2, gameObjectsLayer.layerHeight - 2) + gameObjectsLayer.layerStartPosition };
+
+            UkraineSoldier.cornersPos = new List<Vector2>() { Vector2.upRight * 1 + gameObjectsLayer.layerStartPosition, new Vector2(gameObjectsLayer.layerWidth - 2, 1) + gameObjectsLayer.layerStartPosition, new Vector2(1, gameObjectsLayer.layerHeight - 2) + gameObjectsLayer.layerStartPosition, new Vector2(gameObjectsLayer.layerWidth - 2, gameObjectsLayer.layerHeight - 2) + gameObjectsLayer.layerStartPosition };
 
             for (int i = 0; i < 10; i++) { GenerateObjectAtGamePlaceRandom(virtualMap, new MineRecoverBox(gameObjectsLayer, Vector2.zero)); }
         }
@@ -881,7 +881,7 @@ namespace KillTheZGame
             }
 
             UkraineSoldier.cornersPos = new List<Vector2>() { Vector2.upRight, new Vector2(gameObjectsLayer.layerWidth - 2, 1), new Vector2(1, gameObjectsLayer.layerHeight - 2), new Vector2(gameObjectsLayer.layerWidth - 2, gameObjectsLayer.layerHeight - 2) };
-            
+
         }
 
         public void KeyInit()
@@ -899,13 +899,13 @@ namespace KillTheZGame
             game.keyManager.keyPressActions.Add(ConsoleKey.V, PressSpacebarOrKeyV);
             game.keyManager.keyPressActions.Add(ConsoleKey.E, PressKeyE);
             game.keyManager.keyPressActions.Add(ConsoleKey.Q, PressKeyQ);
-            
+
 
             game.keyManager.keyPressActions.Add(ConsoleKey.Escape, PressKeyEscape);
 
             // game.keyManager.keyPressActions.Add(ConsoleKey.X, PressKeyX);
             // game.keyManager.keyPressActions.Add(ConsoleKey.Z, PressKeyZ);
-               
+
             // game.keyManager.keyPressActions.Add(ConsoleKey.D0, PressKey0);
             // game.keyManager.keyPressActions.Add(ConsoleKey.D1, PressKey1);
             // game.keyManager.keyPressActions.Add(ConsoleKey.D2, PressKey2);
@@ -934,7 +934,7 @@ namespace KillTheZGame
 
             if (levelEnemyCount > 0 && game.time > (ulong)levelPrepareTime)
             {
-                if  (game.time > (ulong)(levelPrepareTime + (GameData.cityEnemyCount.ElementAt(GameData.currentCityIndex).Value - levelEnemyCount) * levelOneEnemySpawnTimeMiliseconds)) { GenerateEnemy(); }
+                if (game.time > (ulong)(levelPrepareTime + (GameData.cityEnemyCount.ElementAt(GameData.currentCityIndex).Value - levelEnemyCount) * levelOneEnemySpawnTimeMiliseconds)) { GenerateEnemy(); }
             }
             DataOutput();
         }
@@ -981,7 +981,7 @@ namespace KillTheZGame
 
             }
         }
-        
+
         public void DataOutput()
         {
             // game.gameGrid.AddDisposablePostProcessingText(new Vector2(0, GameData.myGameWindowHeight - 2), "\t\tIn this line is control Information for developer(can be ignore):" + game.gameObjects.Count + "   " + ShitrussiaTankZ.basicEnemyStopTicks + "   ");
@@ -993,7 +993,7 @@ namespace KillTheZGame
             game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) - 58, GameData.myGameWindowHeight - 4), GameData.aplication.gameText.GetText("CurrentTime") + game.time + GameData.aplication.gameText.GetText("ms") + GameData.aplication.gameText.GetText("AttackStartTime") + levelPrepareTime + GameData.aplication.gameText.GetText("ms"));
             game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) + 6, GameData.myGameWindowHeight - 4), GameData.aplication.gameText.GetText("EnemyLeftSpawn") + levelEnemyCount + GameData.aplication.gameText.GetText("EnemyLeftKill") + enemyLeftToKill);
             game.gameGrid.AddDisposablePostProcessingText(new Vector2(gameObjectsLayer.layerStartPosition.x + 3, GameData.myGameWindowHeight - 4), GameData.aplication.gameText.GetText("Score") + GameData.score.ToString());
-            
+
         }
         public void SirenCheck()
         {
@@ -1028,7 +1028,7 @@ namespace KillTheZGame
         // public void PressKeyZ() { isLose = true; }
 
         public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
-        public void GenerateEnemy() { game.AddExistGameObject(new ShitrussiaTankZ(this, gameObjectsLayer, new Vector2(KTZEngineAplication.random.Next(1, gameFieldSize.x - 1), gameFieldSize.y - 2))); levelEnemyCount = (levelEnemyCount <= 0)? 0 : levelEnemyCount - 1; }
+        public void GenerateEnemy() { game.AddExistGameObject(new ShitrussiaTankZ(this, gameObjectsLayer, new Vector2(KTZEngineAplication.random.Next(1, gameFieldSize.x - 1), gameFieldSize.y - 2))); levelEnemyCount = (levelEnemyCount <= 0) ? 0 : levelEnemyCount - 1; }
 
         public void GenerateObjectAtGamePlaceRandom(int[,] virtualMap, GameObject obj)
         {
@@ -1091,7 +1091,7 @@ namespace KillTheZGame
 
     public class MyGame : Game
     {
-        public MyGame(ref KTZEngineAplication aplication_, Vector2 gameGridSize_, string name, int ups_=1) : base(ref aplication_, gameGridSize_, name, ups_)
+        public MyGame(ref KTZEngineAplication aplication_, Vector2 gameGridSize_, string name, int ups_ = 1) : base(ref aplication_, gameGridSize_, name, ups_)
         {
 
         }
@@ -1127,15 +1127,15 @@ namespace KillTheZGame
 
         public Dictionary<Vector2, char> playerPoses;
         public Vector2 direction = Vector2.up;
-        public List<GameLayer> collisonCheckLayers = new ();
-        public List<string> collisionCheckIds = new ();
+        public List<GameLayer> collisonCheckLayers = new();
+        public List<string> collisionCheckIds = new();
         public MyGameShell myGame;
         public int shootIndex = 0;
         public static int shootMaxIndex = 8;
         public int mineCount;
         public int bayraktarAttacksTimes = 0;
 
-        public MyPlayer(MyGameShell game_, string playerName, GameLayer thisLayer, Vector2 _position, List<GameLayer> collisonCheckLayers_=null, List<string> collisonCheckIds_=null) : base(playerName, thisLayer, _position, ' ', new List<string>() { GameData.gameIds["player"], GameData.gameIds["collision"] }, 3)
+        public MyPlayer(MyGameShell game_, string playerName, GameLayer thisLayer, Vector2 _position, List<GameLayer> collisonCheckLayers_ = null, List<string> collisonCheckIds_ = null) : base(playerName, thisLayer, _position, ' ', new List<string>() { GameData.gameIds["player"], GameData.gameIds["collision"] }, 3)
         {
             playerPoses = new Dictionary<Vector2, char>() { { Vector2.up, basicUpChar }, { Vector2.right, basicRightChar }, { Vector2.down, basicDownChar }, { Vector2.left, basicLeftChar } };
             icon = basicUpChar;
@@ -1185,18 +1185,18 @@ namespace KillTheZGame
 
         public List<Vector2> ObjectsCollisionCheck()
         {
-            List<Vector2> blockedDir = new ();
+            List<Vector2> blockedDir = new();
             for (int dirI = 0; dirI < Vector2.eightDirections.Count; dirI++)
             {
-                
-                if (GameData.wallPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || 
+
+                if (GameData.wallPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) ||
                     GameData.collisionIdPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) ||
-                    GameData.pricklyHedgehogsPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || 
-                    GameData.minePositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) || 
+                    GameData.pricklyHedgehogsPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) ||
+                    GameData.minePositionList.Contains(globalPosition + Vector2.eightDirections[dirI]) ||
                     GameData.enemyPositionList.Contains(globalPosition + Vector2.eightDirections[dirI]))
-                { blockedDir.Add(Vector2.eightDirections[dirI]); continue; } 
+                { blockedDir.Add(Vector2.eightDirections[dirI]); continue; }
             }
-            
+
             return blockedDir;
         }
 
@@ -1230,7 +1230,7 @@ namespace KillTheZGame
                 GameData.myGameShell.game.AddExistGameObject(new SimpleBayraktarRocket(GameData.myGameShell.game, layer, new Vector2(tX, startY), new Vector2(tX, tY)));
                 xPositions.Remove(tX);
             }
-            
+
             for (int q = -1; q < 2; q += 2)
             {
                 int plusOffsetY = (layer.layerHeight - 1) * Math.Abs(Math.Sign(q - 1));
@@ -1294,7 +1294,7 @@ namespace KillTheZGame
     {
         public Vector2 dir;
         public const char bulletIcon = '•';
-        public Vector2 layerSize; 
+        public Vector2 layerSize;
         public Game game;
         public GoodBullet(Game game_, GameLayer layer_, Vector2 pos, Vector2 dir_) : base("bullet" + KTZEngineAplication.GenerateProtectName(), layer_, pos, bulletIcon, new List<string>() { GameData.gameIds["bullet"] })
         {
@@ -1319,8 +1319,8 @@ namespace KillTheZGame
 
         public override void Update()
         {
-            if (!KTZMath.IsInInterval(localPosition , Vector2.downLeft, layerSize) || game.gameGrid.layers["staticObjects"].staticObjects.Exists(o => o.id.Contains(GameData.gameIds["collision"]) && o.globalPosition == globalPosition)) { game.DeleteGameObject(name); }
-            
+            if (!KTZMath.IsInInterval(localPosition, Vector2.downLeft, layerSize) || game.gameGrid.layers["staticObjects"].staticObjects.Exists(o => o.id.Contains(GameData.gameIds["collision"]) && o.globalPosition == globalPosition)) { game.DeleteGameObject(name); }
+
         }
 
         public override void AfterMoveUpdate()
@@ -1340,7 +1340,7 @@ namespace KillTheZGame
 
         public static Dictionary<Vector2, char> icons = new Dictionary<Vector2, char>() { { Vector2.up, basicUpChar }, { Vector2.down, basicDownChar }, { Vector2.right, basicRightChar }, { Vector2.left, basicLeftChar } };
 
-        public SimpleBayraktarRocket(Game game_, GameLayer layer_, Vector2 pos, Vector2 target_, Vector2? direction=null) : base(game_, layer_, pos, Vector2.up)
+        public SimpleBayraktarRocket(Game game_, GameLayer layer_, Vector2 pos, Vector2 target_, Vector2? direction = null) : base(game_, layer_, pos, Vector2.up)
         {
             if (direction == null) { direction = Vector2.up; }
             dir = (Vector2)direction;
@@ -1350,7 +1350,7 @@ namespace KillTheZGame
             icon = icons[dir];
         }
 
-        public override void Update() 
+        public override void Update()
         {
             if (localPosition == target || GameData.enemyPositionList.Contains(globalPosition))
             {
@@ -1359,7 +1359,7 @@ namespace KillTheZGame
             else if (!KTZMath.IsInInterval(localPosition, Vector2.downLeft * 10, layerSize + Vector2.upRight * 9) && game.gameObjects.Keys.Contains(name)) { game.DeleteGameObject(name); }
         }
 
-        public override void AfterMoveUpdate() {}
+        public override void AfterMoveUpdate() { }
 
         public void InTarget()
         {
@@ -1393,16 +1393,16 @@ namespace KillTheZGame
         public Vector2 dir;
         public static Vector2 priorityDir = Vector2.down;
         public List<string> actionList = new() { "stay", "stay", "stay", "changeDirection", "moveToDirection", "moveNice", "moveNice", "moveNice" };
-        
+
         public string action;
         public List<GameLayer> collisonCheckLayers;
         public List<string> collisionCheckIds;
         public int moveIndex = 0;
         public int moveTick = 0;
-        
+
         public static int sameMoveCount = 6;
         public static int basicEnemyStopTicks = 30;
-        
+
         public int enemyStopTicks;
 
         public List<Vector2> statBlockDir = new List<Vector2>();
@@ -1419,7 +1419,7 @@ namespace KillTheZGame
 
         public static char basicIcon = 'z';
 
-        public ShitrussiaTankZ (MyGameShell myGame_, GameLayer layer_, Vector2 pos) : base ("russiaTankZ" + KTZEngineAplication.GenerateProtectName(), layer_, pos, basicIcon, new List<string>() { GameData.gameIds["enemy"] })
+        public ShitrussiaTankZ(MyGameShell myGame_, GameLayer layer_, Vector2 pos) : base("russiaTankZ" + KTZEngineAplication.GenerateProtectName(), layer_, pos, basicIcon, new List<string>() { GameData.gameIds["enemy"] })
         {
             localPosition = pos;
             layerSize = new Vector2(layer.layerWidth, layer.layerHeight);
@@ -1440,40 +1440,40 @@ namespace KillTheZGame
             if (moveIndex < 0)
             {
                 switch (action)
-                    {
-                        case "stay":
-                            dir = Vector2.zero;
-                            break;
-                        case "changeDirection":
-                            dir = moveDirections.ElementAt(KTZEngineAplication.random.Next(moveDirections.Count));
-                            break;
-                        case "moveNice":
-                            if (!blockedDirections.Contains(priorityDir)) { dir = priorityDir; }
-                            else
-                            {
-                                dir = moveDirections[KTZEngineAplication.random.Next(2)];
-                                if (blockedDirections.Contains(dir)) { dir.RotationToRight90(2); if (blockedDirections.Contains(dir)) { dir = -priorityDir; } }
-                            }
-                            break;
-                    }
+                {
+                    case "stay":
+                        dir = Vector2.zero;
+                        break;
+                    case "changeDirection":
+                        dir = moveDirections.ElementAt(KTZEngineAplication.random.Next(moveDirections.Count));
+                        break;
+                    case "moveNice":
+                        if (!blockedDirections.Contains(priorityDir)) { dir = priorityDir; }
+                        else
+                        {
+                            dir = moveDirections[KTZEngineAplication.random.Next(2)];
+                            if (blockedDirections.Contains(dir)) { dir.RotationToRight90(2); if (blockedDirections.Contains(dir)) { dir = -priorityDir; } }
+                        }
+                        break;
+                }
                 disposableVelocity = dir;
                 moveTick++;
 
             }
-            
+
             if (disposableVelocity != Vector2.zero)
             {
                 statBlockDir = SideCollisionDetect();
             }
-            
+
             moveIndex = (disposableVelocity != Vector2.zero && moveIndex <= 0) ? enemyStopTicks : moveIndex - 1;
-            
+
 
             blockedDirections = statBlockDir;
         }
 
-        public override void Update() 
-        { 
+        public override void Update()
+        {
             AlmostAtFinishCheck();
         }
 
@@ -1506,9 +1506,10 @@ namespace KillTheZGame
             return blockedDir;
         }
 
-        public void CurrentPosCollision ()
+        public void CurrentPosCollision()
         {
-            if (GameData.bulletPositionList.Contains(globalPosition)) {
+            if (GameData.bulletPositionList.Contains(globalPosition))
+            {
                 GameObject currBull = myGameShell.game.gameObjectsList.Find(o => o.id.Contains(GameData.gameIds["bullet"]) && o.globalPosition == globalPosition);
                 if (currBull != null)
                 {
@@ -1518,16 +1519,16 @@ namespace KillTheZGame
                     Die();
                 }
             }
-            
+
             else if (globalPosition == GameData.traktorMykola.globalPosition || GameData.pricklyHedgehogsPositionList.Contains(globalPosition)) { Die(); }
             else if (GameData.minePositionList.Contains(globalPosition))
-            { 
+            {
                 GoodMine currMine = (GoodMine)(GameData.myGameShell.game.gameObjectsList.Find(o => o.id.Contains(GameData.gameIds["mine"]) && o.globalPosition == globalPosition));
                 if (currMine != null) { currMine.Explosion(); }
             }
 
             if (GameData.slowdownPositionList.Contains(globalPosition)) { enemyStopTicks = basicEnemyStopTicks * 3; }
-            
+
         }
 
         public void AlmostAtFinishCheck()
@@ -1577,7 +1578,7 @@ namespace KillTheZGame
 
         public static int animationMaxTick = 12;
 
-        public GoodMine(Vector2 pos, GameLayer layer_, bool currentPosDetect=true) : base("GoodMine" + KTZEngineAplication.GenerateProtectName(), layer_, pos, 'Θ', new List<string> { GameData.gameIds["mine"]}, -1) 
+        public GoodMine(Vector2 pos, GameLayer layer_, bool currentPosDetect = true) : base("GoodMine" + KTZEngineAplication.GenerateProtectName(), layer_, pos, 'Θ', new List<string> { GameData.gameIds["mine"] }, -1)
         {
             if (currentPosDetect)
             {
@@ -1594,7 +1595,7 @@ namespace KillTheZGame
         public override void PreUpdate()
         {
             IconAnimation();
-            
+
         }
 
         public override void AfterUpdate()
@@ -1636,7 +1637,7 @@ namespace KillTheZGame
                 ((ShitrussiaTankZ)objectsToKill[q]).Die();
             }
 
-            
+
             GameData.myGameShell.game.DeleteGameObject(name);
         }
 
@@ -1743,8 +1744,8 @@ namespace KillTheZGame
                 moveTick++;
             }
 
-            statBlockDir = StaticObjectsCollisionDetect(); 
-            
+            statBlockDir = StaticObjectsCollisionDetect();
+
             moveIndex = (disposableVelocity != Vector2.zero && moveIndex <= 0) ? NickolaStopTicks : moveIndex - 1;
 
             blockedDirections = statBlockDir;
@@ -1774,11 +1775,11 @@ namespace KillTheZGame
             }
 
             if (GameData.allWallPositionList.Contains(globalPosition)) { globalPosition = Vector2.upRight; }
-             
+
 
             return blockedDir;
         }
-         
+
         public void AttackTanks()
         {
             Vector2 lookPos;
@@ -1796,15 +1797,16 @@ namespace KillTheZGame
                             directionToTarget = Vector2.fourDirections[i];
                             dir = directionToTarget;
                         }
-                    } else { break; }
+                    }
+                    else { break; }
                 }
             }
             if (globalPosition == targetPos) { isAttack = false; }
-            if (isAttack) 
-            { 
-                disposableVelocity = directionToTarget; 
-                animationMaxTick = animationMaxTickRage; 
-                attackTime++; 
+            if (isAttack)
+            {
+                disposableVelocity = directionToTarget;
+                animationMaxTick = animationMaxTickRage;
+                attackTime++;
                 if (attackTime > attackMaxTime) { isAttack = false; attackTime = 0; animationMaxTick = animationMaxTickNormal; }
             }
             else if (animationMaxTick != animationMaxTickNormal) { animationMaxTick = animationMaxTickNormal; }
@@ -1850,7 +1852,7 @@ namespace KillTheZGame
     public class JustTextTab : SelectListTab
     {
 
-        public JustTextTab(string tabName, List<SLTItem> outputText) : base(GameData.aplication, outputText, tabName, 1) 
+        public JustTextTab(string tabName, List<SLTItem> outputText) : base(GameData.aplication, outputText, tabName, 1)
         {
             selectItemLeftSign = "";
             selectItemRightSign = "";
@@ -1871,7 +1873,7 @@ namespace KillTheZGame
 
     public class FinalWinTab : JustTextTab
     {
-        public FinalWinTab() : base("FinalWinTab", new List<SLTItem>() )
+        public FinalWinTab() : base("FinalWinTab", new List<SLTItem>())
         {
             keyManager.keyPressActions = new Dictionary<ConsoleKey, Action>() { { ConsoleKey.Enter, PressEnterOrSpace }, { ConsoleKey.Spacebar, PressEnterOrSpace } };
             TextUpdate();
@@ -1880,13 +1882,13 @@ namespace KillTheZGame
 
         public void TextUpdate()
         {
-            itemList = new List<SLTItem>() 
-            { 
-                new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0), 
+            itemList = new List<SLTItem>()
+            {
+                new SLTItem("Message1", GameData.aplication.gameText.GetText("Congratulations"), GameData.EmptyMethod, 0),
                 new SLTItem("Message2", GameData.aplication.gameText.GetText("Today") + GameData.virtualTime.ToShortDateString() + GameData.aplication.gameText.GetText("IsHistoricDay"), GameData.EmptyMethod, 2),
-                new SLTItem("Message3", GameData.aplication.gameText.GetText("YouCapturemoscow"), GameData.EmptyMethod, 2), 
-                new SLTItem("Message4", GameData.aplication.gameText.GetText("YouFinWinWar") + GameData.warStartVirtualTime.ToShortDateString(), GameData.EmptyMethod, 2), 
-                new SLTItem("Message5", GameData.aplication.gameText.GetText("PressEnterToContinue"), GameData.EmptyMethod, 7) 
+                new SLTItem("Message3", GameData.aplication.gameText.GetText("YouCapturemoscow"), GameData.EmptyMethod, 2),
+                new SLTItem("Message4", GameData.aplication.gameText.GetText("YouFinWinWar") + GameData.warStartVirtualTime.ToShortDateString(), GameData.EmptyMethod, 2),
+                new SLTItem("Message5", GameData.aplication.gameText.GetText("PressEnterToContinue"), GameData.EmptyMethod, 7)
             };
 
             AlignToCenter();
@@ -1966,7 +1968,7 @@ namespace KillTheZGame
             NoAction = NoAction_;
             YesAction = YesAction_;
             Console.Clear();
-            itemList = new List<SLTItem>() { new SLTItem("OptionNo", GameData.aplication.gameText.GetText("No"), SelectNo),  new SLTItem("OptionYes", GameData.aplication.gameText.GetText("Yes"), SelectYes, 2), };
+            itemList = new List<SLTItem>() { new SLTItem("OptionNo", GameData.aplication.gameText.GetText("No"), SelectNo), new SLTItem("OptionYes", GameData.aplication.gameText.GetText("Yes"), SelectYes, 2), };
             AlignToCenter();
             HeightAlignToCenter();
             selectedElemIndex = 0;
@@ -1991,7 +1993,7 @@ namespace KillTheZGame
             Console.Clear();
             YesAction();
         }
-    } 
+    }
 
     public class UkraineSoldier : GameObject
     {
@@ -2013,7 +2015,7 @@ namespace KillTheZGame
 
         public static int attackMaxDistance = 10;
 
-        public List<Vector2> statBlockDir = new ();
+        public List<Vector2> statBlockDir = new();
 
         public static List<Vector2> moveDirections;
         public static List<Vector2> canMoveDirections;
@@ -2045,9 +2047,9 @@ namespace KillTheZGame
 
             soldierStopTicks = basicUASoldierStopTicks;
             CurrentPosCollision();
-            
+
             if (shootIndex == 0) { AttackEnemy(); }
-            
+
 
             if (localPosition.y > layer.layerHeight - (int)(KTZMapsGeneration.zoneHeight * 1.5))
             {
@@ -2064,7 +2066,7 @@ namespace KillTheZGame
                 {
                     SetPriorDir(Vector2.right);
                 }
-            } 
+            }
             else if (localPosition.y < (int)(layer.layerHeight / 2) && priorityDir != Vector2.up)
             {
                 SetPriorDir(Vector2.up);
@@ -2081,7 +2083,7 @@ namespace KillTheZGame
                 {
                     case "stay":
                         dir = Vector2.zero;
-                        if (KTZEngineAplication.random.Next(100) == 7 && blockedDirections.Count < 3)  { PlantMine(); }
+                        if (KTZEngineAplication.random.Next(100) == 7 && blockedDirections.Count < 3) { PlantMine(); }
                         break;
                     case "changeDirection":
                         dir = moveDirections.ElementAt(KTZEngineAplication.random.Next(moveDirections.Count));
@@ -2098,7 +2100,7 @@ namespace KillTheZGame
                 disposableVelocity = dir;
                 moveTick++;
             }
-            
+
 
             if (disposableVelocity != Vector2.zero)
             {
@@ -2111,7 +2113,7 @@ namespace KillTheZGame
 
             blockedDirections = statBlockDir;
 
-            
+
         }
 
         public override void AfterUpdate()
@@ -2135,10 +2137,10 @@ namespace KillTheZGame
                 {
                     blockedDir.Add(Vector2.fourDirections[dirI]); continue;
                 }
-                
+
             }
 
-            
+
             if (stupidBlockedDirCount >= 4)
             {
                 blockedDir = new();
@@ -2152,32 +2154,33 @@ namespace KillTheZGame
                     }
                     else if (GameData.collisionIdPositionList.Contains(globalPosition + Vector2.fourDirections[dirI]) || GameData.minePositionList.Contains(globalPosition + Vector2.fourDirections[dirI]))
                     {
-                        blockedDir.Add(Vector2.fourDirections[dirI]); continue; 
+                        blockedDir.Add(Vector2.fourDirections[dirI]); continue;
                     }
-                
+
                 }
             }
-            
 
-            if (stupidBlockedDirCount == 2 && blockedDir[0].x != -blockedDir[1].x && 
-                !GameData.wallPositionList.Contains(globalPosition - blockedDir[0] - blockedDir[1]) && 
+
+            if (stupidBlockedDirCount == 2 && blockedDir[0].x != -blockedDir[1].x &&
+                !GameData.wallPositionList.Contains(globalPosition - blockedDir[0] - blockedDir[1]) &&
                 !stupidPositionToBlock.Contains(globalPosition - blockedDir[0] - blockedDir[1]) &&
                 localPosition > 1 && localPosition < layer.layerWidth - 2
                 )
             { stupidPositionToBlock.Add(globalPosition); }
-            else if (stupidBlockedDirCount > 2) { stupidPositionToBlock.Add(globalPosition); }   
+            else if (stupidBlockedDirCount > 2) { stupidPositionToBlock.Add(globalPosition); }
 
             return blockedDir;
         }
 
         public void BulletEat()
         {
-            if (GameData.bulletPositionList.Contains(globalPosition)) { 
+            if (GameData.bulletPositionList.Contains(globalPosition))
+            {
                 GameObject bulletCollision = myGame.game.gameObjectsList.Find(o => (o.id.Contains(GameData.gameIds["bullet"])) && o.globalPosition == globalPosition);
-                if (bulletCollision != null) 
-                { 
-                    disposableVelocity = (disposableVelocity.Direction.x != bulletCollision.finalVelocity.Direction.x ^ disposableVelocity.Direction.y != bulletCollision.finalVelocity.Direction.y) ? disposableVelocity + bulletCollision.finalVelocity : disposableVelocity; 
-                    myGame.game.DeleteGameObject(bulletCollision.name); 
+                if (bulletCollision != null)
+                {
+                    disposableVelocity = (disposableVelocity.Direction.x != bulletCollision.finalVelocity.Direction.x ^ disposableVelocity.Direction.y != bulletCollision.finalVelocity.Direction.y) ? disposableVelocity + bulletCollision.finalVelocity : disposableVelocity;
+                    myGame.game.DeleteGameObject(bulletCollision.name);
                 }
             }
         }
@@ -2229,7 +2232,7 @@ namespace KillTheZGame
 
         public void SetPriorDir(Vector2 dir)
         {
-            if (dir == Vector2.zero) 
+            if (dir == Vector2.zero)
             {
                 priorityDir = Vector2.zero;
                 moveDirections = new List<Vector2>() { Vector2.up, Vector2.right, Vector2.left, Vector2.down };
@@ -2312,22 +2315,22 @@ namespace KillTheZGame
         public static string namePavlo = "Sprinix (Pavlo Nickel)";
         public static string nameRoman = "CoolGuy228 (Roman Havrylyuk)";
 
-        public static Dictionary<string, string> gameIds = new() 
-        { { "collision", "Collision" }, { "player", "Player" }, 
-            { "bullet", "Bullet" }, { "playerBullet", "PlayerBullet" }, 
-            { "enemy", "Enemy" }, { "Mykola", "Mykola" }, { "mine", "Mine" }, 
-            { "enemySlowDown", "EnemySlowDown" }, { "pricklyHedgehogs", "PricklyHedgehogs" }, 
+        public static Dictionary<string, string> gameIds = new()
+        { { "collision", "Collision" }, { "player", "Player" },
+            { "bullet", "Bullet" }, { "playerBullet", "PlayerBullet" },
+            { "enemy", "Enemy" }, { "Mykola", "Mykola" }, { "mine", "Mine" },
+            { "enemySlowDown", "EnemySlowDown" }, { "pricklyHedgehogs", "PricklyHedgehogs" },
             { "UkraineSoldier", "UkraineSoldier" }, { "mineRecoverBox", "MineRecoverBox" } };
 
 
         public static MyGame myGameRef = new(ref aplication, Vector2.upRight, "gameRef", 1);
         public static MyGameShell myGameShellRef = new(ref myGameRef, EmptyMethod, Vector2.zero, Vector2.upRight, false);
-        public static GameLayer gameLayerRef = new (1, 1, "gameLayerRef", ' ', 0, Vector2.zero);
+        public static GameLayer gameLayerRef = new(1, 1, "gameLayerRef", ' ', 0, Vector2.zero);
         public static UkraineTraktorMykola traktorUkraineMykolaRef = new(myGameShellRef, gameLayerRef, Vector2.zero);
-        public static GoodBullet goodBulletRef = new (myGameRef, gameLayerRef, Vector2.zero, Vector2.zero);
-        public static GoodMine goodMineRef = new (Vector2.zero, gameLayerRef, false);
-        public static ShitrussiaTankZ shitrussiaTankZRef = new (myGameShellRef, gameLayerRef, Vector2.zero);
-        public static EnemySlowDownTile enemySlowDownTileRef = new (Vector2.zero, gameLayerRef, '5');
+        public static GoodBullet goodBulletRef = new(myGameRef, gameLayerRef, Vector2.zero, Vector2.zero);
+        public static GoodMine goodMineRef = new(Vector2.zero, gameLayerRef, false);
+        public static ShitrussiaTankZ shitrussiaTankZRef = new(myGameShellRef, gameLayerRef, Vector2.zero);
+        public static EnemySlowDownTile enemySlowDownTileRef = new(Vector2.zero, gameLayerRef, '5');
         public static SimpleBayraktarRocket simpleBayraktarRocketRef = new(myGameRef, gameLayerRef, Vector2.zero, Vector2.upRight);
 
         public static readonly Type goodBulletType = goodBulletRef.GetType();
@@ -2363,7 +2366,7 @@ namespace KillTheZGame
 
         public static bool isDanger;
         public static ConsoleColor dangerColor = ConsoleColor.Red;
-        public static void EmptyMethod() { } 
+        public static void EmptyMethod() { }
     }
 
 }

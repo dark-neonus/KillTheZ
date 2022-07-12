@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using KTZEngine;
-using System.Drawing;
 
 using Vector2 = Vector2Namespace.Vector2;
 
@@ -69,13 +63,13 @@ namespace KTZEngine
                 {
                     for (int y = 1; y < layer.layerHeight - 1; y++)
                     {
-                    if (virtualMap[x, y] == 1) { continue; }
-                    chance = 1;
+                        if (virtualMap[x, y] == 1) { continue; }
+                        chance = 1;
                         for (int q = 0; q < Vector2.eightDirections.Count; q++)
                         {
                             if (virtualMap[x + Vector2.eightDirections[q].x, y + Vector2.eightDirections[q].y] == 1) { chance += chancePlus * chance * 2; }
                         }
-                    if ( KTZEngineAplication.random.Next(maxChance) < chancePlus )
+                        if (KTZEngineAplication.random.Next(maxChance) < chancePlus)
                         {
                             virtualMap[x, y] = 1;
                         }
@@ -97,7 +91,7 @@ namespace KTZEngine
                         if (virtualMap[x + Vector2.fourDirections.ElementAt(q).x, y + Vector2.fourDirections.ElementAt(q).y] == 1) { isClearCur = false; continue; }
                     }
                     if (isClearCur) { virtualMap[x, y] = 0; }
-                    
+
                 }
             }
 
@@ -130,7 +124,7 @@ namespace KTZEngine
 
         public static List<Vector2> GetListOfGridCoordinats(GameLayer layer)
         {
-            List<Vector2> coordinatesList = new ();
+            List<Vector2> coordinatesList = new();
             for (int x = 0; x < layer.layerWidth; x++)
             {
                 for (int y = 0; y < layer.layerHeight; y++)
@@ -143,7 +137,7 @@ namespace KTZEngine
         }
         public static List<Vector2> GetListOfGridCoordinats(Grid grid)
         {
-            List<Vector2> coordinatesList = new ();
+            List<Vector2> coordinatesList = new();
             for (int x = 0; x < grid.Width; x++)
             {
                 for (int y = 0; y < grid.Height; y++)
@@ -180,36 +174,36 @@ namespace KTZEngine
         public static int cityZoneHeight = 3;
         public static int centralStreetOffset = 7;
         public static int smallSideStreetDiagonalCoef = 3;
-        public static Dictionary<Vector2, int> aloneWallVectorStructure = new () { { Vector2.zero, 1 }, { Vector2.up, 0 }, { Vector2.right, 0 }, { Vector2.down, 0 }, { Vector2.left, 0 } };
+        public static Dictionary<Vector2, int> aloneWallVectorStructure = new() { { Vector2.zero, 1 }, { Vector2.up, 0 }, { Vector2.right, 0 }, { Vector2.down, 0 }, { Vector2.left, 0 } };
 
-        public static Dictionary<Vector2, int> leftUpCornerVectorStructure = new () { { Vector2.zero, 0 }, { Vector2.up, 1 }, { Vector2.left, 1 }, { Vector2.down, 0 }, { Vector2.right, 0 }, };
-        public static Dictionary<Vector2, int> leftDownCornerVectorStructure = new () { { Vector2.zero, 0 }, { Vector2.down, 1 }, { Vector2.left, 1 }, { Vector2.up, 0 }, { Vector2.right, 0 }, };
+        public static Dictionary<Vector2, int> leftUpCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.up, 1 }, { Vector2.left, 1 }, { Vector2.down, 0 }, { Vector2.right, 0 }, };
+        public static Dictionary<Vector2, int> leftDownCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.down, 1 }, { Vector2.left, 1 }, { Vector2.up, 0 }, { Vector2.right, 0 }, };
         public static Dictionary<Vector2, int> rightUpCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.up, 1 }, { Vector2.right, 1 }, { Vector2.down, 0 }, { Vector2.left, 0 }, };
         public static Dictionary<Vector2, int> rightDownCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.down, 1 }, { Vector2.right, 1 }, { Vector2.up, 0 }, { Vector2.left, 0 }, };
 
         public static List<int> allUsageNums = new() { 0, 1, 2, 3, 4 };
         public static int[,] UkrainCityMapGeneration(int[,] virtualMap, List<string> cityNames, int currCityIndex)
         {
-            Vector2 virtualMapSize = new (virtualMap.GetLength(0), virtualMap.GetLength(1));
+            Vector2 virtualMapSize = new(virtualMap.GetLength(0), virtualMap.GetLength(1));
 
-            
+
             DrawRectOnVirtualMap(virtualMap, new Vector2(1, virtualMapSize.y - 1 - zoneHeight), new Vector2(virtualMapSize.x - 1, zoneHeight), 0);
             DrawRectOnVirtualMap(virtualMap, new Vector2(1), new Vector2(virtualMapSize.x - 2, zoneHeight), 0);
 
-            for (int i = 0; i < 2; i++) 
-            { 
-                RunSmallWormInVirtualMap(virtualMap, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), virtualMapSize.y - zoneHeight), Vector2.upRight, virtualMapSize - 1, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), zoneHeight), allUsageNums, 0, randomChanceGo:-100);
+            for (int i = 0; i < 2; i++)
+            {
+                RunSmallWormInVirtualMap(virtualMap, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), virtualMapSize.y - zoneHeight), Vector2.upRight, virtualMapSize - 1, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), zoneHeight), allUsageNums, 0, randomChanceGo: -100);
             }
-            for (int i = 0; i < 5; i++) 
-            { 
-                RunMediumWormInVirtualMap(virtualMap, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), virtualMapSize.y - zoneHeight), Vector2.upRight, virtualMapSize - 1, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), zoneHeight), allUsageNums, 0, randomChanceGo:-100); 
+            for (int i = 0; i < 5; i++)
+            {
+                RunMediumWormInVirtualMap(virtualMap, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), virtualMapSize.y - zoneHeight), Vector2.upRight, virtualMapSize - 1, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), zoneHeight), allUsageNums, 0, randomChanceGo: -100);
             }
-            for (int i = 0; i < 3; i++) 
-            { 
-                RunBigWormInVirtualMap(virtualMap, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), virtualMapSize.y - zoneHeight), Vector2.upRight, virtualMapSize - 1, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), zoneHeight), allUsageNums, 0, randomChanceGo:-100); 
+            for (int i = 0; i < 3; i++)
+            {
+                RunBigWormInVirtualMap(virtualMap, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), virtualMapSize.y - zoneHeight), Vector2.upRight, virtualMapSize - 1, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), zoneHeight), allUsageNums, 0, randomChanceGo: -100);
             }
-            
-            for (int i = -1; i <= 1; i += 2) 
+
+            for (int i = -1; i <= 1; i += 2)
             {
                 Vector2 startPos;
                 Vector2 targetPos;
@@ -226,16 +220,16 @@ namespace KTZEngine
 
                 RunBigWormInVirtualMap(
                     virtualMap,
-                    startPos, 
-                    Vector2.upRight, 
+                    startPos,
+                    Vector2.upRight,
                     virtualMapSize - 1,
-                    targetPos, 
-                    allUsageNums, 
-                    0, 
+                    targetPos,
+                    allUsageNums,
+                    0,
                     randomChanceGo: -100
-                    ); 
+                    );
             }
-            for (int i = 0; i < 3; i++) 
+            for (int i = 0; i < 3; i++)
             {
                 Vector2 startPos;
                 Vector2 targetPos;
@@ -256,16 +250,16 @@ namespace KTZEngine
                     startPos,
                     Vector2.upRight,
                     virtualMapSize - 1,
-                    targetPos, 
+                    targetPos,
                     new List<int>() { 0, 1 },
-                    0, 
+                    0,
                     randomChanceGo: -100
-                    ); 
+                    );
             }
-            
+
 
             for (int i = 0; i < 13; i++) { CreateStructureHard(virtualMap, mediumBoxKnot, new Vector2(KTZEngineAplication.random.Next(mediumBoxKnot.GetLength(0), virtualMapSize.x - mediumBoxKnot.GetLength(0)), KTZEngineAplication.random.Next(mediumBoxKnot.GetLength(1) + zoneHeight, virtualMapSize.y - mediumBoxKnot.GetLength(1) - zoneHeight))); }
-            for (int i = 0; i < 10; i++) { CreateStructureHard(virtualMap, smallBoxKnot, new Vector2(KTZEngineAplication.random.Next(smallBoxKnot.GetLength(0), virtualMapSize.x - smallBoxKnot.GetLength(0)), KTZEngineAplication.random.Next(smallBoxKnot.GetLength(1) + zoneHeight, virtualMapSize.y - smallBoxKnot.GetLength(1) - zoneHeight)));}
+            for (int i = 0; i < 10; i++) { CreateStructureHard(virtualMap, smallBoxKnot, new Vector2(KTZEngineAplication.random.Next(smallBoxKnot.GetLength(0), virtualMapSize.x - smallBoxKnot.GetLength(0)), KTZEngineAplication.random.Next(smallBoxKnot.GetLength(1) + zoneHeight, virtualMapSize.y - smallBoxKnot.GetLength(1) - zoneHeight))); }
 
             for (int i = 0; i < 3; i++) { CreateStructureHard(virtualMap, bigBoxKnot, new Vector2(KTZEngineAplication.random.Next(bigBoxKnot.GetLength(0), virtualMapSize.x - bigBoxKnot.GetLength(0)), KTZEngineAplication.random.Next(bigBoxKnot.GetLength(1) + zoneHeight, virtualMapSize.y - bigBoxKnot.GetLength(1) - zoneHeight))); }
 
@@ -369,7 +363,7 @@ namespace KTZEngine
             return virtualMap;
         }
 
-        public static int[,] ChaoticGeneration(int[,] virtualMap, int eggsCount=1000, int growTimes=2, int fullNum=1)
+        public static int[,] ChaoticGeneration(int[,] virtualMap, int eggsCount = 1000, int growTimes = 2, int fullNum = 1)
         {
             Vector2 virtualMapSize = new(virtualMap.GetLength(0), virtualMap.GetLength(1));
             Vector2 pos;
@@ -403,7 +397,7 @@ namespace KTZEngine
         }
         public static int[,] CreateStructureHard(int[,] virtualMap, int[,] structure, Vector2 position)
         {
-            Vector2 mapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 mapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             // Vector2 structureSize = new Vector2(structure.GetLength(0), structure.GetLength(1));
             if (KTZMath.IsInInterval(position, Vector2.zero, mapSize))
             {
@@ -419,7 +413,7 @@ namespace KTZEngine
         }
         public static int[,] CreateStructureOnlyNum(int[,] virtualMap, int[,] structure, Vector2 position, int visibleNum = 1)
         {
-            Vector2 mapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 mapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             // Vector2 structureSize = new Vector2(structure.GetLength(0), structure.GetLength(1));
             if (KTZMath.IsInInterval(position, Vector2.zero, mapSize))
             {
@@ -436,7 +430,7 @@ namespace KTZEngine
         }
         public static int[,] CreateStructureOnlyOnNum(int[,] virtualMap, int[,] structure, Vector2 position, int allowNum = 1)
         {
-            Vector2 mapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 mapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             // Vector2 structureSize = new Vector2(structure.GetLength(0), structure.GetLength(1));
             if (KTZMath.IsInInterval(position, Vector2.zero, mapSize))
             {
@@ -453,7 +447,7 @@ namespace KTZEngine
         public static bool CreateStructureOnlyIfAllEqual(ref int[,] virtualMap, int[,] structure, Vector2 position, int allowNum = 0)
         {
             int[,] basicVirtualMap = VirtualMapCopy(virtualMap);
-            Vector2 mapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 mapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             if (KTZMath.IsInInterval(position, Vector2.zero, mapSize))
             {
                 for (int x = 0; x < structure.GetLength(0); x++)
@@ -478,12 +472,12 @@ namespace KTZEngine
                 {
                     for (int y = 0; y < structure.GetLength(1); y++)
                     {
-                        if (KTZMath.IsInInterval(new Vector2(x + position.x, y + position.y), Vector2.zero, mapSize) && allowZoneNums.Contains(virtualMap[x + position.x, y + position.y])) 
+                        if (KTZMath.IsInInterval(new Vector2(x + position.x, y + position.y), Vector2.zero, mapSize) && allowZoneNums.Contains(virtualMap[x + position.x, y + position.y]))
                         {
                             if (structEmptyNums.Contains(structure[x, y])) { continue; }
                             else { virtualMap[x + position.x, y + position.y] = structure[x, y]; }
                         }
-                        
+
                         else { virtualMap = basicVirtualMap; return false; }
                     }
                 }
@@ -536,7 +530,7 @@ namespace KTZEngine
                 {
                     for (int y = 0; y < layer.layerHeight; y++)
                     {
-                        if (virtualMap[x, y] == objects.Keys.ElementAt(i)) { game.AddExistGameObject( objects.Values.ElementAt(i), new Vector2(x, y), objects.Values.ElementAt(i).name + KTZEngineAplication.GenerateProtectName() ); }
+                        if (virtualMap[x, y] == objects.Keys.ElementAt(i)) { game.AddExistGameObject(objects.Values.ElementAt(i), new Vector2(x, y), objects.Values.ElementAt(i).name + KTZEngineAplication.GenerateProtectName()); }
                     }
                 }
             }
@@ -559,7 +553,7 @@ namespace KTZEngine
 
         public static int[,] EdgeGeneration(int[,] virtualMap)
         {
-            Vector2 virtualMapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 virtualMapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             for (int x = 0; x < virtualMap.GetLength(0); x++)
             {
                 virtualMap[x, 0] = 1;
@@ -572,10 +566,10 @@ namespace KTZEngine
             }
             return virtualMap;
         }
-        
+
         public static int[,] DrawRectOnVirtualMap(int[,] virtualMap, Vector2 start, Vector2 size, int fillValue)
         {
-            Vector2 virtualMapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 virtualMapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             for (int x = 0; x < size.x; x++)
             {
                 if (KTZMath.IsInInterval(x + start.x, 0, virtualMapSize.x))
@@ -597,7 +591,7 @@ namespace KTZEngine
             int[,] path = CreateVirtualMap(virtualMap.GetLength(0), virtualMap.GetLength(1), 0);
             path[fieldStart.x, fieldStart.y] = traceNum;
 
-            Vector2 virtualMapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 virtualMapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             Vector2 pos = start;
             Vector2 targetDir = (target - pos).Direction;
             Vector2 moveDir = targetDir;
@@ -648,9 +642,9 @@ namespace KTZEngine
             int[,] path = CreateVirtualMap(virtualMap.GetLength(0), virtualMap.GetLength(1), 0);
             path[fieldStart.x, fieldStart.y] = traceNum;
 
-            Vector2 virtualMapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 virtualMapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             Vector2 pos = start;
-            Vector2 targetDir = new (Math.Sign(target.x - pos.x), Math.Sign(target.y - pos.y));
+            Vector2 targetDir = new(Math.Sign(target.x - pos.x), Math.Sign(target.y - pos.y));
             Vector2 moveDir = targetDir;
             Vector2 newPos;
             Vector2 drawTilePos;
@@ -705,9 +699,9 @@ namespace KTZEngine
             int[,] path = CreateVirtualMap(virtualMap.GetLength(0), virtualMap.GetLength(1), 0);
             path[fieldStart.x, fieldStart.y] = traceNum;
 
-            Vector2 virtualMapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 virtualMapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             Vector2 pos = start;
-            Vector2 targetDir = new (Math.Sign(target.x - pos.x), Math.Sign(target.y - pos.y));
+            Vector2 targetDir = new(Math.Sign(target.x - pos.x), Math.Sign(target.y - pos.y));
             Vector2 moveDir = targetDir;
             Vector2 newPos;
             Vector2 drawTilePos;
@@ -762,8 +756,8 @@ namespace KTZEngine
 
         public static int[,] HardClearStructureOnVirtualMap(int[,] virtualMap, int[,] structureForClear, int emptyInt, Vector2 startFieldForClear, Vector2 endFieldForClear)
         {
-            Vector2 virtualMapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
-            Vector2 structureSize = new (structureForClear.GetLength(0) - 1, structureForClear.GetLength(1) - 1);
+            Vector2 virtualMapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 structureSize = new(structureForClear.GetLength(0) - 1, structureForClear.GetLength(1) - 1);
 
             startFieldForClear = KTZMath.CutNumberToInterval(startFieldForClear, Vector2.zero, virtualMapSize);
             endFieldForClear = KTZMath.CutNumberToInterval(endFieldForClear, Vector2.zero, virtualMapSize - structureSize);
@@ -774,7 +768,7 @@ namespace KTZEngine
             {
                 for (int x = startFieldForClear.x; x < endFieldForClear.x; x++)
                 {
-                    for(int y = startFieldForClear.y; y < endFieldForClear.y; y++)
+                    for (int y = startFieldForClear.y; y < endFieldForClear.y; y++)
                     {
                         zoneNice = true;
                         for (int xStructure = 0; xStructure <= structureSize.x && zoneNice; xStructure++)
@@ -792,7 +786,7 @@ namespace KTZEngine
                                 {
                                     virtualMap[x + xGen, y + yGen] = emptyInt;
                                 }
-                            } 
+                            }
                         }
                     }
                 }
@@ -801,10 +795,10 @@ namespace KTZEngine
 
             return virtualMap;
         }
-        
+
         public static int[,] VectorsClearStructureOnVirtualMap(int[,] virtualMap, Dictionary<Vector2, int> tiles, int emptyInt, Vector2 startFieldForClear, Vector2 endFieldForClear)
         {
-            Vector2 virtualMapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 virtualMapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             // Vector2 structureSize = new Vector2(structureForClear.GetLength(0) - 1, structureForClear.GetLength(1) - 1);
 
 
@@ -819,12 +813,12 @@ namespace KTZEngine
             {
                 for (int x = startFieldForClear.x; x < endFieldForClear.x; x++)
                 {
-                    for(int y = startFieldForClear.y; y < endFieldForClear.y; y++)
+                    for (int y = startFieldForClear.y; y < endFieldForClear.y; y++)
                     {
                         zoneNice = true;
                         for (int i = 0; i < tilesKeys.Count && zoneNice; i++)
                         {
-                            if (virtualMap[x + tilesKeys[i].x, y + tilesKeys[i].y] != tilesValues[i]) { zoneNice = false;  }
+                            if (virtualMap[x + tilesKeys[i].x, y + tilesKeys[i].y] != tilesValues[i]) { zoneNice = false; }
                         }
                         if (zoneNice)
                         {
@@ -841,7 +835,7 @@ namespace KTZEngine
             return virtualMap;
         }
 
-        public static int[,] OptimizationOfWalls(int [,] virtualMap, int fullWallNum, int emptyWallNum)
+        public static int[,] OptimizationOfWalls(int[,] virtualMap, int fullWallNum, int emptyWallNum)
         {
             int[,] optimizateMap = CreateVirtualMap(virtualMap.GetLength(0), virtualMap.GetLength(1), 0);
             Vector2 virtualMapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
@@ -868,14 +862,14 @@ namespace KTZEngine
                 for (int y = 1; y < virtualMapSize.y; y++)
                 {
                     if (optimizateMap[x, y] == 1) { virtualMap[x, y] = emptyWallNum; }
-                    
+
                 }
             }
 
             return virtualMap;
         }
-        
-        public static int[,] BombHoleGenerate(int[,] virtualMap, int holeNum, int eggsCount=14, int growTimes=8)
+
+        public static int[,] BombHoleGenerate(int[,] virtualMap, int holeNum, int eggsCount = 14, int growTimes = 8)
         {
             Vector2 virtualMapSize = new Vector2(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             Vector2 currVectorpos;
@@ -892,9 +886,9 @@ namespace KTZEngine
 
             for (int i = 0; i < growTimes; i++)
             {
-                for(int x = 1; x < virtualMapSize.x; x++)
+                for (int x = 1; x < virtualMapSize.x; x++)
                 {
-                    for (int y = 1; y < virtualMapSize.y ; y++)
+                    for (int y = 1; y < virtualMapSize.y; y++)
                     {
                         chance = 1;
                         for (int dirI = 0; dirI < Vector2.eightDirections.Count; dirI++)
@@ -902,7 +896,7 @@ namespace KTZEngine
                             currVectorpos = new Vector2(x + Vector2.eightDirections[dirI].x, y + Vector2.eightDirections[dirI].y);
                             chance = (virtualMap[currVectorpos.x, currVectorpos.y] == holeNum) ? chance + 2 : chance;
                         }
-                        if (KTZEngineAplication.random.Next(chance) > 4) { virtualMap[x, y] = holeNum; } 
+                        if (KTZEngineAplication.random.Next(chance) > 4) { virtualMap[x, y] = holeNum; }
                     }
                 }
             }
@@ -910,7 +904,7 @@ namespace KTZEngine
             return virtualMap;
         }
 
-        
+
         public static int[,] CityNameBoxGeneration(int[,] virtualMap, Vector2 pos, string text)
         {
             int textLen = text.Length;
@@ -922,15 +916,15 @@ namespace KTZEngine
 
             CreateStructureHard(virtualMap, generateStruct, pos + new Vector2(-2, -3));
 
-            
+
 
             return virtualMap;
         }
 
 
-        public static int[,] GeneratePricklyHedgehogs(int[,] refVirtualMap, List<int> genCounts=null)
+        public static int[,] GeneratePricklyHedgehogs(int[,] refVirtualMap, List<int> genCounts = null)
         {
-            if (genCounts == null) { genCounts = new List<int>() { 4, 4, 3, 6 };}
+            if (genCounts == null) { genCounts = new List<int>() { 4, 4, 3, 6 }; }
 
             int[,] virtualMap = VirtualMapCopy(refVirtualMap);
             Vector2 virtualMapSize = new Vector2(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
@@ -999,7 +993,7 @@ namespace KTZEngine
             {
                 for (int q = 0; q < genCounts[i];)
                 {
-                    if (CreateStructureOnlyIfAllNotEmptyEqual(ref virtualMap, structures[i][KTZEngineAplication.random.Next(2 )], new Vector2(KTZEngineAplication.random.Next(virtualMapSize.x), KTZEngineAplication.random.Next(virtualMapSize.y - zoneHeight)), new List<int>() { 0 }, new List<int>() { 0, 4 })) { q++; }
+                    if (CreateStructureOnlyIfAllNotEmptyEqual(ref virtualMap, structures[i][KTZEngineAplication.random.Next(2)], new Vector2(KTZEngineAplication.random.Next(virtualMapSize.x), KTZEngineAplication.random.Next(virtualMapSize.y - zoneHeight)), new List<int>() { 0 }, new List<int>() { 0, 4 })) { q++; }
                 }
             }
 

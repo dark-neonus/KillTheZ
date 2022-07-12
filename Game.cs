@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics;
-
+using System.Linq;
 using Vector2 = Vector2Namespace.Vector2;
 
 
@@ -19,8 +17,8 @@ namespace KTZEngine
 
         public Vector2 windowSize;
 
-        public Dictionary<string, GameObject> gameObjects = new ();
-        public List<GameObject> gameObjectsList = new ();
+        public Dictionary<string, GameObject> gameObjects = new();
+        public List<GameObject> gameObjectsList = new();
 
         private GameObject gmObj;
 
@@ -36,7 +34,7 @@ namespace KTZEngine
         //─────────────────────────Methods─────────────────────────|
         public GameObject CreateGameObject(string name, GameLayer _gameLayer, Vector2 _position, char ico, List<string> ids = null)
         {
-            try { GameObject newGameObj = new (name, _gameLayer, _position, ico, ids); gameObjects.Add(name, newGameObj); return newGameObj; }
+            try { GameObject newGameObj = new(name, _gameLayer, _position, ico, ids); gameObjects.Add(name, newGameObj); return newGameObj; }
             catch (ArgumentException e) { KTZEngineAplication.MessageOutput(e.GetType().Name.ToString() + ": " + e.Message.ToString()); throw new Exception(e.Message); }
         }
         public void AddExistGameObject(GameObject newGameObj)
@@ -46,8 +44,9 @@ namespace KTZEngine
         }
         public void AddExistGameObject(GameObject newGameObj, Vector2 pos, string name)
         {
-            try { 
-                newGameObj.globalPosition = pos; 
+            try
+            {
+                newGameObj.globalPosition = pos;
                 newGameObj.name = name;
                 gameObjects.Add(newGameObj.name, newGameObj);
                 gameObjectsList.Add(newGameObj);
@@ -71,8 +70,8 @@ namespace KTZEngine
                 }
 
                 return 0;
-             }
-             catch (ArgumentException e) { KTZEngineAplication.MessageOutput(e.GetType().Name.ToString() + ": " + e.Message.ToString()); throw new Exception(e.Message); }
+            }
+            catch (ArgumentException e) { KTZEngineAplication.MessageOutput(e.GetType().Name.ToString() + ": " + e.Message.ToString()); throw new Exception(e.Message); }
         }
 
         public void Start()
@@ -105,9 +104,9 @@ namespace KTZEngine
         }
         public override void AfterUpdate() { }
 
-        public virtual void PreUpdateGame () { }
-        public virtual void UpdateGame () { }
-        public virtual void AfterUpdateGame () { }
+        public virtual void PreUpdateGame() { }
+        public virtual void UpdateGame() { }
+        public virtual void AfterUpdateGame() { }
 
         // public virtual void SpecialUpdate() { }
 
@@ -152,7 +151,7 @@ namespace KTZEngine
             }
         }
 
-        public void PostProcessing(Vector2 coord ,char symbol)
+        public void PostProcessing(Vector2 coord, char symbol)
         {
             Console.CursorVisible = false;
             Console.SetCursorPosition(coord.x, windowSize.y - coord.y - 1);
@@ -173,7 +172,7 @@ namespace KTZEngine
     public class GameGrid
     {
 
-        public Dictionary<string, GameLayer> layers = new () { };
+        public Dictionary<string, GameLayer> layers = new() { };
         public char emptyChar = ' ';
 
         public Grid grid;
@@ -236,7 +235,7 @@ namespace KTZEngine
                                 if (KTZMath.IsInInterval(currPos, layer.layerStartPosition, layer.layerStartPosition + new Vector2(layer.layerWidth - 1, layer.layerHeight - 1)))
                                 {
                                     currPosInLayer = currPos - layer.layerStartPosition;
-                                    grid.grid[x, y] = layer.grid[currPosInLayer.x, currPosInLayer.y]; 
+                                    grid.grid[x, y] = layer.grid[currPosInLayer.x, currPosInLayer.y];
                                 }
                             }
                         }
@@ -248,7 +247,8 @@ namespace KTZEngine
             {
                 int q = 0;
                 postProcessY = sumPostProcessingData.ElementAt(i).Key.y;
-                if (KTZMath.IsInInterval(postProcessY, 0, grid.Height - 1)) {
+                if (KTZMath.IsInInterval(postProcessY, 0, grid.Height - 1))
+                {
 
                     postProcessX = sumPostProcessingData.ElementAt(i).Key.x;
                     for (int x = postProcessX; x < grid.Width && x >= 0 && q < sumPostProcessingData.ElementAt(i).Value.Length; x++)
@@ -271,29 +271,29 @@ namespace KTZEngine
         public void Draw() { grid.Draw(); }
         public GameLayer CreateLayer(string name_, int width, int height, int startX, int startY, char emptyChar, int priority)
         {
-            Vector2 layerSize = new (width, height);
-            Vector2 layerStartPos = new (startX, startY);
-            GameLayer newLayer = new (layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
+            Vector2 layerSize = new(width, height);
+            Vector2 layerStartPos = new(startX, startY);
+            GameLayer newLayer = new(layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
             layers.Add(newLayer.name, newLayer);
             return layers[newLayer.name];
         }
         public GameLayer CreateLayer(string name_, Vector2 layerSize, int startX, int startY, char emptyChar, int priority)
         {
-            Vector2 layerStartPos = new (startX, startY);
-            GameLayer newLayer = new (layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
+            Vector2 layerStartPos = new(startX, startY);
+            GameLayer newLayer = new(layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
             layers.Add(newLayer.name, newLayer);
             return layers[newLayer.name];
         }
         public GameLayer CreateLayer(string name_, int width, int height, Vector2 layerStartPos, char emptyChar, int priority)
         {
-            Vector2 layerSize = new (width, height);
-            GameLayer newLayer = new (layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
+            Vector2 layerSize = new(width, height);
+            GameLayer newLayer = new(layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
             layers.Add(newLayer.name, newLayer);
             return layers[newLayer.name];
         }
         public GameLayer CreateLayer(string name_, Vector2 layerSize, Vector2 layerStartPos, char emptyChar, int priority)
         {
-            GameLayer newLayer = new (layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
+            GameLayer newLayer = new(layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
             layers.Add(newLayer.name, newLayer);
             return layers[newLayer.name];
         }
@@ -373,15 +373,15 @@ namespace KTZEngine
             return row;
         }
 
-        public StaticGameObject CreateStaticObject(Vector2 position_, char ico, List<string> ids=null)
+        public StaticGameObject CreateStaticObject(Vector2 position_, char ico, List<string> ids = null)
         {
-            StaticGameObject newStaticGameObj = new (position_, this, ico, ids);
+            StaticGameObject newStaticGameObj = new(position_, this, ico, ids);
             staticObjects.Add(newStaticGameObj);
             newStaticGameObj.DrawOnLayerGrid();
             return newStaticGameObj;
         }
 
-        public void AddExistStaticObject( StaticGameObject obj_, Vector2 localPos)
+        public void AddExistStaticObject(StaticGameObject obj_, Vector2 localPos)
         {
             StaticGameObject obj = obj_.Copy();
             obj.layer = this;
@@ -419,11 +419,11 @@ namespace KTZEngine
         public int priority = 1;
         public char icon;
 
-        public List<string> id = new ();
-        public List<Vector2> blockedDirections = new ();
+        public List<string> id = new();
+        public List<Vector2> blockedDirections = new();
 
         //─────────────────────────GameObject construcor─────────────────────────|
-        public GameObject(string objName, GameLayer thisLayer, Vector2 _position, char ico, List<string> ids=null, int priority_=1)
+        public GameObject(string objName, GameLayer thisLayer, Vector2 _position, char ico, List<string> ids = null, int priority_ = 1)
         {
             layer = thisLayer;
             name = objName;
@@ -462,7 +462,7 @@ namespace KTZEngine
 
             // ChildUpdate
             Update();
-            
+
         }
         public void GameObjectAfterUpdate()
         {
@@ -495,7 +495,7 @@ namespace KTZEngine
         public GameLayer layer;
         public char ico;
 
-        public List<string> id = new ();
+        public List<string> id = new();
 
         public StaticGameObject(Vector2 position_, GameLayer layer_, char ico_, List<string> ids = null)
         {
@@ -508,7 +508,7 @@ namespace KTZEngine
 
         public void DrawOnLayerGrid()
         {
-            if(KTZMath.IsInInterval(localPosition, Vector2.zero, new Vector2(layer.layerWidth - 1, layer.layerHeight - 1)))
+            if (KTZMath.IsInInterval(localPosition, Vector2.zero, new Vector2(layer.layerWidth - 1, layer.layerHeight - 1)))
             {
                 layer.grid[localPosition.x, localPosition.y] = ico;
             }

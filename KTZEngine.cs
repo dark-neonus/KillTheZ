@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Versioning;
@@ -24,7 +23,7 @@ namespace KTZEngine
 
         public const string smallEnglishAlphabet = "abcdefghijklmnopqrstuvwxyz";
 
-        public static Random random = new ();
+        public static Random random = new();
 
         public static string windowTitle = standartWindowTitle;
         public static bool consoleResizable = standartConsoleResizable;
@@ -36,17 +35,17 @@ namespace KTZEngine
         public static int windowWidth;
         public static int windowHeight;
 
-        public Dictionary<string, GameTab> gameTabs = new () { };
-        public Dictionary<string, Action> tabsBehavior = new () { };
+        public Dictionary<string, GameTab> gameTabs = new() { };
+        public Dictionary<string, Action> tabsBehavior = new() { };
         public string currentGameTabName;
-        
+
         DateTime start;
         TimeSpan time;
 
         public float currentAverageFPS;
         public float[] arrayOfFPS;
 
-        public static Exception lolException = new ("lol is here");
+        public static Exception lolException = new("lol is here");
 
         // public ConsoleColor ConsoleBackgroundColor = ConsoleColor.Black;
         // public ConsoleColor ConsoleForegroundColor = ConsoleColor.Gray;
@@ -83,7 +82,7 @@ namespace KTZEngine
             isInAplication = true;
 
             UpdateConsoleColors();
-            
+
 
             currentAverageFPS = 0;
             arrayOfFPS = new float[60];
@@ -130,7 +129,7 @@ namespace KTZEngine
         {
             using StreamWriter sw = File.AppendText("Message.txt");
             sw.WriteLine("{0}\n({1})\n{2}", new string('_', 50), DateTime.Now, text);
-            
+
         }
 
 
@@ -211,8 +210,8 @@ namespace KTZEngine
     public class DataBlocksTab : GameTab
     {
         public Grid grid;
-        public Dictionary<string, DBTTextField> textFields = new () { };
-        public Dictionary<string, DBTVerticalList> verticalLists = new () { };
+        public Dictionary<string, DBTTextField> textFields = new() { };
+        public Dictionary<string, DBTVerticalList> verticalLists = new() { };
 
         public DataBlocksTab(KTZEngineAplication game_, string name_, int ups_, char emptyChar_ = ' ') : base(game_, name_, ups_)
         {
@@ -225,13 +224,13 @@ namespace KTZEngine
 
         public DBTTextField CreateTextField(string fieldName, Vector2 position, string text)
         {
-            DBTTextField textField = new (fieldName, position, text);
+            DBTTextField textField = new(fieldName, position, text);
             textFields.Add(textField.name, textField);
             return textField;
         }
         public DBTVerticalList CreateVerticalList(string listName, Vector2 position, List<string> listOfLines_)
         {
-            DBTVerticalList verticalList = new (listName, position, listOfLines_);
+            DBTVerticalList verticalList = new(listName, position, listOfLines_);
             verticalLists.Add(verticalList.name, verticalList);
             return verticalList;
         }
@@ -297,7 +296,7 @@ namespace KTZEngine
             }
         }
 
-        public void NumerateList(string separator= standartSeparator)
+        public void NumerateList(string separator = standartSeparator)
         {
             for (int i = 0; i < height; i++)
             {
@@ -334,7 +333,7 @@ namespace KTZEngine
         public const string standartSelectItemRightSign = " <";
         public const string standartSelectItemLeftSign = "> ";
 
-        public List<SLTItem> itemList = new () {};
+        public List<SLTItem> itemList = new() { };
         public int selectedElemIndex = 0;
         public int distanceBetweenElements;
         public string selectItemRightSign;
@@ -351,15 +350,15 @@ namespace KTZEngine
         private int postProcessY;
 
         //─────────────────────────SelectListTab construcor─────────────────────────|
-        public SelectListTab(KTZEngineAplication aplication_, List<SLTItem> SLTItemList, string name_, int ups_, string selectItemRightSign_=standartSelectItemRightSign, string selectItemLeftSign_ = standartSelectItemLeftSign, int distanceBetweenElements_=standartDistanceBetweenElements) : base(aplication_, name_, ups_)
+        public SelectListTab(KTZEngineAplication aplication_, List<SLTItem> SLTItemList, string name_, int ups_, string selectItemRightSign_ = standartSelectItemRightSign, string selectItemLeftSign_ = standartSelectItemLeftSign, int distanceBetweenElements_ = standartDistanceBetweenElements) : base(aplication_, name_, ups_)
         {
             itemList = SLTItemList;
             selectItemRightSign = selectItemRightSign_;
             selectItemLeftSign = selectItemLeftSign_;
-            for (int i=0; i<itemList.Count; i++) { itemList[i].orderNumber = i; }
+            for (int i = 0; i < itemList.Count; i++) { itemList[i].orderNumber = i; }
             distanceBetweenElements = distanceBetweenElements_;
 
-            keyManager = new KeyManager(new Dictionary<ConsoleKey, Action> { 
+            keyManager = new KeyManager(new Dictionary<ConsoleKey, Action> {
             {ConsoleKey.UpArrow, SelectPreviousElement },
             {ConsoleKey.W, SelectPreviousElement },
             {ConsoleKey.DownArrow, SelectNextElement },
@@ -398,7 +397,8 @@ namespace KTZEngine
             sumPostProcessingData = regularPostProcessingData.Concat(disposablePostProcessingData).ToList();
             for (int i = 0; i < sumPostProcessingData.Count; i++)
             {
-                if (KTZMath.IsInInterval(sumPostProcessingData[i].Key, Vector2.zero, new Vector2(KTZEngineAplication.windowWidth, KTZEngineAplication.windowHeight))) {
+                if (KTZMath.IsInInterval(sumPostProcessingData[i].Key, Vector2.zero, new Vector2(KTZEngineAplication.windowWidth, KTZEngineAplication.windowHeight)))
+                {
                     Console.SetCursorPosition(sumPostProcessingData[i].Key.x, sumPostProcessingData[i].Key.y);
                     Console.Write(sumPostProcessingData[i].Value);
                 }
@@ -580,15 +580,15 @@ namespace KTZEngine
 
         public void SelectNextElement() { selectedElemIndex++; }
         public void SelectPreviousElement() { selectedElemIndex--; }
-        public void SelectLeftItem() 
+        public void SelectLeftItem()
         {
             itemList[selectedElemIndex].ChangeSelectIndex(-1);
             if (itemList[selectedElemIndex].isActivateWhenVisible)
             {
                 ActivateCurrentElement();
             }
-        } 
-        public void SelectRightItem() 
+        }
+        public void SelectRightItem()
         {
             itemList[selectedElemIndex].ChangeSelectIndex(1);
             if (itemList[selectedElemIndex].isActivateWhenVisible)
@@ -670,7 +670,7 @@ namespace KTZEngine
     public class Language
     {
         public string name;
-        public Dictionary<string, string> dictionary = new () { };
+        public Dictionary<string, string> dictionary = new() { };
 
         public Language(string languageName)
         {
@@ -680,7 +680,7 @@ namespace KTZEngine
 
     public class GameText
     {
-        public Dictionary<string, Language> languages = new () { };
+        public Dictionary<string, Language> languages = new() { };
         public string currentLanguageName;
         public int languagesCount;
 
@@ -736,7 +736,7 @@ namespace KTZEngine
         public int Height;
         public char emptyChar;
 
-        public Grid(string name_, Vector2 startPosition_, int gridW, int gridH, char emptyChar_=standartEmptyChar)
+        public Grid(string name_, Vector2 startPosition_, int gridW, int gridH, char emptyChar_ = standartEmptyChar)
         {
             name = name_;
             startPosition = startPosition_;
@@ -774,7 +774,7 @@ namespace KTZEngine
         public void Draw()
         {
             int conBuffHeight = Math.Min(Height, Console.BufferHeight);
-            System.Text.StringBuilder outString = new ();
+            System.Text.StringBuilder outString = new();
             if (KTZMath.IsCubeVectorInFieldVector(startPosition, Width, Height, Vector2.zero, KTZEngineAplication.windowWidth, KTZEngineAplication.windowHeight))
             {
                 for (int y = conBuffHeight - 1; y >= 0; y--)
@@ -785,7 +785,7 @@ namespace KTZEngine
                     }
                 }
             }
-            for (int y = 0; y < Height - 1 ; y++)
+            for (int y = 0; y < Height - 1; y++)
             {
                 Console.SetCursorPosition(0, y);
                 Console.Write(outString.ToString(y * Width, Width));
@@ -799,7 +799,7 @@ namespace KTZEngine
 
     public class KeyManager
     {
-        public Dictionary<ConsoleKey, Action> keyPressActions = new () { };
+        public Dictionary<ConsoleKey, Action> keyPressActions = new() { };
         public ConsoleKey? pressedKey = ConsoleEvents.GetKey();
         public bool isAnyKeyPressed = false;
 
@@ -816,7 +816,7 @@ namespace KTZEngine
                 foreach (var keyAndAction in keyPressActions)
                 {
                     if (pressedKey == keyAndAction.Key) { keyAndAction.Value(); }
-                    
+
                 }
             }
             else
@@ -827,11 +827,11 @@ namespace KTZEngine
 
         public static void ClearKeyPressBuffer()
         {
-            while(Console.KeyAvailable)
+            while (Console.KeyAvailable)
             {
                 Console.ReadKey(true);
             }
         }
     }
-    
+
 }

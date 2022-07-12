@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Vector2 = Vector2Namespace.Vector2;
 
@@ -51,7 +48,9 @@ namespace KTZEngine
             if ((IsInInterval(cubeStart, fieldStart, fieldStart + fieldSize - 1)) || (IsInInterval(cubeStart + cubeSize - 1, fieldStart, fieldStart + fieldSize - 1)) || (IsInInterval(cubeStart + cubeSize.x - 1, fieldStart, fieldStart + fieldSize - 1)) || (IsInInterval(cubeStart + cubeSize.y - 1, fieldStart, fieldStart + fieldSize - 1)))
             {
                 return true;
-            } else {
+            }
+            else
+            {
                 for (int x = 0; x < cubeSize.x; x++)
                 {
                     for (int y = 0; y < cubeSize.y; y++)
@@ -72,7 +71,9 @@ namespace KTZEngine
             if ((IsInInterval(cubeStart, fieldStart, fieldStart + fieldSize - 1)) || (IsInInterval(cubeStart + cubeSize - 1, fieldStart, fieldStart + fieldSize - 1)) || (IsInInterval(cubeStart + cubeSize.x - 1, fieldStart, fieldStart + fieldSize - 1)) || (IsInInterval(cubeStart + cubeSize.y - 1, fieldStart, fieldStart + fieldSize - 1)))
             {
                 return true;
-            } else {
+            }
+            else
+            {
                 for (int x = 0; x < cubeSize.x; x++)
                 {
                     for (int y = 0; y < cubeSize.y; y++)
@@ -167,7 +168,7 @@ namespace KTZEngine
         public static int CutNumberToInterval(int num, int start, int end)
         {
             if (start > end) { throw new Exception("Interval length must be greater than zero"); }
-            return Math.Max( Math.Min(num, end), start );
+            return Math.Max(Math.Min(num, end), start);
         }
         public static float CutNumberToInterval(float num, float start, float end)
         {
@@ -181,13 +182,13 @@ namespace KTZEngine
         }
 
         //────────────────────────────────────────────GetCurrentNumberPersent────────────────────────────────────────────|
-        public static int GetCurrentNumberPersent(int num, int measureNum, int start=0, int end=100, bool absolute=false, bool cutToMax=true, bool cutToMin=true)
+        public static int GetCurrentNumberPersent(int num, int measureNum, int start = 0, int end = 100, bool absolute = false, bool cutToMax = true, bool cutToMin = true)
         {
             if (start >= end) { throw new Exception("Interval length must be greater than zero"); }
             if (absolute) { int change = Math.Abs(Math.Min(0, start)); start = 0; end = Math.Abs(end) + change; num = Math.Abs(num); }
             int percents = (int)Math.Round((float)(num / measureNum * (end - start)));
 
-            
+
             if (percents < start && cutToMin) { percents = start; }
             if (percents > end && cutToMax) { percents = end; }
 
@@ -209,7 +210,7 @@ namespace KTZEngine
         }
 
         //────────────────────────────────────────────GetFloatNuberPersentes────────────────────────────────────────────|
-        public static float GetFloatNuberPersentes(int num, int measureNum, bool absolute=true)
+        public static float GetFloatNuberPersentes(int num, int measureNum, bool absolute = true)
         {
             return GetCurrentNumberPersent(num, measureNum, 0, 100, absolute) / 100;
         }
