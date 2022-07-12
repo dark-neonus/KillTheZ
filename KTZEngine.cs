@@ -342,6 +342,14 @@ namespace KTZEngine
         public bool drawRightSign = true;
         public bool drawLeftSign = true;
 
+
+        public List<KeyValuePair<Vector2, string>> regularPostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
+        public List<KeyValuePair<Vector2, string>> disposablePostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
+        public List<KeyValuePair<Vector2, string>> sumPostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
+
+        private int postProcessX;
+        private int postProcessY;
+
         //─────────────────────────SelectListTab construcor─────────────────────────|
         public SelectListTab(KTZEngineAplication aplication_, List<SLTItem> SLTItemList, string name_, int ups_, string selectItemRightSign_=standartSelectItemRightSign, string selectItemLeftSign_ = standartSelectItemLeftSign, int distanceBetweenElements_=standartDistanceBetweenElements) : base(aplication_, name_, ups_)
         {
@@ -386,6 +394,17 @@ namespace KTZEngine
 
                 Console.WriteLine(leftSign + item.text + rightSign);
             }
+
+            sumPostProcessingData = regularPostProcessingData.Concat(disposablePostProcessingData).ToList();
+            for (int i = 0; i < sumPostProcessingData.Count; i++)
+            {
+                if (KTZMath.IsInInterval(sumPostProcessingData[i].Key, Vector2.zero, new Vector2(KTZEngineAplication.windowWidth, KTZEngineAplication.windowHeight))) {
+                    Console.SetCursorPosition(sumPostProcessingData[i].Key.x, sumPostProcessingData[i].Key.y);
+                    Console.Write(sumPostProcessingData[i].Value);
+                }
+            }
+
+            disposablePostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
 
         }
 
@@ -782,6 +801,7 @@ namespace KTZEngine
     {
         public Dictionary<ConsoleKey, Action> keyPressActions = new () { };
         public ConsoleKey? pressedKey = ConsoleEvents.GetKey();
+        public bool isAnyKeyPressed = false;
 
         public KeyManager(Dictionary<ConsoleKey, Action> keyOrActionDictionary = null) { if (keyOrActionDictionary != null) { keyPressActions = keyOrActionDictionary; } }
 
@@ -789,6 +809,8 @@ namespace KTZEngine
         {
             if (Console.KeyAvailable)
             {
+                isAnyKeyPressed = true;
+
                 pressedKey = ConsoleEvents.GetKey();
 
                 foreach (var keyAndAction in keyPressActions)
@@ -796,6 +818,10 @@ namespace KTZEngine
                     if (pressedKey == keyAndAction.Key) { keyAndAction.Value(); }
                     
                 }
+            }
+            else
+            {
+                isAnyKeyPressed = false;
             }
         }
 

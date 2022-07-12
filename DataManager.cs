@@ -37,8 +37,8 @@ namespace KillTheZGame
             data.virtualTime = GameData.virtualTime;
             data.warStartVirtualTime = GameData.warStartVirtualTime;
             data.currentCityIndex = GameData.currentCityIndex;
-            data.languageIndex = GameData.settingsMenu.itemList[0].selectedIndex;
-            data.themeIndex = GameData.settingsMenu.itemList[1].selectedIndex;
+            data.languageIndex = GameData.settingsMenu.itemList[1].selectedIndex;
+            data.themeIndex = GameData.settingsMenu.itemList[0].selectedIndex;
 
             File.WriteAllText(dataFileName, JsonSerializer.Serialize(data));
         }
@@ -59,11 +59,11 @@ namespace KillTheZGame
 
             GameData.currentCityIndex = data.currentCityIndex;
 
-            GameData.settingsMenu.itemList[0].selectedIndex = data.languageIndex;
-            GameData.settingsMenu.itemList[0].variants[GameData.settingsMenu.itemList[0].selectedIndex].selectAction();
-
-            GameData.settingsMenu.itemList[1].selectedIndex = data.themeIndex;
+            GameData.settingsMenu.itemList[1].selectedIndex = data.languageIndex;
             GameData.settingsMenu.itemList[1].variants[GameData.settingsMenu.itemList[1].selectedIndex].selectAction();
+
+            GameData.settingsMenu.itemList[0].selectedIndex = data.themeIndex;
+            GameData.settingsMenu.itemList[0].variants[GameData.settingsMenu.itemList[0].selectedIndex].selectAction();
         }
     }
 

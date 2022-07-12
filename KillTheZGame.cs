@@ -294,7 +294,6 @@ namespace KillTheZGame
 
         public MainMenu()
         {
-            
             menuTab = new SelectListTab(GameData.aplication, new List<SLTItem>(), "MainMenu", 20);
             TextUpdate();
             menuTab.keyManager.keyPressActions.Add(ConsoleKey.Escape, Exit);
@@ -316,7 +315,11 @@ namespace KillTheZGame
             menuTab.HeightAlignToCenter();
         }
 
-        public void StartGame() { InitGame(); RunGame(); }
+        public void StartGame() {
+            
+            InitGame(); 
+            RunGame(); 
+        }
         public void ContinueGame() { RunGame(); }
         public void Tutorial() { OpenTutorial(); }
         public void Settings() { OpenSettings(); }
@@ -422,6 +425,12 @@ namespace KillTheZGame
             itemList[0].topOffset = 6;
         }
 
+        public override void AfterUpdate()
+        {
+            base.AfterUpdate();
+            if (keyManager.isAnyKeyPressed) { DataManager.SaveData(); }
+        }
+
         public override void Draw()
         {
             base.Draw();
@@ -488,7 +497,7 @@ namespace KillTheZGame
 
         public void ClearGameData() { DataManager.RestartData(); }
 
-        public void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate(); }
+        public void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate();  }
         public void SetLangEnglish() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextUpdate(); }
         public void SetLangPolish() { GameData.aplication.gameText.currentLanguageName = GameData.polish.name; GameShell.aplic.TextUpdate(); }
 
@@ -506,7 +515,7 @@ namespace KillTheZGame
 
         public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
     }
-
+ 
     public class CreditsTab : JustTextTab
     {
         public static int linesLen = 15;
@@ -1920,7 +1929,46 @@ namespace KillTheZGame
         }
     }
 
+    public class YesNoTab : SelectListTab
+    {
+        public bool selectedBool = false;
+        public string callerTabName;
 
+        public YesNoTab() : base(GameData.aplication, new List<SLTItem>() { }, KTZEngineAplication.GenerateProtectName() + "YesNoTab", 20)
+        {
+            itemList = new List<SLTItem>()
+            {
+                new SLTItem("OptionNo", "No", SelectNo),
+                new SLTItem("OptionYes", "Yes", SelectYes),
+            };
+        }
+
+        public void EndChoice()
+        {
+            GameData.aplication.currentGameTabName = callerTabName;
+            Console.Clear();
+        }
+
+        public void GetAnswer(string question, string callerTabName_)
+        {
+            regularPostProcessingData.Clear();
+            regularPostProcessingData.Add(new KeyValuePair<Vector2, string>(new Vector2((int)((GameData.myGameWindowWidth - question.Length) / 2), 3), question));
+            callerTabName = callerTabName_;
+            GameData.aplication.currentGameTabName = name;
+        }
+
+        public void SelectNo()
+        {
+            selectedBool = false;
+            EndChoice();
+        }
+
+        public void SelectYes()
+        {
+            selectedBool = true;
+            EndChoice();
+        }
+    } 
 
     public class UkraineSoldier : GameObject
     {
@@ -2235,9 +2283,9 @@ namespace KillTheZGame
         public static Language ukraine;
         public static Language polish;
 
-        public static string nameNazar = "Nazar Pasichnyk";
-        public static string namePavlo = "Pavlo surname";
-        public static string nameRoman = "Roman surname";
+        public static string nameNazar = "DarkNeon (Nazar Pasichnyk)";
+        public static string namePavlo = "Sprinix (Pavlo Nickel)";
+        public static string nameRoman = "CoolGuy228 (Roman Havrylyuk)";
 
         public static Dictionary<string, string> gameIds = new() 
         { { "collision", "Collision" }, { "player", "Player" }, 
