@@ -6,150 +6,6 @@ using Vector2 = Vector2Namespace.Vector2;
 
 namespace KTZEngine
 {
-    public class MapGeneration
-    {
-        public static void ChaoticWallGeneration(StaticGameObject wall, int createdEggsCount = 40, int antiIntensityEdgeGrow = 5)
-        {
-            GameLayer layer = wall.layer;
-
-            int[,] virtualMap = new int[layer.layerWidth, layer.layerHeight];
-            // Fill Virtual Grid By Zero
-            for (int x = 0; x < layer.layerWidth; x++)
-            {
-                for (int y = 0; y < layer.layerHeight; y++)
-                {
-                    virtualMap[x, y] = 0;
-                }
-            }
-
-            // Create Edge Walls
-            for (int x = 0; x < layer.layerWidth; x++)
-            {
-                virtualMap[x, 0] = 1;
-                virtualMap[x, layer.layerHeight - 1] = 1;
-            }
-            for (int y = 1/*ignore corners*/; y < layer.layerHeight - 1/*ignore corners*/; y++)
-            {
-                virtualMap[0, y] = 1;
-                virtualMap[layer.layerWidth - 1, y] = 1;
-            }
-
-            // Generate Random Wall Eggs
-            for (int i = 0; i < createdEggsCount; i++)
-            {
-                virtualMap[KTZEngineAplication.random.Next(layer.layerWidth), KTZEngineAplication.random.Next(layer.layerHeight)] = 1;
-            }
-
-            // Grow Edge
-            for (int x = 1; x < layer.layerWidth - 1; x++)
-            {
-                if (KTZEngineAplication.random.Next(antiIntensityEdgeGrow) == 0 && virtualMap[x, 1] == 0) { virtualMap[x, 1] = 1; }
-                if (KTZEngineAplication.random.Next(antiIntensityEdgeGrow) == 0 && virtualMap[x, layer.layerHeight - 2] == 0) { virtualMap[x, layer.layerHeight - 2] = 1; }
-            }
-            for (int y = 1; y < layer.layerHeight - 1; y++)
-            {
-                if (KTZEngineAplication.random.Next(antiIntensityEdgeGrow) == 0 && virtualMap[1, y] == 0) { virtualMap[1, y] = 1; }
-                if (KTZEngineAplication.random.Next(antiIntensityEdgeGrow) == 0 && virtualMap[layer.layerWidth - 2, y] == 0) { virtualMap[layer.layerWidth - 2, y] = 1; }
-            }
-
-            int chance;
-            int maxChance = 100;
-            int chancePlus = (int)(100 / Vector2.eightDirections.Count) - 2;
-
-            // Wall Grow Around Eggs
-            for (int i = 1; i <= 3; i++)
-            {
-                for (int x = 1; x < layer.layerWidth - 1; x++)
-                {
-                    for (int y = 1; y < layer.layerHeight - 1; y++)
-                    {
-                        if (virtualMap[x, y] == 1) { continue; }
-                        chance = 1;
-                        for (int q = 0; q < Vector2.eightDirections.Count; q++)
-                        {
-                            if (virtualMap[x + Vector2.eightDirections[q].x, y + Vector2.eightDirections[q].y] == 1) { chance += chancePlus * chance * 2; }
-                        }
-                        if (KTZEngineAplication.random.Next(maxChance) < chancePlus)
-                        {
-                            virtualMap[x, y] = 1;
-                        }
-                    }
-                }
-            }
-
-            bool isClearCur;
-
-            // Clear Alone Walls
-            for (int x = 1; x < layer.layerWidth - 1; x++)
-            {
-                for (int y = 1; y < layer.layerHeight - 1; y++)
-                {
-                    if (virtualMap[x, y] == 0) { continue; }
-                    isClearCur = true;
-                    for (int q = 0; q < Vector2.fourDirections.Count; q++)
-                    {
-                        if (virtualMap[x + Vector2.fourDirections.ElementAt(q).x, y + Vector2.fourDirections.ElementAt(q).y] == 1) { isClearCur = false; continue; }
-                    }
-                    if (isClearCur) { virtualMap[x, y] = 0; }
-
-                }
-            }
-
-            for (int x = 0; x < layer.layerWidth; x++)
-            {
-                for (int y = 0; y < layer.layerHeight; y++)
-                {
-                    // Debug.Write(virtualMap[x, y]);
-                    if (virtualMap[x, y] == 1) { layer.AddExistStaticObject(wall, new Vector2(x, y)); }
-                }
-                // Debug.WriteLine("");
-            }
-        }
-
-        public static void LayerEdgeGeneration(StaticGameObject wall)
-        {
-            GameLayer layer = wall.layer;
-            for (int x = 0; x < layer.layerWidth; x++)
-            {
-                layer.AddExistStaticObject(wall, new Vector2(x, 0));
-                layer.AddExistStaticObject(wall, new Vector2(x, layer.layerHeight - 1));
-            }
-            for (int y = 1; y < layer.layerHeight - 1; y++)
-            {
-                layer.AddExistStaticObject(wall, new Vector2(0, y));
-                layer.AddExistStaticObject(wall, new Vector2(layer.layerWidth - 1, y));
-            }
-
-        }
-
-        public static List<Vector2> GetListOfGridCoordinats(GameLayer layer)
-        {
-            List<Vector2> coordinatesList = new();
-            for (int x = 0; x < layer.layerWidth; x++)
-            {
-                for (int y = 0; y < layer.layerHeight; y++)
-                {
-                    coordinatesList.Add(new Vector2(x, y));
-                }
-            }
-
-            return coordinatesList;
-        }
-        public static List<Vector2> GetListOfGridCoordinats(Grid grid)
-        {
-            List<Vector2> coordinatesList = new();
-            for (int x = 0; x < grid.Width; x++)
-            {
-                for (int y = 0; y < grid.Height; y++)
-                {
-                    coordinatesList.Add(new Vector2(x, y));
-                }
-            }
-
-            return coordinatesList;
-        }
-    }
-
     public class KTZMapsGeneration
     {
         public static int[,] mediumBoxKnot = new int[5, 5] {
@@ -182,6 +38,7 @@ namespace KTZEngine
         public static Dictionary<Vector2, int> rightDownCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.down, 1 }, { Vector2.right, 1 }, { Vector2.up, 0 }, { Vector2.left, 0 }, };
 
         public static List<int> allUsageNums = new() { 0, 1, 2, 3, 4 };
+
         public static int[,] UkrainCityMapGeneration(int[,] virtualMap, List<string> cityNames, int currCityIndex)
         {
             Vector2 virtualMapSize = new(virtualMap.GetLength(0), virtualMap.GetLength(1));
@@ -411,56 +268,6 @@ namespace KTZEngine
             }
             return virtualMap;
         }
-        public static int[,] CreateStructureOnlyNum(int[,] virtualMap, int[,] structure, Vector2 position, int visibleNum = 1)
-        {
-            Vector2 mapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
-            // Vector2 structureSize = new Vector2(structure.GetLength(0), structure.GetLength(1));
-            if (KTZMath.IsInInterval(position, Vector2.zero, mapSize))
-            {
-                for (int x = 0; x < structure.GetLength(0); x++)
-                {
-                    // if (
-                    for (int y = 0; y < structure.GetLength(1); y++)
-                    {
-                        if (KTZMath.IsInInterval(new Vector2(x + position.x, y + position.y), Vector2.zero, mapSize) && structure[x, y] == visibleNum) { virtualMap[x + position.x, y + position.y] = structure[x, y]; }
-                    }
-                }
-            }
-            return virtualMap;
-        }
-        public static int[,] CreateStructureOnlyOnNum(int[,] virtualMap, int[,] structure, Vector2 position, int allowNum = 1)
-        {
-            Vector2 mapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
-            // Vector2 structureSize = new Vector2(structure.GetLength(0), structure.GetLength(1));
-            if (KTZMath.IsInInterval(position, Vector2.zero, mapSize))
-            {
-                for (int x = 0; x < structure.GetLength(0); x++)
-                {
-                    for (int y = 0; y < structure.GetLength(1); y++)
-                    {
-                        if (KTZMath.IsInInterval(new Vector2(x + position.x, y + position.y), Vector2.zero, mapSize) && virtualMap[x + position.x, y + position.y] == allowNum) { virtualMap[x + position.x, y + position.y] = structure[x, y]; }
-                    }
-                }
-            }
-            return virtualMap;
-        }
-        public static bool CreateStructureOnlyIfAllEqual(ref int[,] virtualMap, int[,] structure, Vector2 position, int allowNum = 0)
-        {
-            int[,] basicVirtualMap = VirtualMapCopy(virtualMap);
-            Vector2 mapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
-            if (KTZMath.IsInInterval(position, Vector2.zero, mapSize))
-            {
-                for (int x = 0; x < structure.GetLength(0); x++)
-                {
-                    for (int y = 0; y < structure.GetLength(1); y++)
-                    {
-                        if (KTZMath.IsInInterval(new Vector2(x + position.x, y + position.y), Vector2.zero, mapSize) && virtualMap[x + position.x, y + position.y] == allowNum) { virtualMap[x + position.x, y + position.y] = structure[x, y]; }
-                        else { virtualMap = basicVirtualMap; return false; }
-                    }
-                }
-            }
-            return true;
-        }
 
         public static bool CreateStructureOnlyIfAllNotEmptyEqual(ref int[,] virtualMap, int[,] structure, Vector2 position, List<int> structEmptyNums, List<int> allowZoneNums)
         {
@@ -513,24 +320,6 @@ namespace KTZEngine
                     for (int y = 0; y < layer.layerHeight; y++)
                     {
                         if (virtualMap[x, y] == objects.Keys.ElementAt(i)) { layer.AddExistStaticObject(objects.Values.ElementAt(i), new Vector2(x, y)); }
-                    }
-                }
-            }
-
-            return virtualMap;
-        }
-
-        public static int[,] GenerateGameObjectsByReference(ref Game game, Dictionary<int, GameObject> objects, int[,] virtualMap)
-        {
-            GameLayer layer;
-            for (int i = 0; i < objects.Count; i++)
-            {
-                layer = objects.Values.ElementAt(i).layer;
-                for (int x = 0; x < layer.layerWidth; x++)
-                {
-                    for (int y = 0; y < layer.layerHeight; y++)
-                    {
-                        if (virtualMap[x, y] == objects.Keys.ElementAt(i)) { game.AddExistGameObject(objects.Values.ElementAt(i), new Vector2(x, y), objects.Values.ElementAt(i).name + KTZEngineAplication.GenerateProtectName()); }
                     }
                 }
             }
@@ -634,7 +423,6 @@ namespace KTZEngine
 
             return virtualMap;
         }
-
         public static int[,] RunMediumWormInVirtualMap(int[,] virtualMap, Vector2 start, Vector2 fieldStart, Vector2 fieldEnd, Vector2 target, List<int> allowedNums, int traceNum, int minRoadLength = 1, int maxRoadLength = 10, int xChanceGo = 30, int yChanceGo = 30, int randomChanceGo = -10, int liveTime = -1)
         {
             if (liveTime <= 0) { liveTime = virtualMap.Length; }
@@ -691,7 +479,6 @@ namespace KTZEngine
 
             return virtualMap;
         }
-
         public static int[,] RunBigWormInVirtualMap(int[,] virtualMap, Vector2 start, Vector2 fieldStart, Vector2 fieldEnd, Vector2 target, List<int> allowedNums, int traceNum, int minRoadLength = 1, int maxRoadLength = 10, int xChanceGo = 30, int yChanceGo = 30, int randomChanceGo = -10, int liveTime = -1)
         {
             if (liveTime <= 0) { liveTime = virtualMap.Length; }
@@ -750,48 +537,6 @@ namespace KTZEngine
                     }
                 }
             }
-
-            return virtualMap;
-        }
-
-        public static int[,] HardClearStructureOnVirtualMap(int[,] virtualMap, int[,] structureForClear, int emptyInt, Vector2 startFieldForClear, Vector2 endFieldForClear)
-        {
-            Vector2 virtualMapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
-            Vector2 structureSize = new(structureForClear.GetLength(0) - 1, structureForClear.GetLength(1) - 1);
-
-            startFieldForClear = KTZMath.CutNumberToInterval(startFieldForClear, Vector2.zero, virtualMapSize);
-            endFieldForClear = KTZMath.CutNumberToInterval(endFieldForClear, Vector2.zero, virtualMapSize - structureSize);
-
-            bool zoneNice;
-
-            if (startFieldForClear < endFieldForClear)
-            {
-                for (int x = startFieldForClear.x; x < endFieldForClear.x; x++)
-                {
-                    for (int y = startFieldForClear.y; y < endFieldForClear.y; y++)
-                    {
-                        zoneNice = true;
-                        for (int xStructure = 0; xStructure <= structureSize.x && zoneNice; xStructure++)
-                        {
-                            for (int yStructure = 0; yStructure <= structureSize.y && zoneNice; yStructure++)
-                            {
-                                if (virtualMap[x + xStructure, y + yStructure] != structureForClear[xStructure, yStructure]) { zoneNice = false; }
-                            }
-                        }
-                        if (zoneNice)
-                        {
-                            for (int xGen = 0; xGen < structureSize.x; xGen++)
-                            {
-                                for (int yGen = 0; yGen < structureSize.y; yGen++)
-                                {
-                                    virtualMap[x + xGen, y + yGen] = emptyInt;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
 
             return virtualMap;
         }
@@ -904,7 +649,6 @@ namespace KTZEngine
             return virtualMap;
         }
 
-
         public static int[,] CityNameBoxGeneration(int[,] virtualMap, Vector2 pos, string text)
         {
             int textLen = text.Length;
@@ -920,7 +664,6 @@ namespace KTZEngine
 
             return virtualMap;
         }
-
 
         public static int[,] GeneratePricklyHedgehogs(int[,] refVirtualMap, List<int> genCounts = null)
         {

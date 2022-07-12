@@ -8,7 +8,6 @@ using Vector2 = Vector2Namespace.Vector2;
 
 namespace KTZEngine
 {
-    ////─────────────────────────────────────────────────────────────────class Game─────────────────────────────────────────────────────────────────|
     public class Game : GameTab
     {
         public KTZEngineAplication aplication;
@@ -22,7 +21,6 @@ namespace KTZEngine
 
         private GameObject gmObj;
 
-        //─────────────────────────Game construcor─────────────────────────|
         public Game(ref KTZEngineAplication aplication_, Vector2 gameGridSize, string name_, int ups_) : base(aplication_, name_, ups_)
         {
             aplication = aplication_;
@@ -31,12 +29,6 @@ namespace KTZEngine
             windowSize = new Vector2(Console.WindowWidth, Console.WindowHeight);
         }
 
-        //─────────────────────────Methods─────────────────────────|
-        public GameObject CreateGameObject(string name, GameLayer _gameLayer, Vector2 _position, char ico, List<string> ids = null)
-        {
-            try { GameObject newGameObj = new(name, _gameLayer, _position, ico, ids); gameObjects.Add(name, newGameObj); return newGameObj; }
-            catch (ArgumentException e) { KTZEngineAplication.MessageOutput(e.GetType().Name.ToString() + ": " + e.Message.ToString()); throw new Exception(e.Message); }
-        }
         public void AddExistGameObject(GameObject newGameObj)
         {
             try { gameObjects.Add(newGameObj.name, newGameObj); gameObjectsList.Add(newGameObj); }
@@ -74,13 +66,7 @@ namespace KTZEngine
             catch (ArgumentException e) { KTZEngineAplication.MessageOutput(e.GetType().Name.ToString() + ": " + e.Message.ToString()); throw new Exception(e.Message); }
         }
 
-        public void Start()
-        {
-
-        }
-
         public override void PreUpdate() { gameObjectsList = gameObjects.Values.ToList(); }
-
         public override void Update()
         {
             // Self Update
@@ -108,7 +94,6 @@ namespace KTZEngine
         public virtual void UpdateGame() { }
         public virtual void AfterUpdateGame() { }
 
-        // public virtual void SpecialUpdate() { }
 
         public void GameObjectsPreUpdate()
         {
@@ -117,7 +102,6 @@ namespace KTZEngine
                 gameObjectsList[i].GameObjectPreUpdate();
             }
         }
-
         public void GameObjectsUpdate()
         {
             for (int i = 0; i < gameObjectsList.Count; i++)
@@ -131,7 +115,6 @@ namespace KTZEngine
                 gmObj.GameObjectAfterMoveUpdate();
             }
         }
-
         public void GameObjectsAfterUpdate()
         {
             for (int i = 0; i < gameObjectsList.Count; i++)
@@ -139,7 +122,6 @@ namespace KTZEngine
                 gameObjectsList[i].GameObjectAfterUpdate();
             }
         }
-
         public void GameObjectsDrawOnGrid()
         {
             foreach (var gmObj in gameObjectsList.OrderBy(o => o.priority))
@@ -163,12 +145,10 @@ namespace KTZEngine
             Console.SetCursorPosition(coord.x, windowSize.y - coord.y - 1);
             Console.Write(text);
         }
-        //───────────────────────Methods End───────────────────────|
 
     }
 
 
-    ////─────────────────────────────────────────────────────────────────class GameGrid─────────────────────────────────────────────────────────────────|
     public class GameGrid
     {
 
@@ -188,14 +168,12 @@ namespace KTZEngine
         private int postProcessX;
         private int postProcessY;
 
-        //─────────────────────────GameGrid construcor─────────────────────────|
         public GameGrid(string name_, int gridW, int gridH, Vector2? startPosition = null)
         {
             if (startPosition == null) { startPosition = Vector2.zero; }
             grid = new Grid(name_, (Vector2)startPosition, gridW, gridH, emptyChar);
         }
 
-        //─────────────────────────Methods─────────────────────────|
         public void LayersCompression(bool ignoreEmptyChar = true)
         {
             if (layers.Count > 0)
@@ -261,29 +239,12 @@ namespace KTZEngine
 
             disposablePostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
         }
-        public void Start()
-        {
-        }
         public void Update()
         {
 
         }
         public void Draw() { grid.Draw(); }
-        public GameLayer CreateLayer(string name_, int width, int height, int startX, int startY, char emptyChar, int priority)
-        {
-            Vector2 layerSize = new(width, height);
-            Vector2 layerStartPos = new(startX, startY);
-            GameLayer newLayer = new(layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
-            layers.Add(newLayer.name, newLayer);
-            return layers[newLayer.name];
-        }
-        public GameLayer CreateLayer(string name_, Vector2 layerSize, int startX, int startY, char emptyChar, int priority)
-        {
-            Vector2 layerStartPos = new(startX, startY);
-            GameLayer newLayer = new(layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
-            layers.Add(newLayer.name, newLayer);
-            return layers[newLayer.name];
-        }
+
         public GameLayer CreateLayer(string name_, int width, int height, Vector2 layerStartPos, char emptyChar, int priority)
         {
             Vector2 layerSize = new(width, height);
@@ -291,26 +252,14 @@ namespace KTZEngine
             layers.Add(newLayer.name, newLayer);
             return layers[newLayer.name];
         }
-        public GameLayer CreateLayer(string name_, Vector2 layerSize, Vector2 layerStartPos, char emptyChar, int priority)
-        {
-            GameLayer newLayer = new(layerSize.x, layerSize.y, name_, emptyChar, priority, layerStartPos);
-            layers.Add(newLayer.name, newLayer);
-            return layers[newLayer.name];
-        }
 
-        public void AddRegularPostProcessingText(Vector2 pos, string text)
-        {
-            regularPostProcessingData.Add(new KeyValuePair<Vector2, string>(pos, text));
-        }
         public void AddDisposablePostProcessingText(Vector2 pos, string text)
         {
             disposablePostProcessingData.Add(new KeyValuePair<Vector2, string>(pos, text));
         }
 
-        //───────────────────────Methods End───────────────────────|
     }
 
-    ////─────────────────────────────────────────────────────────────────class GameLayer─────────────────────────────────────────────────────────────────|
     public class GameLayer
     {
         public string name;
@@ -327,7 +276,6 @@ namespace KTZEngine
 
         public int priority;
 
-        //─────────────────────────GameLayer construcor─────────────────────────|
         public GameLayer(int gridW, int gridH, string name_, char emptCh, int priority_, Vector2 gameLayerStartPosition)
         {
             layerWidth = gridW;
@@ -347,7 +295,6 @@ namespace KTZEngine
             Clear();
         }
 
-        //─────────────────────────Methods─────────────────────────|
         public void Clear()
         {
             for (int x = 0; x < layerWidth; x++)
@@ -357,20 +304,6 @@ namespace KTZEngine
                     grid[x, y] = emptyChar;
                 }
             }
-        }
-
-        public string GetColumn(int columnIndex)
-        {
-            string column = "";
-            for (int i = 0; i < layerHeight; i++) { column += grid[columnIndex, i]; }
-            return column;
-        }
-
-        public string GetRow(int rowIndex)
-        {
-            string row = "";
-            for (int i = 0; i < layerWidth; i++) { row += grid[i, rowIndex]; }
-            return row;
         }
 
         public StaticGameObject CreateStaticObject(Vector2 position_, char ico, List<string> ids = null)
@@ -391,22 +324,8 @@ namespace KTZEngine
             // obj.DrawOnLayerGrid();
         }
 
-        public int DeleteStaticObject(Vector2 localPos, char ico)
-        {
-            try
-            {
-                StaticGameObject delObj = staticObjects.Find(o => o.localPosition == localPos && o.ico == ico);
-                delObj = null;
-
-                return 1;
-            }
-            catch (ArgumentException e) { KTZEngineAplication.MessageOutput(e.GetType().Name.ToString() + ": " + e.Message.ToString()); throw new Exception(e.Message); }
-        }
-
-        //───────────────────────Methods End───────────────────────|
     }
 
-    ////─────────────────────────────────────────────────────────────────class GameObject─────────────────────────────────────────────────────────────────|
     public class GameObject
     {
         public string name;
@@ -422,7 +341,6 @@ namespace KTZEngine
         public List<string> id = new();
         public List<Vector2> blockedDirections = new();
 
-        //─────────────────────────GameObject construcor─────────────────────────|
         public GameObject(string objName, GameLayer thisLayer, Vector2 _position, char ico, List<string> ids = null, int priority_ = 1)
         {
             layer = thisLayer;
@@ -437,7 +355,6 @@ namespace KTZEngine
             id.Add("GameObject");
         }
 
-        //─────────────────────────Methods─────────────────────────|
         public void GameObjectPreUpdate()
         {
             PreUpdate();
@@ -466,10 +383,8 @@ namespace KTZEngine
         }
         public void GameObjectAfterUpdate()
         {
-            // Clear disposably variables
             disposableVelocity = Vector2.zero;
 
-            // ChildLateUpdate
             AfterUpdate();
         }
 
@@ -480,10 +395,8 @@ namespace KTZEngine
         public virtual void AfterMoveUpdate() { }
         public virtual void AfterUpdate() { }
 
-        //───────────────────────Methods End───────────────────────|
     }
 
-    ////─────────────────────────────────────────────────────────────────class StaticGameObject─────────────────────────────────────────────────────────────────|
     public class StaticGameObject
     {
         public Vector2 localPosition;

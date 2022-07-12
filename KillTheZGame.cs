@@ -12,15 +12,14 @@ namespace KillTheZGame
 {
     public class GameShell
     {
-        public static KillTheZGame aplic = new();
-        public static void Main() { aplic.MainProtector(); }
+        public static void Main() { KillTheZGame.MainProtector(); }
     }
 
     public class KillTheZGame
     {
 
 
-        public void MyAplicationInit()
+        public static void MyAplicationInit()
         {
 
             Console.CursorVisible = false;
@@ -84,14 +83,14 @@ namespace KillTheZGame
             TextUpdate();
         }
 
-        public void MyAplicationStart()
+        public static void MyAplicationStart()
         {
             GameData.aplication.currentGameTabName = GameData.mainMenu.menuTab.name;
             Console.CursorVisible = false;
             Console.CursorSize = 1;
         }
 
-        public void MainProtector()
+        public static void MainProtector()
         {
             MyAplicationInit();
             MyAplicationStart();
@@ -102,7 +101,7 @@ namespace KillTheZGame
             }
         }
 
-        public void MyGameTabBehavior()
+        public static void MyGameTabBehavior()
         {
             // KeyManager.ClearKeyPressBuffer();
 
@@ -110,46 +109,46 @@ namespace KillTheZGame
             // GameData.myGameShell.Update();
         }
 
-        public void MainMenuBehavior()
+        public static void MainMenuBehavior()
         {
             GameData.mainMenu.menuTab.Update();
             GameData.mainMenu.menuTab.Draw();
 
         }
-        public void SettingsMenuBehavior()
+        public static void SettingsMenuBehavior()
         {
             GameData.settingsMenu.Update();
             GameData.settingsMenu.Draw();
         }
-        public void CreditsTabBehavior()
+        public static void CreditsTabBehavior()
         {
             GameData.creditsTab.Update();
             GameData.creditsTab.Draw();
         }
 
-        public void LoseCityTabBehavior() { GameData.lostCityTab.Update(); GameData.lostCityTab.Draw(); }
-        public void CaptureCityTabBehavior() { GameData.captureCityTab.Update(); GameData.captureCityTab.Draw(); }
+        public static void LoseCityTabBehavior() { GameData.lostCityTab.Update(); GameData.lostCityTab.Draw(); }
+        public static void CaptureCityTabBehavior() { GameData.captureCityTab.Update(); GameData.captureCityTab.Draw(); }
 
-        public void YesNoTabBehavior() { GameData.yesNoTab.Update(); GameData.yesNoTab.Draw(); }
+        public static void YesNoTabBehavior() { GameData.yesNoTab.Update(); GameData.yesNoTab.Draw(); }
 
 
-        public void FinalWinTabBehavior()
+        public static void FinalWinTabBehavior()
         {
             GameData.finalWinTab.Update();
             GameData.finalWinTab.Draw();
         }
-        public void DecidemoscowFateTabBehavior()
+        public static void DecidemoscowFateTabBehavior()
         {
             GameData.moscowDecideFateTab.Update();
             GameData.moscowDecideFateTab.Draw();
         }
-        public void WarStartTabTabBehavior()
+        public static void WarStartTabTabBehavior()
         {
             GameData.warStartTab.Update();
             GameData.warStartTab.Draw();
         }
 
-        public void TextUpdate()
+        public static void TextUpdate()
         {
             GameData.tutorailTabPages = new List<List<SLTItem>>()
             {
@@ -323,30 +322,30 @@ namespace KillTheZGame
         {
             GameData.yesNoTab.GetAnswer(GameData.aplication.gameText.GetText("NewGameQuestion"), menuTab.name, GameData.EmptyMethod, NewGame);
         }
-        public void NewGame()
+        public static void NewGame()
         {
             InitGame();
             RunGame();
         }
 
-        public void ContinueGame() { RunGame(); }
-        public void Tutorial() { OpenTutorial(); }
-        public void Settings() { OpenSettings(); }
-        public void Credits() { OpenCredits(); }
+        public static void ContinueGame() { RunGame(); }
+        public static void Tutorial() { OpenTutorial(); }
+        public static void Settings() { OpenSettings(); }
+        public static void Credits() { OpenCredits(); }
         public void Exit()
         {
             DataManager.SaveData();
             GameData.yesNoTab.GetAnswer(GameData.aplication.gameText.GetText("ExitGameQuestion"), menuTab.name, GameData.EmptyMethod, CloseGame);
         }
 
-        public void CloseGame() { GameData.aplication.isInAplication = false; }
+        public static void CloseGame() { GameData.aplication.isInAplication = false; }
 
-        public void InitGame() { GameData.myGameShell.Init(); }
+        public static void InitGame() { GameData.myGameShell.Init(); }
 
-        public void RunGame() { GameData.aplication.currentGameTabName = GameData.myGameShell.game.name; }
-        public void OpenTutorial() { GameData.aplication.currentGameTabName = GameData.tutorialMenu.name; GameData.tutorialMenu.Open(); }
-        public void OpenSettings() { GameData.aplication.currentGameTabName = GameData.settingsMenu.name; GameData.settingsMenu.Open(); }
-        public void OpenCredits() { GameData.aplication.currentGameTabName = GameData.creditsTab.name; Console.Clear(); }
+        public static void RunGame() { GameData.aplication.currentGameTabName = GameData.myGameShell.game.name; }
+        public static void OpenTutorial() { GameData.aplication.currentGameTabName = GameData.tutorialMenu.name; GameData.tutorialMenu.Open(); }
+        public static void OpenSettings() { GameData.aplication.currentGameTabName = GameData.settingsMenu.name; GameData.settingsMenu.Open(); }
+        public static void OpenCredits() { GameData.aplication.currentGameTabName = GameData.creditsTab.name; Console.Clear(); }
     }
 
     public class TutorialMenu : SelectListTab
@@ -488,23 +487,23 @@ namespace KillTheZGame
             AlignToCenter();
         }
 
-        public void DonateNationalBank()
+        public static void DonateNationalBank()
         {
-            Process myProcess = new Process();
+            Process myProcess = new ();
             myProcess.StartInfo.UseShellExecute = true;
             myProcess.StartInfo.FileName = "https://bank.gov.ua/ua/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi";
             myProcess.Start();
         }
-        public void DonateComeBackAlive()
+        public static void DonateComeBackAlive()
         {
-            Process myProcess = new Process();
+            Process myProcess = new ();
             myProcess.StartInfo.UseShellExecute = true;
             myProcess.StartInfo.FileName = "https://savelife.in.ua/donate/";
             myProcess.Start();
         }
-        public void DonateHospitallers()
+        public static void DonateHospitallers()
         {
-            Process myProcess = new Process();
+            Process myProcess = new ();
             myProcess.StartInfo.UseShellExecute = true;
             myProcess.StartInfo.FileName = "https://balistyka.ua/pidtrymai?fbclid=IwAR3tobBzTTPokPlzRVBXfX6sX772z_wSxoXdxdrzEXhZrlHayMIrp-Mz0g8";
             myProcess.Start();
@@ -515,17 +514,17 @@ namespace KillTheZGame
             GameData.yesNoTab.GetAnswer(GameData.aplication.gameText.GetText("ClearDataQuestion"), name, GameData.EmptyMethod, DataManager.RestartData);
         }
 
-        public void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; GameShell.aplic.TextUpdate(); }
-        public void SetLangEnglish() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; GameShell.aplic.TextUpdate(); }
-        public void SetLangPolish() { GameData.aplication.gameText.currentLanguageName = GameData.polish.name; GameShell.aplic.TextUpdate(); }
+        public static void SetLangUkraine() { GameData.aplication.gameText.currentLanguageName = GameData.ukraine.name; KillTheZGame.TextUpdate(); }
+        public static void SetLangEnglish() { GameData.aplication.gameText.currentLanguageName = GameData.english.name; KillTheZGame.TextUpdate(); }
+        public static void SetLangPolish() { GameData.aplication.gameText.currentLanguageName = GameData.polish.name; KillTheZGame.TextUpdate(); }
 
-        public void SetThemeDark() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Gray; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
-        public void SetThemeLight() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.White; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Black; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
-        public void SetThemeDoom() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkRed; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
-        public void SetThemeHecker() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Green; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
-        public void SetThemeHell() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkRed; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Red; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
-        public void SetThemePatriotic() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkBlue; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkYellow; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
-        public void SetThemePony() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Magenta; GameData.aplication.ConsoleForegroundColor = ConsoleColor.White; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public static void SetThemeDark() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Gray; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public static void SetThemeLight() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.White; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Black; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public static void SetThemeDoom() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkRed; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public static void SetThemeHecker() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Black; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Green; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public static void SetThemeHell() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkRed; GameData.aplication.ConsoleForegroundColor = ConsoleColor.Red; GameData.dangerColor = ConsoleColor.White; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public static void SetThemePatriotic() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.DarkBlue; GameData.aplication.ConsoleForegroundColor = ConsoleColor.DarkYellow; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
+        public static void SetThemePony() { GameData.aplication.ConsoleBackgroundColor = ConsoleColor.Magenta; GameData.aplication.ConsoleForegroundColor = ConsoleColor.White; GameData.dangerColor = ConsoleColor.Red; GameData.aplication.UpdateConsoleColors(); Console.Clear(); }
 
         public void Open() { selectedElemIndex = 0; Console.Clear(); }
 
@@ -536,7 +535,7 @@ namespace KillTheZGame
 
     public class CreditsTab : JustTextTab
     {
-        public static int linesLen = 15;
+        public const int linesLen = 15;
 
         public CreditsTab() : base("CreditsTab", new List<SLTItem>())
         {
@@ -568,16 +567,11 @@ namespace KillTheZGame
             HeightAlignToCenter();
         }
 
-        public string MakeLinesAround(string text, int lineLength)
+        public static string MakeLinesAround(string text, int lineLength)
         {
             return new string('─', lineLength) + " " + text + " " + new string('─', lineLength);
         }
 
-        public void GoToMenu()
-        {
-            Console.Clear();
-            GameData.aplication.currentGameTabName = GameData.mainMenu.menuTab.name;
-        }
     }
 
     public class DecideFateTab : SelectListTab
@@ -624,7 +618,7 @@ namespace KillTheZGame
             GameData.warStartTab.TextUpdate();
         }
 
-        public void RestartWar()
+        public static void RestartWar()
         {
             GameData.yearsOfPeace = KTZEngineAplication.random.Next(3, 10);
             GameData.warStartVirtualTime = new DateTime(GameData.virtualTime.Year + GameData.yearsOfPeace, 4, 24);
@@ -767,7 +761,7 @@ namespace KillTheZGame
 
 
             // int textLen = GameData.cityNames[GameData.currentCityIndex].Length;
-            Vector2 textStartPos = new Vector2((int)Math.Round((double)((floorLayer.layerWidth - GameData.cityNames[GameData.currentCityIndex + 1].Length) / 2)), floorLayer.layerHeight - KTZMapsGeneration.zoneHeight);
+            Vector2 textStartPos = new ((int)Math.Round((double)((floorLayer.layerWidth - GameData.cityNames[GameData.currentCityIndex + 1].Length) / 2)), floorLayer.layerHeight - KTZMapsGeneration.zoneHeight);
             for (int i = 0; i < GameData.cityNames[GameData.currentCityIndex + 1].Length; i++) { floorLayer.CreateStaticObject(textStartPos + new Vector2(i, 0), GameData.cityNames[GameData.currentCityIndex + 1][i], new List<string>() { GameData.gameIds["collision"] }); }
 
             textStartPos = new Vector2((int)Math.Round((double)((floorLayer.layerWidth - GameData.cityNames[GameData.currentCityIndex].Length) / 2)), KTZMapsGeneration.zoneHeight - 1);
@@ -807,7 +801,7 @@ namespace KillTheZGame
 
             for (int i = 0; i < 10; i++) { GenerateObjectAtGamePlaceRandom(virtualMap, new MineRecoverBox(gameObjectsLayer, Vector2.zero)); }
         }
-        public int[,] ShitrussiaCityInit()
+        public static int[,] ShitrussiaCityInit()
         {
             int[,] virtualMap;
 
@@ -917,7 +911,7 @@ namespace KillTheZGame
             // game.keyManager.keyPressActions.Add(ConsoleKey.L, PressKeyL);
         }
 
-        public void PreUpdate()
+        public static void PreUpdate()
         {
             GameData.isDanger = false;
 
@@ -972,7 +966,7 @@ namespace KillTheZGame
                 if (obj.id.Contains(GameData.gameIds["collision"])) { GameData.collisionIdPositionList.Add(obj.globalPosition); }
             }
         }
-        public void MineAnimationTick()
+        public static void MineAnimationTick()
         {
             if (GameData.myGameShell.updateIndex % GoodMine.animationMaxTick == 0)
             {
@@ -1009,23 +1003,14 @@ namespace KillTheZGame
             }
         }
 
-        // Key Press Actions
-        public void PressKeyUpOrW() { GameData.player.MoveUp(); }
-        public void PressKeyDownOrS() { GameData.player.MoveDown(); }
-        public void PressKeyRightOrD() { GameData.player.MoveRight(); }
-        public void PressKeyLeftOrA() { GameData.player.MoveLeft(); }
-        public void PressSpacebarOrKeyV() { GameData.player.Shot(); }
-        public void PressKeyE() { GameData.player.PlantMine(); }
-        // public void PressKeyP() { for (int i = 0; i < 1000; i++) { GenerateEnemy(); } }
+        public static void PressKeyUpOrW() { GameData.player.MoveUp(); }
+        public static void PressKeyDownOrS() { GameData.player.MoveDown(); }
+        public static void PressKeyRightOrD() { GameData.player.MoveRight(); }
+        public static void PressKeyLeftOrA() { GameData.player.MoveLeft(); }
+        public static void PressSpacebarOrKeyV() { GameData.player.Shot(); }
+        public static void PressKeyE() { GameData.player.PlantMine(); }
         public void PressKeyQ() { if (bayraktarAttackCount > 0) { GameData.player.bayraktarAttacksTimes += 3; bayraktarAttackCount--; } }
-
-        // public void PressKey1() { ShitrussiaTankZ.basicEnemyStopTicks = (ShitrussiaTankZ.basicEnemyStopTicks <= 0) ?  0 : ShitrussiaTankZ.basicEnemyStopTicks - 1; }
-        // public void PressKey2() { ShitrussiaTankZ.basicEnemyStopTicks++; }
-        // public void PressKey0() { GenerateEnemy(); }
         public void PressKeyEscape() { GoToMainMenu(); }
-
-        // public void PressKeyX() { isWin = true; }
-        // public void PressKeyZ() { isLose = true; }
 
         public void GoToMainMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
         public void GenerateEnemy() { game.AddExistGameObject(new ShitrussiaTankZ(this, gameObjectsLayer, new Vector2(KTZEngineAplication.random.Next(1, gameFieldSize.x - 1), gameFieldSize.y - 2))); levelEnemyCount = (levelEnemyCount <= 0) ? 0 : levelEnemyCount - 1; }
@@ -1098,7 +1083,7 @@ namespace KillTheZGame
 
         public override void PreUpdateGame()
         {
-            GameData.myGameShell.PreUpdate();
+            MyGameShell.PreUpdate();
         }
 
         public override void UpdateGame()
@@ -1111,10 +1096,6 @@ namespace KillTheZGame
             GameData.myGameShell.AfterUpdate();
         }
 
-        // public override void SpecialUpdate()
-        // {
-        //     GameData.myGameShell.SpecialUpdate();
-        // }
     }
 
     public class MyPlayer : GameObject
@@ -1211,7 +1192,7 @@ namespace KillTheZGame
             List<int> xPositions;
 
             enemys = GameData.myGameShell.game.gameObjectsList.Where(o => o.id.Contains(GameData.gameIds["enemy"])).ToList();
-            enemys.OrderBy(o => o.localPosition.y);
+            enemys = enemys.OrderBy(o => o.localPosition.y).ToList();
             rocketCount = 30;
             xPositions = Enumerable.Range(1, layer.layerWidth - 2).ToList();
 
@@ -1237,7 +1218,7 @@ namespace KillTheZGame
 
                 // Attack to right
                 enemys = GameData.myGameShell.game.gameObjectsList.Where(o => o.id.Contains(GameData.gameIds["enemy"]) && KTZMath.IsInInterval(o.localPosition.y, plusOffsetY + KTZMapsGeneration.zoneHeight * q, plusOffsetY + (KTZMapsGeneration.zoneHeight + 3) * q)).ToList();
-                enemys.OrderBy(o => o.localPosition.x);
+                enemys = enemys.OrderBy(o => o.localPosition.x).ToList();
                 rocketCount = 3;
                 foreach (GameObject enemy in enemys)
                 {
@@ -1256,7 +1237,7 @@ namespace KillTheZGame
                 }
                 // Attack to left
                 enemys = GameData.myGameShell.game.gameObjectsList.Where(o => o.id.Contains(GameData.gameIds["enemy"]) && KTZMath.IsInInterval(o.localPosition.y, plusOffsetY + KTZMapsGeneration.zoneHeight * q, plusOffsetY + (KTZMapsGeneration.zoneHeight + 3) * q)).ToList();
-                enemys.OrderBy(o => -o.localPosition.x);
+                enemys = enemys.OrderBy(o => -o.localPosition.x).ToList();
                 rocketCount = 3;
                 foreach (GameObject enemy in enemys)
                 {
@@ -1338,7 +1319,7 @@ namespace KillTheZGame
         public static char basicUpChar = '╩';
         public static char basicDownChar = '╦';
 
-        public static Dictionary<Vector2, char> icons = new Dictionary<Vector2, char>() { { Vector2.up, basicUpChar }, { Vector2.down, basicDownChar }, { Vector2.right, basicRightChar }, { Vector2.left, basicLeftChar } };
+        public static Dictionary<Vector2, char> icons = new () { { Vector2.up, basicUpChar }, { Vector2.down, basicDownChar }, { Vector2.right, basicRightChar }, { Vector2.left, basicLeftChar } };
 
         public SimpleBayraktarRocket(Game game_, GameLayer layer_, Vector2 pos, Vector2 target_, Vector2? direction = null) : base(game_, layer_, pos, Vector2.up)
         {
@@ -1356,7 +1337,7 @@ namespace KillTheZGame
             {
                 InTarget();
             }
-            else if (!KTZMath.IsInInterval(localPosition, Vector2.downLeft * 10, layerSize + Vector2.upRight * 9) && game.gameObjects.Keys.Contains(name)) { game.DeleteGameObject(name); }
+            else if (!KTZMath.IsInInterval(localPosition, Vector2.downLeft * 10, layerSize + Vector2.upRight * 9) && game.gameObjects.ContainsKey(name)) { game.DeleteGameObject(name); }
         }
 
         public override void AfterMoveUpdate() { }
@@ -1374,7 +1355,7 @@ namespace KillTheZGame
 
             if (canPlantMine)
             {
-                GoodMine explosionMine = new GoodMine(globalPosition, GameData.myGameShell.gameObjectsLayer);
+                GoodMine explosionMine = new (globalPosition, GameData.myGameShell.gameObjectsLayer);
                 game.AddExistGameObject(explosionMine);
                 explosionMine.Explosion();
 
@@ -1405,9 +1386,9 @@ namespace KillTheZGame
 
         public int enemyStopTicks;
 
-        public List<Vector2> statBlockDir = new List<Vector2>();
+        public List<Vector2> statBlockDir = new ();
 
-        public static List<Vector2> moveDirections = new List<Vector2>() { priorityDir, Vector2.GetVectorRotatedRight90(priorityDir), Vector2.GetVectorRotatedLeft90(priorityDir), -priorityDir };
+        public static List<Vector2> moveDirections = new () { priorityDir, Vector2.GetVectorRotatedRight90(priorityDir), Vector2.GetVectorRotatedLeft90(priorityDir), -priorityDir };
 
         public Type currObjType;
         public string currStatObjId;
@@ -1557,16 +1538,11 @@ namespace KillTheZGame
             myGameShell.game.DeleteGameObject(name);
         }
 
-        public void SetPriorDir(Vector2 dir)
-        {
-            priorityDir = dir;
-            moveDirections = new List<Vector2>() { priorityDir, Vector2.GetVectorRotatedRight90(priorityDir), Vector2.GetVectorRotatedLeft90(priorityDir), -priorityDir };
-        }
     }
 
     public class GoodMine : GameObject
     {
-        public List<GameObject> objectsToKill = new List<GameObject>();
+        public List<GameObject> objectsToKill = new ();
         public bool isExplosion = false;
         public GameObject collisionBullet = null;
         public GameObject nextExplosionMine = null;
@@ -1641,14 +1617,6 @@ namespace KillTheZGame
             GameData.myGameShell.game.DeleteGameObject(name);
         }
 
-        public void FindAllObjectsToKill(GameObject detectedObj)
-        {
-            for (int q = 0; q < Vector2.eightDirections.Count; q++) { objectsToKill.AddRange(GameData.myGameShell.game.gameObjectsList.FindAll(o => o.globalPosition == globalPosition + Vector2.eightDirections[q] && o.GetType() == GameData.shitrussiaTankZType)); }
-            objectsToKill.AddRange(GameData.myGameShell.game.gameObjectsList.FindAll(o => o.globalPosition == globalPosition && o.GetType() == GameData.shitrussiaTankZType));
-            // mineKillObjects.Add(GameData.myGame.game.gameObjects.Values.ToList().Find(o => o.globalPosition == globalPosition && o.GetType() == GameData.goodMineType));
-            objectsToKill.Remove(detectedObj);
-            objectsToKill.Remove(this);
-        }
         public void FindAllObjectsToKill()
         {
             for (int q = 0; q < Vector2.eightDirections.Count; q++) { objectsToKill.AddRange(GameData.myGameShell.game.gameObjectsList.FindAll(o => o.globalPosition == globalPosition + Vector2.eightDirections[q] && o.GetType() == GameData.shitrussiaTankZType)); }
@@ -1692,9 +1660,9 @@ namespace KillTheZGame
         public string action;
         public int moveIndex = 0;
         public int moveTick = 0;
-        public static int sameMoveCount = 6;
-        public static int NickolaStopTicks = 20;
-        public static int attackMaxLength = 6;
+        public const int sameMoveCount = 6;
+        public const int soldierStopTicks = 20;
+        public const int attackMaxLength = 6;
 
         public Vector2 targetPos;
         public Vector2 directionToTarget;
@@ -1703,13 +1671,13 @@ namespace KillTheZGame
         public ulong attackTime = 0;
         public ulong attackMaxTime = 20;
 
-        public static char[] icons = new char[] { 'O', 'O', 'o', '—', '—', '—', '—', 'o', 'O', 'O' };
+        public static readonly char[] icons = new char[] { 'O', 'O', 'o', '—', '—', '—', '—', 'o', 'O', 'O' };
         public int iconIndex = 0;
         public int animationTick = 0;
-        public static int animationMaxTickNormal = 3;
-        public static int animationMaxTickRage = 1;
+        public const int animationMaxTickNormal = 3;
+        public const int animationMaxTickRage = 1;
         public static int animationMaxTick = animationMaxTickNormal;
-        public List<Vector2> statBlockDir = new List<Vector2>();
+        public List<Vector2> statBlockDir = new ();
 
         public UkraineTraktorMykola(MyGameShell myGame_, GameLayer layer_, Vector2 pos) : base("TankMykola", layer_, pos, '\u00f6', new List<string>() { GameData.gameIds["Mykola"], GameData.gameIds["collision"] }, 2)
         {
@@ -1746,7 +1714,7 @@ namespace KillTheZGame
 
             statBlockDir = StaticObjectsCollisionDetect();
 
-            moveIndex = (disposableVelocity != Vector2.zero && moveIndex <= 0) ? NickolaStopTicks : moveIndex - 1;
+            moveIndex = (disposableVelocity != Vector2.zero && moveIndex <= 0) ? soldierStopTicks : moveIndex - 1;
 
             blockedDirections = statBlockDir;
 
@@ -1845,7 +1813,7 @@ namespace KillTheZGame
 
     public class PricklyHedgehogs : StaticGameObject
     {
-        public static char basicIcon = 'x';
+        public const char basicIcon = 'x';
         public PricklyHedgehogs(Vector2 pos, GameLayer layer) : base(pos, layer, basicIcon, new List<string>() { GameData.gameIds["pricklyHedgehogs"] }) { }
     }
 
@@ -1868,7 +1836,7 @@ namespace KillTheZGame
         }
 
         public void GoToMenu() { Console.Clear(); aplication.currentGameTabName = GameData.mainMenu.menuTab.name; }
-        public void ContinueGame() { GameData.mainMenu.NewGame(); }
+        public static void ContinueGame() { MainMenu.NewGame(); }
     }
 
     public class FinalWinTab : JustTextTab
@@ -1895,7 +1863,7 @@ namespace KillTheZGame
             HeightAlignToCenter();
         }
 
-        public void PressEnterOrSpace()
+        public static void PressEnterOrSpace()
         {
             Console.Clear();
             GameData.aplication.currentGameTabName = GameData.moscowDecideFateTab.name;
@@ -1937,7 +1905,7 @@ namespace KillTheZGame
             HeightAlignToCenter();
         }
 
-        public void PressEnterOrSpace()
+        public static void PressEnterOrSpace()
         {
             Console.Clear();
             GameData.aplication.currentGameTabName = GameData.mainMenu.menuTab.name;
@@ -2008,8 +1976,8 @@ namespace KillTheZGame
         public int moveTick = 0;
         public int shootIndex = 0;
         public static int sameMoveCount = 3;
-        public static int basicUASoldierStopTicks = 10;
-        public static int maxShootIndex = 6;
+        public const int basicUASoldierStopTicks = 10;
+        public const int maxShootIndex = 6;
         public int mineCount = 3;
         public int soldierStopTicks;
 
@@ -2025,7 +1993,7 @@ namespace KillTheZGame
         public List<GameObject> currPosObjects;
         public StaticGameObject currPosStaticObject;
 
-        public static Dictionary<Vector2, char> soldierPoses = new Dictionary<Vector2, char>() { { Vector2.up, '˄' }, { Vector2.right, '>' }, { Vector2.down, '˅' }, { Vector2.left, '<' } };
+        public static Dictionary<Vector2, char> soldierPoses = new () { { Vector2.up, '˄' }, { Vector2.right, '>' }, { Vector2.down, '˅' }, { Vector2.left, '<' } };
 
         public static List<Vector2> stupidPositionToBlock = new() { };
         public static List<Vector2> cornersPos = new() { };
@@ -2247,9 +2215,9 @@ namespace KillTheZGame
 
     public class MineRecoverBox : GameObject
     {
-        public static int countOfRecoverMine = 10;
+        public const int countOfRecoverMine = 10;
         public const char standartIcon = '◙';
-        public static char statStandartIcon = standartIcon;
+        public const char statStandartIcon = standartIcon;
 
         public MineRecoverBox(GameLayer layer_, Vector2 pos) : base("MineRecoverBox" + KTZEngineAplication.GenerateProtectName(), layer_, pos, standartIcon, new List<string>() { GameData.gameIds["mineRecoverBox"] })
         { }
@@ -2302,8 +2270,8 @@ namespace KillTheZGame
 
         public static int score = 0;
 
-        public static DateTime virtualTime = new DateTime(2022, 4, 24);
-        public static DateTime warStartVirtualTime = new DateTime(2014, 2, 20);
+        public static DateTime virtualTime = new (2022, 4, 24);
+        public static DateTime warStartVirtualTime = new (2014, 2, 20);
         public static int yearsOfPeace = 1;
 
         // Languages

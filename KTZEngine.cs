@@ -45,10 +45,6 @@ namespace KTZEngine
         public float currentAverageFPS;
         public float[] arrayOfFPS;
 
-        public static Exception lolException = new("lol is here");
-
-        // public ConsoleColor ConsoleBackgroundColor = ConsoleColor.Black;
-        // public ConsoleColor ConsoleForegroundColor = ConsoleColor.Gray;
         public ConsoleColor ConsoleBackgroundColor = ConsoleColor.Black;
         public ConsoleColor ConsoleForegroundColor = ConsoleColor.Gray;
 
@@ -132,7 +128,6 @@ namespace KTZEngine
 
         }
 
-
         public static string GenerateProtectName()
         {
             return KTZEngineAplication.random.NextDouble().ToString() + KTZEngineAplication.random.Next(Int32.MinValue + 1, Int32.MaxValue - 1).ToString();
@@ -145,13 +140,10 @@ namespace KTZEngine
         public KTZEngineAplication aplication;
 
         public string name;
-        // Updates per second
         private int _ups;
 
         public ulong time = 0;
 
-        /// <summary>Updates per Second</summary>
-        /// <remarks>Cannot be less than or equal to zero</remarks>
         public int UPS
         {
             get { return _ups; }
@@ -161,8 +153,6 @@ namespace KTZEngine
                 else { _ups = value; }
             }
         }
-        /// <summary>Delay after every update for realize fps</summary>
-        /// <remarks>delayPerSecond = 1000/fps</remarks>
         public int delayPerUpdate;
         public int frameInd;
 
@@ -184,7 +174,6 @@ namespace KTZEngine
         {
             PreUpdate();
         }
-
         public void UpdateTab()
         {
 
@@ -193,7 +182,6 @@ namespace KTZEngine
 
             KeyManager.ClearKeyPressBuffer();
         }
-
         public void AfterUpdateTab()
         {
             AfterUpdate();
@@ -202,129 +190,6 @@ namespace KTZEngine
         public virtual void PreUpdate() { }
         public virtual void Update() { }
         public virtual void AfterUpdate() { }
-
-
-
-
-    }
-    public class DataBlocksTab : GameTab
-    {
-        public Grid grid;
-        public Dictionary<string, DBTTextField> textFields = new() { };
-        public Dictionary<string, DBTVerticalList> verticalLists = new() { };
-
-        public DataBlocksTab(KTZEngineAplication game_, string name_, int ups_, char emptyChar_ = ' ') : base(game_, name_, ups_)
-        {
-            aplication = game_;
-            grid = new Grid(name, Vector2.zero, KTZEngineAplication.windowWidth, KTZEngineAplication.windowHeight, emptyChar_);
-        }
-
-        public void Start() { }
-        public override void Update() { }
-
-        public DBTTextField CreateTextField(string fieldName, Vector2 position, string text)
-        {
-            DBTTextField textField = new(fieldName, position, text);
-            textFields.Add(textField.name, textField);
-            return textField;
-        }
-        public DBTVerticalList CreateVerticalList(string listName, Vector2 position, List<string> listOfLines_)
-        {
-            DBTVerticalList verticalList = new(listName, position, listOfLines_);
-            verticalLists.Add(verticalList.name, verticalList);
-            return verticalList;
-        }
-    }
-    public class DBTTextField
-    {
-        public Vector2 position;
-        public string name;
-        public string text;
-        public int width;
-
-        public DBTTextField(string name_, Vector2 pos, string text_)
-        {
-            name = name_;
-            position = pos;
-            text = text_;
-            width = text.Length;
-        }
-
-        public void DrawOnGrid(ref Grid grid)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if (KTZMath.IsInInterval(position + new Vector2(x, 0), grid.startPosition, grid.startPosition + new Vector2(grid.Width, grid.Height)))
-                {
-                    grid.grid[position.x + x, position.y] = text[x];
-                }
-            }
-        }
-    }
-    public class DBTVerticalList
-    {
-        public const string standartSeparator = ")";
-
-        public Vector2 position;
-        public string name;
-        public List<string> lineList;
-        public List<string> origLineList;
-        public int width;
-        public int height;
-
-        public DBTVerticalList(string name_, Vector2 pos, List<string> listOfLines)
-        {
-            name = name_;
-            position = pos;
-            origLineList = listOfLines;
-            lineList = listOfLines;
-            width = KTZMath.GetMaxStringLengthInList(lineList);
-            height = lineList.Count;
-        }
-
-        public void DrawOnGrid(ref Grid grid)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    if (KTZMath.IsInInterval(position + new Vector2(x, y), grid.startPosition, grid.startPosition + new Vector2(grid.Width, grid.Height)))
-                    {
-                        grid.grid[position.x + x, position.y + y] = lineList[y][x];
-                    }
-                }
-            }
-        }
-
-        public void NumerateList(string separator = standartSeparator)
-        {
-            for (int i = 0; i < height; i++)
-            {
-                lineList[i] = i.ToString() + separator + origLineList;
-            }
-        }
-        public void LiterateList(string separator = standartSeparator)
-        {
-            int cycles = (int)Math.Ceiling((double)(height / KTZEngineAplication.smallEnglishAlphabet.Length)) - 1;
-            for (int q = 0; q <= cycles; q++)
-            {
-                string letterIndex = q.ToString();
-                if (letterIndex == "0") { letterIndex = ""; }
-                for (int i = 0; i < height; i++)
-                {
-                    lineList[i] = KTZEngineAplication.smallEnglishAlphabet[i] + letterIndex + separator + origLineList;
-                }
-            }
-        }
-        public void TextarateList(List<string> textListForElem, string separator = standartSeparator)
-        {
-            for (int i = 0; i < height; i++)
-            {
-                // textListForElem[^1] = textListForElem[textListForElem.Count - 1]
-                if (textListForElem.Count - 1 < i) { lineList[i] = textListForElem[^1] + separator + origLineList[i]; }
-                else { lineList[i] = textListForElem[i] + separator + origLineList[i]; }
-            }
-        }
     }
 
     public class SelectListTab : GameTab
@@ -349,7 +214,6 @@ namespace KTZEngine
         private int postProcessX;
         private int postProcessY;
 
-        //─────────────────────────SelectListTab construcor─────────────────────────|
         public SelectListTab(KTZEngineAplication aplication_, List<SLTItem> SLTItemList, string name_, int ups_, string selectItemRightSign_ = standartSelectItemRightSign, string selectItemLeftSign_ = standartSelectItemLeftSign, int distanceBetweenElements_ = standartDistanceBetweenElements) : base(aplication_, name_, ups_)
         {
             itemList = SLTItemList;
@@ -367,7 +231,6 @@ namespace KTZEngine
             });
         }
 
-        //─────────────────────────Methods─────────────────────────|
         public override void Update()
         {
             if (itemList.Count > 0) { selectedElemIndex = KTZMath.LoopNumberInInterval(selectedElemIndex, 0, itemList.Count - 1); }
@@ -421,20 +284,6 @@ namespace KTZEngine
             itemList[0].topOffset = (int)((Console.BufferHeight - listHeight * 1.5) / 2);
         }
 
-        public void AlignToRight()
-        {
-            foreach (var item in itemList)
-            {
-                item.sideOffset = 0;
-            }
-        }
-        public void AlignToLeft()
-        {
-            foreach (var item in itemList)
-            {
-                item.sideOffset = KTZEngineAplication.windowWidth - item.text.Length;
-            }
-        }
         public void AlignToCenter()
         {
             foreach (var item in itemList)
@@ -446,7 +295,6 @@ namespace KTZEngine
         public void SelectNextElement() { selectedElemIndex++; }
         public void SelectPreviousElement() { selectedElemIndex--; }
         public void SelectItem() { if (itemList.Count > 0) { itemList[selectedElemIndex].Activate(); } }
-        //───────────────────────Methods End───────────────────────|
     }
 
     public class SLTItem
@@ -491,7 +339,6 @@ namespace KTZEngine
         public bool drawLeftSign = true;
 
 
-        //─────────────────────────SelectListTab construcor─────────────────────────|
         public SelectSelectListTab(KTZEngineAplication aplication_, List<SSLTItem> SSLTItemList, string name_, int ups_, string selectItemRightSign_ = standartSelectItemRightSign, string selectItemLeftSign_ = standartSelectItemLeftSign, int distanceBetweenElements_ = standartDistanceBetweenElements) : base(aplication_, name_, ups_)
         {
             itemList = SSLTItemList;
@@ -515,7 +362,6 @@ namespace KTZEngine
 
         }
 
-        //─────────────────────────Methods─────────────────────────|
         public override void Update()
         {
             if (itemList.Count > 0) { selectedElemIndex = KTZMath.LoopNumberInInterval(selectedElemIndex, 0, itemList.Count - 1); }
@@ -557,19 +403,6 @@ namespace KTZEngine
 
         }
 
-        public void HeightAlignToCenter()
-        {
-            itemList[0].topOffset = 0;
-            int listHeight = itemList.Count;
-            for (int i = 0; i < itemList.Count; i++)
-            {
-                listHeight += itemList[i].topOffset;
-            }
-            if (listHeight > Console.BufferHeight) { Console.BufferHeight = listHeight; }
-
-            itemList[0].topOffset = (int)((Console.BufferHeight - listHeight * 1.5) / 2);
-        }
-
         public void AlignToCenter()
         {
             foreach (var item in itemList)
@@ -597,7 +430,6 @@ namespace KTZEngine
             }
         }
         public void ActivateCurrentElement() { itemList[selectedElemIndex].variants[itemList[selectedElemIndex].selectedIndex].selectAction(); }
-        //───────────────────────Methods End───────────────────────|
     }
 
     public class SSLTItem
@@ -694,16 +526,6 @@ namespace KTZEngine
             languagesCount = languages.Count;
         }
 
-        public void AddText(string textKey, Dictionary<string, string> langWords)
-        {
-            if (langWords.Count != languages.Count) { throw new Exception("Count of given arguments(=" + langWords.Count + ") must equal to languages count(=" + languages.Count + ")"); }
-            foreach (var langPair in langWords)
-            {
-                if (languages.ContainsKey(langPair.Key)) { languages[langPair.Key].dictionary.Add(textKey, langPair.Value); }
-                else { throw new Exception("Cant find \"" + langPair.Key + "\" in \"" + String.Join(", ", languages.Keys.ToArray()) + "\""); }
-            }
-        }
-
         public void AddSomeText(Dictionary<string, Dictionary<string, string>> words)
         {
             foreach (var wordsList in words)
@@ -722,7 +544,6 @@ namespace KTZEngine
             if (languages[currentLanguageName].dictionary.ContainsKey(textKey)) { return languages[currentLanguageName].dictionary[textKey]; }
             else { throw new Exception("Cant find \"" + textKey + "\" in \"" + String.Join(", ", languages[currentLanguageName].dictionary.Keys.ToArray()) + "\""); }
         }
-
     }
 
     public class Grid
@@ -756,19 +577,6 @@ namespace KTZEngine
                     grid[x, y] = emptyChar;
                 }
             }
-        }
-
-        public string GetColumn(int columnIndex)
-        {
-            string column = "";
-            for (int i = 0; i < Height; i++) { column += grid[columnIndex, i]; }
-            return column;
-        }
-        public string GetRow(int rowIndex)
-        {
-            string row = "";
-            for (int i = 0; i < Width; i++) { row += grid[i, rowIndex]; }
-            return row;
         }
 
         public void Draw()

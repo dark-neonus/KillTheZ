@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace Vector2Namespace
 {
-    ////─────────────────────────────────────────────────────────────────struct Vector2─────────────────────────────────────────────────────────────────|
     public struct Vector2 : IEquatable<Vector2>// , ICollection<Vector2>
     {
         public int x;
@@ -18,14 +17,7 @@ namespace Vector2Namespace
         // Constructor
         public Vector2(int X, int Y) { this.x = X; this.y = Y; }
         public Vector2(int XandY) { this.x = XandY; this.y = XandY; }
-        public Vector2(Vector2 X, Vector2 Y) { this.x = X.x; this.y = Y.y; }
-        public Vector2(Vector2 vector) { this.x = vector.x; this.y = vector.y; }
-        public Vector2(int[] pos) { if (pos.Length < 2) { throw new Exception("To create Vector2 need at least 2 arguments"); } this.x = pos[0]; this.y = pos[1]; }
-        public Vector2(List<int> pos) { if (pos.Count < 2) { throw new Exception("To create Vector2 need at least 2 arguments"); } this.x = pos[0]; this.y = pos[1]; }
 
-
-
-        // Vector constants
         public static Vector2 zero = new(0, 0);
 
         public static Vector2 right = new(1, 0);
@@ -92,17 +84,6 @@ namespace Vector2Namespace
             { "downLeft", downLeft }
         };
 
-        public string ToString(bool writeAxisNames = false)
-        {
-            if (writeAxisNames)
-            {
-                return "x: " + x + "   y: " + y;
-            }
-            else
-            {
-                return x + " " + y;
-            }
-        }
 
         public void RotationToRight90(int times = 1)
         {
@@ -172,98 +153,26 @@ namespace Vector2Namespace
             return vec;
         }
 
-        public override bool Equals(object? obj) => obj is Vector2 other && Equals(other);
-
         public bool Equals(Vector2 o) => (x == o.x) && (y == o.y);
 
-        public override int GetHashCode() => (x, y).GetHashCode();
 
-        // Vector 2 +
         public static Vector2 operator +(Vector2 a, Vector2 b) { return new Vector2(a.x + b.x, a.y + b.y); }
         public static Vector2 operator +(Vector2 a, int b) { return new Vector2(a.x + b, a.y + b); }
-        public static Vector2 operator +(int a, Vector2 b) { return new Vector2(a + b.x, a + b.y); }
-        public static Vector2 operator +(Vector2 a, int[] b) { return new Vector2(a.x + b[0], a.y + b[1]); }
-        public static Vector2 operator +(int[] a, Vector2 b) { return new Vector2(a[0] + b.x, a[1] + b.x); }
-        public static Vector2 operator +(Vector2 a, List<int> b) { return new Vector2(a.x + b[0], a.y + b[1]); }
-        public static Vector2 operator +(List<int> a, Vector2 b) { return new Vector2(a[0] + b.x, a[1] + b.x); }
-        // Vector 2 -
         public static Vector2 operator -(Vector2 a, Vector2 b) { return new Vector2(a.x - b.x, a.y - b.y); }
         public static Vector2 operator -(Vector2 a, int b) { return new Vector2(a.x - b, a.y - b); }
-        public static Vector2 operator -(int a, Vector2 b) { return new Vector2(a - b.x, a - b.y); }
-        public static Vector2 operator -(Vector2 a, int[] b) { return new Vector2(a.x - b[0], a.y - b[1]); }
-        public static Vector2 operator -(int[] a, Vector2 b) { return new Vector2(a[0] - b.x, a[1] - b.x); }
-        public static Vector2 operator -(Vector2 a, List<int> b) { return new Vector2(a.x - b[0], a.y - b[1]); }
-        public static Vector2 operator -(List<int> a, Vector2 b) { return new Vector2(a[0] - b.x, a[1] - b.x); }
-        // Vector 2 *
-        public static Vector2 operator *(Vector2 a, Vector2 b) { return new Vector2(a.x * b.x, a.y * b.y); }
         public static Vector2 operator *(Vector2 a, int b) { return new Vector2(a.x * b, a.y * b); }
-        public static Vector2 operator *(int a, Vector2 b) { return new Vector2(a * b.x, a * b.y); }
-        public static Vector2 operator *(Vector2 a, int[] b) { return new Vector2(a.x * b[0], a.y * b[1]); }
-        public static Vector2 operator *(int[] a, Vector2 b) { return new Vector2(a[0] * b.x, a[1] * b.x); }
-        public static Vector2 operator *(Vector2 a, List<int> b) { return new Vector2(a.x * b[0], a.y * b[1]); }
-        public static Vector2 operator *(List<int> a, Vector2 b) { return new Vector2(a[0] * b.x, a[1] * b.x); }
-        // Vector 2 
-        public static Vector2 operator /(Vector2 a, Vector2 b) { return new Vector2(a.x / b.x, a.y / b.y); }
-        public static Vector2 operator /(Vector2 a, int b) { return new Vector2(a.x / b, a.y / b); }
-        public static Vector2 operator /(int a, Vector2 b) { return new Vector2(a / b.x, a / b.y); }
-        public static Vector2 operator /(Vector2 a, int[] b) { return new Vector2(a.x / b[0], a.y / b[1]); }
-        public static Vector2 operator /(int[] a, Vector2 b) { return new Vector2(a[0] / b.x, a[1] / b.x); }
-        public static Vector2 operator /(Vector2 a, List<int> b) { return new Vector2(a.x / b[0], a.y / b[1]); }
-        public static Vector2 operator /(List<int> a, Vector2 b) { return new Vector2(a[0] / b.x, a[1] / b.x); }
-        // Vector 2 equal
+
         public static bool operator ==(Vector2 a, Vector2 b) { return (a.x == b.x) && (a.y == b.y); }
-        public static bool operator ==(Vector2 a, int b) { return (a.x == b && a.y == b); }
-        public static bool operator ==(int a, Vector2 b) { return (a == b.x && a == b.y); }
-        public static bool operator ==(Vector2 a, int[] b) { return (a.x == b[0] && a.y == b[1]); }
-        public static bool operator ==(int[] a, Vector2 b) { return (a[0] == b.x && a[1] == b.x); }
-        public static bool operator ==(Vector2 a, List<int> b) { return (a.x == b[0] && a.y == b[1]); }
-        public static bool operator ==(List<int> a, Vector2 b) { return (a[0] == b.x && a[1] == b.x); }
-        // Vector 2 not equal
         public static bool operator !=(Vector2 a, Vector2 b) { return (a.x != b.x) || (a.y != b.y); }
-        public static bool operator !=(Vector2 a, int b) { return (a.x != b && a.y != b); }
-        public static bool operator !=(int a, Vector2 b) { return (a != b.x && a != b.y); }
-        public static bool operator !=(Vector2 a, int[] b) { return (a.x != b[0] && a.y != b[1]); }
-        public static bool operator !=(int[] a, Vector2 b) { return (a[0] != b.x && a[1] != b.x); }
-        public static bool operator !=(Vector2 a, List<int> b) { return (a.x != b[0] && a.y != b[1]); }
-        public static bool operator !=(List<int> a, Vector2 b) { return (a[0] != b.x && a[1] != b.x); }
-        // Vector 2 less
+
         public static bool operator <(Vector2 a, Vector2 b) { return (a.x < b.x && a.y < b.y); }
         public static bool operator <(Vector2 a, int b) { return (a.x < b && a.y < b); }
         public static bool operator <(int a, Vector2 b) { return (a < b.x && a < b.y); }
-        public static bool operator <(Vector2 a, int[] b) { return (a.x < b[0] && a.y < b[1]); }
-        public static bool operator <(int[] a, Vector2 b) { return (a[0] < b.x && a[1] < b.x); }
-        public static bool operator <(Vector2 a, List<int> b) { return (a.x < b[0] && a.y < b[1]); }
-        public static bool operator <(List<int> a, Vector2 b) { return (a[0] < b.x && a[1] < b.x); }
-        // Vector 2 bigger
         public static bool operator >(Vector2 a, Vector2 b) { return (a.x > b.x && a.y > b.y); }
         public static bool operator >(Vector2 a, int b) { return (a.x > b && a.y > b); }
         public static bool operator >(int a, Vector2 b) { return (a > b.x && a > b.y); }
-        public static bool operator >(Vector2 a, int[] b) { return (a.x > b[0] && a.y > b[1]); }
-        public static bool operator >(int[] a, Vector2 b) { return (a[0] > b.x && a[1] > b.x); }
-        public static bool operator >(Vector2 a, List<int> b) { return (a.x > b[0] && a.y > b[1]); }
-        public static bool operator >(List<int> a, Vector2 b) { return (a[0] > b.x && a[1] > b.x); }
-        // Vector 2 less or equal
-        public static bool operator <=(Vector2 a, Vector2 b) { return (a.x <= b.x && a.y <= b.y); }
-        public static bool operator <=(Vector2 a, int b) { return (a.x <= b && a.y <= b); }
-        public static bool operator <=(int a, Vector2 b) { return (a <= b.x && a <= b.y); }
-        public static bool operator <=(Vector2 a, int[] b) { return (a.x <= b[0] && a.y <= b[1]); }
-        public static bool operator <=(int[] a, Vector2 b) { return (a[0] <= b.x && a[1] <= b.x); }
-        public static bool operator <=(Vector2 a, List<int> b) { return (a.x <= b[0] && a.y <= b[1]); }
-        public static bool operator <=(List<int> a, Vector2 b) { return (a[0] <= b.x && a[1] <= b.x); }
-        // Vector 2 bigger or equal
-        public static bool operator >=(Vector2 a, Vector2 b) { return (a.x >= b.x && a.y >= b.y); }
-        public static bool operator >=(Vector2 a, int b) { return (a.x >= b && a.y >= b); }
-        public static bool operator >=(int a, Vector2 b) { return (a >= b.x && a >= b.y); }
-        public static bool operator >=(Vector2 a, int[] b) { return (a.x >= b[0] && a.y >= b[1]); }
-        public static bool operator >=(int[] a, Vector2 b) { return (a[0] >= b.x && a[1] >= b.x); }
-        public static bool operator >=(Vector2 a, List<int> b) { return (a.x >= b[0] && a.y >= b[1]); }
-        public static bool operator >=(List<int> a, Vector2 b) { return (a[0] >= b.x && a[1] >= b.x); }
-        // Vector 2 changes
-        public static Vector2 operator ++(Vector2 a) { return new Vector2(a.x++, a.y++); }
-        public static Vector2 operator --(Vector2 a) { return new Vector2(a.x--, a.y--); }
-        // Vector 2 signum
+
         public static Vector2 operator -(Vector2 a) { return new Vector2(-a.x, -a.y); }
-        public static Vector2 operator +(Vector2 a) { return new Vector2(a.x, a.y); }
 
 
     }
