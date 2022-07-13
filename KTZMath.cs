@@ -13,8 +13,8 @@ namespace KTZEngine
 
         public static bool IsCubeVectorInFieldVector(Vector2 cubeStart, int cubeWidth, int cubeHeight, Vector2 fieldStart, int fieldWidth, int fieldHeight, bool checkStart = true, bool checkeStop = true)
         {
-            Vector2 cubeSize = new Vector2(cubeWidth, cubeHeight);
-            Vector2 fieldSize = new Vector2(fieldWidth, fieldHeight);
+            Vector2 cubeSize = new (cubeWidth, cubeHeight);
+            Vector2 fieldSize = new (fieldWidth, fieldHeight);
             if ((IsInInterval(cubeStart, fieldStart, fieldStart + fieldSize - 1)) || (IsInInterval(cubeStart + cubeSize - 1, fieldStart, fieldStart + fieldSize - 1)) || (IsInInterval(cubeStart + cubeSize.x - 1, fieldStart, fieldStart + fieldSize - 1)) || (IsInInterval(cubeStart + cubeSize.y - 1, fieldStart, fieldStart + fieldSize - 1)))
             {
                 return true;

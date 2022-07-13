@@ -27,7 +27,7 @@ namespace KTZEngine
 
             if (handle != IntPtr.Zero)
             {
-                DeleteMenu(sysMenu, SC_SIZE, MF_BYCOMMAND);
+                _ = DeleteMenu(sysMenu, SC_SIZE, MF_BYCOMMAND);
             }
         }
 
@@ -49,8 +49,7 @@ namespace KTZEngine
 
             IntPtr consoleHandle = GetStdHandle(STD_INPUT_HANDLE);
 
-            uint consoleMode;
-            if (!GetConsoleMode(consoleHandle, out consoleMode))
+            if (!GetConsoleMode(consoleHandle, out uint consoleMode))
             {
                 return false;
             }
@@ -73,14 +72,9 @@ namespace KTZEngine
     {
         [DllImport("kernel32.dll", ExactSpelling = true)]
         private static extern IntPtr GetConsoleWindow();
-        private static IntPtr ThisConsole = GetConsoleWindow();
+        private static readonly IntPtr ThisConsole = GetConsoleWindow();
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-        private const int HIDE = 0;
-        private const int MAXIMIZE = 3;
-        private const int MINIMIZE = 6;
-        private const int RESTORE = 9;
-        private static Array modes = new[] { HIDE, MAXIMIZE, MINIMIZE, RESTORE };
         public static void SetMode(int modeIndex)
         {
             ShowWindow(ThisConsole, modeIndex);

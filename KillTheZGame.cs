@@ -50,7 +50,7 @@ namespace KillTheZGame
 
 
             GameData.originalMyGame = new MyGame(ref GameData.aplication, new Vector2(GameData.myGameWindowWidth, GameData.myGameWindowHeight), "Game", 40);
-            GameData.myGameShell = new MyGameShell(ref GameData.originalMyGame, MyGameTabBehavior, new Vector2((int)((GameData.myGameWindowWidth - GameData.myGameWidth) / 2), (int)((GameData.myGameWindowHeight - GameData.myGameHeight) / 2)), new Vector2(GameData.myGameWidth, GameData.myGameHeight));
+            GameData.myGameShell = new MyGameShell(ref GameData.originalMyGame, GameData.EmptyMethod, new Vector2((int)((GameData.myGameWindowWidth - GameData.myGameWidth) / 2), (int)((GameData.myGameWindowHeight - GameData.myGameHeight) / 2)), new Vector2(GameData.myGameWidth, GameData.myGameHeight));
 
 
             GameData.mainMenu = new MainMenu();
@@ -99,14 +99,6 @@ namespace KillTheZGame
             {
                 GameData.aplication.Update();
             }
-        }
-
-        public static void MyGameTabBehavior()
-        {
-            // KeyManager.ClearKeyPressBuffer();
-
-            // GameData.myGameShell.PreUpdate();
-            // GameData.myGameShell.Update();
         }
 
         public static void MainMenuBehavior()
@@ -638,10 +630,8 @@ namespace KillTheZGame
         public string origGameName;
         public Action TabBehavior;
 
-        // Display Layer
         public Vector2 gameDisplaySize;
 
-        // Game Layers 
         public Vector2 gameFieldSize = Vector2.zero;
         public Vector2 gameStartPos = Vector2.zero;
 
@@ -760,7 +750,6 @@ namespace KillTheZGame
 
 
 
-            // int textLen = GameData.cityNames[GameData.currentCityIndex].Length;
             Vector2 textStartPos = new ((int)Math.Round((double)((floorLayer.layerWidth - GameData.cityNames[GameData.currentCityIndex + 1].Length) / 2)), floorLayer.layerHeight - KTZMapsGeneration.zoneHeight);
             for (int i = 0; i < GameData.cityNames[GameData.currentCityIndex + 1].Length; i++) { floorLayer.CreateStaticObject(textStartPos + new Vector2(i, 0), GameData.cityNames[GameData.currentCityIndex + 1][i], new List<string>() { GameData.gameIds["collision"] }); }
 
@@ -769,20 +758,14 @@ namespace KillTheZGame
 
             int mapCenterX = (int)Math.Round((float)(gameObjectsLayer.layerWidth / 2));
 
-            GameData.player = new MyPlayer(this, "Player", gameObjectsLayer, new Vector2(mapCenterX, /*gameObjectsLayer.layerHeight -*/ 3), new List<GameLayer>() { staticObjectsLayer, gameObjectsLayer }, new List<string>() { GameData.gameIds["collision"], GameData.gameIds["mine"], GameData.gameIds["pricklyHedgehogs"] });
+            GameData.player = new MyPlayer(this, "Player", gameObjectsLayer, new Vector2(mapCenterX, 3), new List<GameLayer>() { staticObjectsLayer, gameObjectsLayer }, new List<string>() { GameData.gameIds["collision"], GameData.gameIds["mine"], GameData.gameIds["pricklyHedgehogs"] });
 
-            GameData.traktorMykola = new UkraineTraktorMykola(this, gameObjectsLayer, new Vector2(KTZEngineAplication.random.Next(1, gameObjectsLayer.layerWidth - 2), /*gameObjectsLayer.layerHeight -*/ KTZEngineAplication.random.Next(1, 3)));
+            GameData.traktorMykola = new UkraineTraktorMykola(this, gameObjectsLayer, new Vector2(KTZEngineAplication.random.Next(1, gameObjectsLayer.layerWidth - 2), KTZEngineAplication.random.Next(1, 3)));
             GenerateObjectAtGamePlaceRandom(virtualMap, GameData.traktorMykola);
 
             GenerateUkraineSoldiers(virtualMap);
 
-            /*
-            for (int i = 0; i < 1000; i++)
-            {
-                GenerateEnemy();
-            }
-            */
-
+           
             UkraineSoldier.stupidPositionToBlock = new() { };
 
             GameData.wallPositionList = new() { };
@@ -863,9 +846,6 @@ namespace KillTheZGame
                     {
                         if (virtualMap[x, y] == 1 || virtualMap[x, y] == 3) { goSoldierVariants[x] += 1; }
                     }
-                    // goSoldierVariants.Add(x, staticObjectsLayer.staticObjects.FindAll(o => o.id.Contains(GameData.gameIds["collision"]) &&
-                    // o.globalPosition.x == x && o.localPosition.y < (int)(gameObjectsLayer.layerHeight / 1)).ToArray().Length +
-                    // floorLayer.staticObjects.FindAll(o => o.ico == wall.ico && o.globalPosition.x == x && o.localPosition.y < (int)(gameObjectsLayer.layerHeight / 2)).ToArray().Length);
                 }
                 goXPos = goSoldierVariants.FirstOrDefault(o => o.Value == goSoldierVariants.Values.Min()).Key;
                 for (int q = 0; q < 2; q++)
@@ -896,19 +876,6 @@ namespace KillTheZGame
 
 
             game.keyManager.keyPressActions.Add(ConsoleKey.Escape, PressKeyEscape);
-
-            // game.keyManager.keyPressActions.Add(ConsoleKey.X, PressKeyX);
-            // game.keyManager.keyPressActions.Add(ConsoleKey.Z, PressKeyZ);
-
-            // game.keyManager.keyPressActions.Add(ConsoleKey.D0, PressKey0);
-            // game.keyManager.keyPressActions.Add(ConsoleKey.D1, PressKey1);
-            // game.keyManager.keyPressActions.Add(ConsoleKey.D2, PressKey2);
-
-
-
-            // game.keyManager.keyPressActions.Add(ConsoleKey.P, PressKeyP);
-            // game.keyManager.keyPressActions.Add(ConsoleKey.K, PressKeyK);
-            // game.keyManager.keyPressActions.Add(ConsoleKey.L, PressKeyL);
         }
 
         public static void PreUpdate()
@@ -935,15 +902,6 @@ namespace KillTheZGame
 
         public void AfterUpdate()
         {
-            // foreach (UkraineSoldier soldier in GameData.myGameShell.game.gameObjectsList.FindAll(o => o.id.Contains(GameData.gameIds["UkraineSoldier"])).ToList())
-            // {
-            //     GameData.myGameShell.game.PostProcessing(soldier.globalPosition + Vector2.right, soldier.priorityDir.Position());
-            // }
-            // foreach (Vector2 pos in UkraineSoldier.stupidPositionToBlock)
-            // {
-            //     GameData.myGameShell.game.PostProcessing(pos, '+');
-            // }
-
             GameResultCheck();
             ObjectsPositionGet();
             SirenCheck();
@@ -978,10 +936,6 @@ namespace KillTheZGame
 
         public void DataOutput()
         {
-            // game.gameGrid.AddDisposablePostProcessingText(new Vector2(0, GameData.myGameWindowHeight - 2), "\t\tIn this line is control Information for developer(can be ignore):" + game.gameObjects.Count + "   " + ShitrussiaTankZ.basicEnemyStopTicks + "   ");
-
-            //game.gameGrid.AddDisposablePostProcessingText(new Vector2(0, GameData.myGameWindowHeight - 4), "\t\tFPS:" + Math.Min((int)GameData.aplication.currentAverageFPS, game.UPS) + "    Current Time: " + game.time + "ms    Attack start time: " + levelPrepareTime + "ms    Enemy left to spawn: " + levelEnemyCount + "    Enemy left to kill: " + enemyLeftToKill + "    Mine count: " + GameData.player.mineCount + "    Bayraktar attack count: " + bayraktarAttackCount);
-
             game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) - 27, GameData.myGameWindowHeight - 2), GameData.aplication.gameText.GetText("MineCount") + GameData.player.mineCount + "[" + GoodMine.icons[GoodMine.iconIndex] + "]" + GameData.aplication.gameText.GetText("BayraktarAttackCount") + bayraktarAttackCount + "[" + SimpleBayraktarRocket.basicUpChar + "]");
             game.gameGrid.AddDisposablePostProcessingText(new Vector2(gameObjectsLayer.layerStartPosition.x + 3, GameData.myGameWindowHeight - 2), "FPS:" + Math.Min((int)GameData.aplication.currentAverageFPS, game.UPS));
             game.gameGrid.AddDisposablePostProcessingText(new Vector2((int)(GameData.myGameWindowWidth / 2) - 58, GameData.myGameWindowHeight - 4), GameData.aplication.gameText.GetText("CurrentTime") + game.time + GameData.aplication.gameText.GetText("ms") + GameData.aplication.gameText.GetText("AttackStartTime") + levelPrepareTime + GameData.aplication.gameText.GetText("ms"));
@@ -1100,10 +1054,10 @@ namespace KillTheZGame
 
     public class MyPlayer : GameObject
     {
-        public static char basicUpChar = "\u001E".ToCharArray()[0];//'▲';
-        public static char basicRightChar = "\u0010".ToCharArray()[0];//'►'; 
-        public static char basicDownChar = "\u001F".ToCharArray()[0];//'▼';
-        public static char basicLeftChar = "\u0011".ToCharArray()[0];//'◄';
+        public static char basicUpChar = "\u001E".ToCharArray()[0];
+        public static char basicRightChar = "\u0010".ToCharArray()[0];
+        public static char basicDownChar = "\u001F".ToCharArray()[0];
+        public static char basicLeftChar = "\u0011".ToCharArray()[0];
 
 
         public Dictionary<Vector2, char> playerPoses;
@@ -1216,7 +1170,6 @@ namespace KillTheZGame
             {
                 int plusOffsetY = (layer.layerHeight - 1) * Math.Abs(Math.Sign(q - 1));
 
-                // Attack to right
                 enemys = GameData.myGameShell.game.gameObjectsList.Where(o => o.id.Contains(GameData.gameIds["enemy"]) && KTZMath.IsInInterval(o.localPosition.y, plusOffsetY + KTZMapsGeneration.zoneHeight * q, plusOffsetY + (KTZMapsGeneration.zoneHeight + 3) * q)).ToList();
                 enemys = enemys.OrderBy(o => o.localPosition.x).ToList();
                 rocketCount = 3;
@@ -1231,11 +1184,9 @@ namespace KillTheZGame
                 {
                     startX = -KTZEngineAplication.random.Next(0, 8);
                     tX = KTZEngineAplication.random.Next(3, layer.layerWidth - 2);
-                    // tY = KTZEngineAplication.random.Next(KTZMapsGeneration.zoneHeight, KTZMapsGeneration.zoneHeight + 3);
                     tY = plusOffsetY + (KTZMapsGeneration.zoneHeight + i) * q;
                     GameData.myGameShell.game.AddExistGameObject(new SimpleBayraktarRocket(GameData.myGameShell.game, layer, new Vector2(startX, tY), new Vector2(tX, tY), Vector2.right));
                 }
-                // Attack to left
                 enemys = GameData.myGameShell.game.gameObjectsList.Where(o => o.id.Contains(GameData.gameIds["enemy"]) && KTZMath.IsInInterval(o.localPosition.y, plusOffsetY + KTZMapsGeneration.zoneHeight * q, plusOffsetY + (KTZMapsGeneration.zoneHeight + 3) * q)).ToList();
                 enemys = enemys.OrderBy(o => -o.localPosition.x).ToList();
                 rocketCount = 3;
@@ -1250,7 +1201,6 @@ namespace KillTheZGame
                 {
                     startX = layer.layerWidth + KTZEngineAplication.random.Next(0, 8);
                     tX = KTZEngineAplication.random.Next(3, layer.layerWidth - 2);
-                    // tY = KTZEngineAplication.random.Next(KTZMapsGeneration.zoneHeight, KTZMapsGeneration.zoneHeight + 3);
                     tY = plusOffsetY + (KTZMapsGeneration.zoneHeight + i) * q;
                     GameData.myGameShell.game.AddExistGameObject(new SimpleBayraktarRocket(GameData.myGameShell.game, layer, new Vector2(startX, tY), new Vector2(tX, tY), Vector2.left));
                 }
@@ -1314,10 +1264,10 @@ namespace KillTheZGame
     {
         public Vector2 target;
 
-        public static char basicRightChar = '╠';
-        public static char basicLeftChar = '╣';
-        public static char basicUpChar = '╩';
-        public static char basicDownChar = '╦';
+        public const char basicRightChar = '╠';
+        public const char basicLeftChar = '╣';
+        public const char basicUpChar = '╩';
+        public const char basicDownChar = '╦';
 
         public static Dictionary<Vector2, char> icons = new () { { Vector2.up, basicUpChar }, { Vector2.down, basicDownChar }, { Vector2.right, basicRightChar }, { Vector2.left, basicLeftChar } };
 
@@ -1381,7 +1331,7 @@ namespace KillTheZGame
         public int moveIndex = 0;
         public int moveTick = 0;
 
-        public static int sameMoveCount = 6;
+        public const int sameMoveCount = 6;
         public static int basicEnemyStopTicks = 30;
 
         public int enemyStopTicks;
@@ -1398,7 +1348,7 @@ namespace KillTheZGame
 
         public bool isCloseToTarget = false;
 
-        public static char basicIcon = 'z';
+        public const char basicIcon = 'z';
 
         public ShitrussiaTankZ(MyGameShell myGame_, GameLayer layer_, Vector2 pos) : base("russiaTankZ" + KTZEngineAplication.GenerateProtectName(), layer_, pos, basicIcon, new List<string>() { GameData.gameIds["enemy"] })
         {
@@ -1549,7 +1499,7 @@ namespace KillTheZGame
 
         public const char mine1Ico = 'Θ';
         public const char mine2Ico = 'O';
-        public static char[] icons = new char[] { mine1Ico, mine2Ico };
+        public static readonly char[] icons = new char[] { mine1Ico, mine2Ico };
         public static int iconIndex = 0;
 
         public static int animationMaxTick = 12;
@@ -1561,7 +1511,6 @@ namespace KillTheZGame
                 GoodMine currPosMine = (GoodMine)GameData.myGameShell.game.gameObjectsList.ToList().Find(o => o.GetType() == GameData.goodMineType && o.globalPosition == globalPosition);
                 if (currPosMine != null)
                 {
-                    // GameData.myGameShell.game.gameObjects.Remove(currPosMine.name);
                     GameData.myGameShell.game.DeleteGameObject(currPosMine.name);
                 }
             }
@@ -1590,12 +1539,10 @@ namespace KillTheZGame
 
             for (int q = 0; q < objectsToKill.Count; q++)
             {
-                // GameData.myGame.game.DeleteGameObject(objectsToKill[q].name);
                 ((ShitrussiaTankZ)objectsToKill[q]).Die();
             }
 
             if (GameData.myGameShell.game.gameObjects.ContainsKey(detectObj.name)) { GameData.myGameShell.game.DeleteGameObject(detectObj.name); }
-            // GameData.myGame.game.DeleteGameObject(detectObj.name);
 
 
             GameData.myGameShell.game.DeleteGameObject(name);
@@ -1609,7 +1556,6 @@ namespace KillTheZGame
 
             for (int q = 0; q < objectsToKill.Count; q++)
             {
-                // GameData.myGame.game.DeleteGameObject(objectsToKill[q].name);
                 ((ShitrussiaTankZ)objectsToKill[q]).Die();
             }
 
@@ -1621,7 +1567,6 @@ namespace KillTheZGame
         {
             for (int q = 0; q < Vector2.eightDirections.Count; q++) { objectsToKill.AddRange(GameData.myGameShell.game.gameObjectsList.FindAll(o => o.globalPosition == globalPosition + Vector2.eightDirections[q] && o.GetType() == GameData.shitrussiaTankZType)); }
             objectsToKill.AddRange(GameData.myGameShell.game.gameObjectsList.FindAll(o => o.globalPosition == globalPosition && o.GetType() == GameData.shitrussiaTankZType));
-            // mineKillObjects.Add(GameData.myGame.game.gameObjects.Values.ToList().Find(o => o.globalPosition == globalPosition && o.GetType() == GameData.goodMineType));
             objectsToKill.Remove(this);
         }
 
@@ -1631,7 +1576,6 @@ namespace KillTheZGame
             {
                 nextExplosionMine = GameData.myGameShell.game.gameObjectsList.Find(o => o.GetType() == GameData.goodMineType && !((GoodMine)o).isExplosion && o.globalPosition == globalPosition + Vector2.eightDirections[q]);
                 if (nextExplosionMine != null) { ((GoodMine)nextExplosionMine).Explosion(); }
-                // Debug.WriteLine(Vector2.namedEightDirections.ElementAt(q).Key);
             }
         }
 
@@ -1975,7 +1919,7 @@ namespace KillTheZGame
         public int moveIndex = 0;
         public int moveTick = 0;
         public int shootIndex = 0;
-        public static int sameMoveCount = 3;
+        public int sameMoveCount = 3;
         public const int basicUASoldierStopTicks = 10;
         public const int maxShootIndex = 6;
         public int mineCount = 3;
@@ -2175,12 +2119,11 @@ namespace KillTheZGame
                 for (int q = 0; q < attackMaxDistance; q++)
                 {
                     lookPos = globalPosition + Vector2.fourDirections[i] * q;
-                    if (!GameData.wallPositionList.Contains(lookPos)/*myGame.staticObjectsLayer.staticObjects.Find(o => o.globalPosition == lookPos && o.id.Contains(GameData.gameIds["collision"])) == null*/)
+                    if (!GameData.wallPositionList.Contains(lookPos))
                     {
-                        if (GameData.enemyPositionList.Contains(lookPos)/*myGame.game.gameObjects.Values.ToList().Find(o => o.globalPosition == lookPos && o.id.Contains(GameData.gameIds["enemy"])) != null*/)
+                        if (GameData.enemyPositionList.Contains(lookPos))
                         {
                             dir = Vector2.fourDirections[i];
-                            // disposableVelocity = dir;
                             Shot();
                             shootIndex = maxShootIndex;
                             return true;
@@ -2243,11 +2186,9 @@ namespace KillTheZGame
 
         public static KTZEngineAplication aplication = new();
 
-        // Aplication
         public static int myGameWindowWidth = 125;
         public static int myGameWindowHeight = 70;
 
-        // Menu
         public static MainMenu mainMenu;
 
         public static TutorialMenu tutorialMenu;
@@ -2262,7 +2203,6 @@ namespace KillTheZGame
         public static DecideFateTab moscowDecideFateTab;
         public static WarStartTab warStartTab;
 
-        // Game
         public static MyGameShell myGameShell;
         public static MyGame originalMyGame;
         public static int myGameWidth = 125;
@@ -2274,7 +2214,6 @@ namespace KillTheZGame
         public static DateTime warStartVirtualTime = new (2014, 2, 20);
         public static int yearsOfPeace = 1;
 
-        // Languages
         public static Language english;
         public static Language ukraine;
         public static Language polish;
@@ -2302,10 +2241,8 @@ namespace KillTheZGame
         public static SimpleBayraktarRocket simpleBayraktarRocketRef = new(myGameRef, gameLayerRef, Vector2.zero, Vector2.upRight);
 
         public static readonly Type goodBulletType = goodBulletRef.GetType();
-        // public static readonly Type traktorkUkraineMykolaType = traktorUkraineMykolaRef.GetType();
         public static readonly Type goodMineType = goodMineRef.GetType();
         public static readonly Type shitrussiaTankZType = shitrussiaTankZRef.GetType();
-        // public static readonly Type enemySlowDownTileType = enemySlowDownTileRef.GetType();
         public static readonly Type simpleBayraktarRocketType = simpleBayraktarRocketRef.GetType();
 
         public static List<string> cityNames = new() { "Kyiv", "Poltava", "Kharkiv", "Lugansk", "Voronezh", "Lipetsk", "Tula", "Podolsk", "Moscow" };
@@ -2313,7 +2250,6 @@ namespace KillTheZGame
         public static List<string> cityNamesRU = new() { "Voronezh", "Lipetsk", "Tula", "Podolsk", "Moscow" };
 
         public static Dictionary<string, int> cityEnemyCount = new() { { cityNames[0], 50 }, { cityNames[1], 100 }, { cityNames[2], 150 }, { cityNames[3], 250 }, { cityNames[4], 350 }, { cityNames[5], 500 }, { cityNames[6], 700 }, { cityNames[7], 1000 } };
-        // public static List<string> CurrentCitys { get { return new List<string>() { cityNames[currentCityIndex], cityNames[currentCityIndex + 1] }; } }
         public static int currentCityIndex = 3;
 
         public static List<Vector2> wallPositionList = new() { };

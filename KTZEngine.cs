@@ -13,22 +13,21 @@ namespace KTZEngine
 {
     public class KTZEngineAplication
     {
-        // Standart Values
         public const string standartWindowTitle = "KTZEngineAplication";
         public const int standartWindowWidth = 85;
         public const int standartWindowHeight = 43;
         public const string KTZEngineMainTabName = "KTZEngineMainTab";
-        public GameTab KTZEngineMainTab;
+        public GameTab? KTZEngineMainTab;
         public const bool standartConsoleResizable = false;
 
         public const string smallEnglishAlphabet = "abcdefghijklmnopqrstuvwxyz";
 
-        public static Random random = new();
+        public static readonly Random random = new();
 
         public static string windowTitle = standartWindowTitle;
         public static bool consoleResizable = standartConsoleResizable;
 
-        public GameText gameText;
+        public GameText? gameText;
 
         public bool isInAplication;
 
@@ -37,18 +36,18 @@ namespace KTZEngine
 
         public Dictionary<string, GameTab> gameTabs = new() { };
         public Dictionary<string, Action> tabsBehavior = new() { };
-        public string currentGameTabName;
+        public string currentGameTabName = "";
 
         DateTime start;
         TimeSpan time;
 
         public float currentAverageFPS;
-        public float[] arrayOfFPS;
+        public float[] arrayOfFPS = Array.Empty<float>();
 
         public ConsoleColor ConsoleBackgroundColor = ConsoleColor.Black;
         public ConsoleColor ConsoleForegroundColor = ConsoleColor.Gray;
 
-        public KTZEngineAplication(int windowW = standartWindowWidth, int windowH = standartWindowHeight, string windowTitle_ = standartWindowTitle, Dictionary<string, Action> tabsBehavior_ = null, bool _consoleResizable = standartConsoleResizable)
+        public KTZEngineAplication(int windowW = standartWindowWidth, int windowH = standartWindowHeight, string windowTitle_ = standartWindowTitle, Dictionary<string, Action>? tabsBehavior_ = null, bool _consoleResizable = standartConsoleResizable)
         {
             windowWidth = windowW;
             windowHeight = windowH;
@@ -86,7 +85,7 @@ namespace KTZEngine
         }
 
         [SupportedOSPlatform("windows")]
-        public void SetConsoleSizeOnWindows() { Console.SetWindowSize(windowWidth, windowHeight); Console.SetBufferSize(windowWidth, windowHeight); }
+        public static void SetConsoleSizeOnWindows() { Console.SetWindowSize(windowWidth, windowHeight); Console.SetBufferSize(windowWidth, windowHeight); }
 
         public void UpdateConsoleColors()
         {
@@ -112,7 +111,7 @@ namespace KTZEngine
             gameTabs[currentGameTabName].time += (ulong)((DateTime.Now - start).Milliseconds);
 
             for (int i = 0; i < arrayOfFPS.Length - 1; i++) { arrayOfFPS[i] = arrayOfFPS[i + 1]; }
-            arrayOfFPS[arrayOfFPS.Length - 1] = (float)(1 / Math.Max(0.00001, TimeSpan.FromMilliseconds(time.Milliseconds).TotalSeconds));
+            arrayOfFPS[^1] = (float)(1 / Math.Max(0.00001, TimeSpan.FromMilliseconds(time.Milliseconds).TotalSeconds));
             currentAverageFPS = arrayOfFPS.Average();
         }
 
@@ -207,12 +206,9 @@ namespace KTZEngine
         public bool drawLeftSign = true;
 
 
-        public List<KeyValuePair<Vector2, string>> regularPostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
-        public List<KeyValuePair<Vector2, string>> disposablePostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
-        public List<KeyValuePair<Vector2, string>> sumPostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
-
-        private int postProcessX;
-        private int postProcessY;
+        public List<KeyValuePair<Vector2, string>> regularPostProcessingData = new() { };
+        public List<KeyValuePair<Vector2, string>> disposablePostProcessingData = new() { };
+        public List<KeyValuePair<Vector2, string>> sumPostProcessingData = new() { };
 
         public SelectListTab(KTZEngineAplication aplication_, List<SLTItem> SLTItemList, string name_, int ups_, string selectItemRightSign_ = standartSelectItemRightSign, string selectItemLeftSign_ = standartSelectItemLeftSign, int distanceBetweenElements_ = standartDistanceBetweenElements) : base(aplication_, name_, ups_)
         {
@@ -611,7 +607,7 @@ namespace KTZEngine
         public ConsoleKey? pressedKey = ConsoleEvents.GetKey();
         public bool isAnyKeyPressed = false;
 
-        public KeyManager(Dictionary<ConsoleKey, Action> keyOrActionDictionary = null) { if (keyOrActionDictionary != null) { keyPressActions = keyOrActionDictionary; } }
+        public KeyManager(Dictionary<ConsoleKey, Action>? keyOrActionDictionary = null) { if (keyOrActionDictionary != null) { keyPressActions = keyOrActionDictionary; } }
 
         public void Update()
         {

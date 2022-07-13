@@ -8,17 +8,17 @@ namespace KTZEngine
 {
     public class KTZMapsGeneration
     {
-        public static int[,] mediumBoxKnot = new int[5, 5] {
+        public static readonly int[,] mediumBoxKnot = new int[5, 5] {
             { 0, 0, 0, 0, 0 },
             { 0, 1, 1, 1, 0 },
             { 0, 1, 1, 1, 0 },
             { 0, 1, 1, 1, 0 },
             { 0, 0, 0, 0, 0 }, };
-        public static int[,] smallBoxKnot = new int[3, 3] {
+        public static readonly int[,] smallBoxKnot = new int[3, 3] {
             { 0, 0, 0 },
             { 0, 1, 0 },
             { 0, 0, 0 }, };
-        public static int[,] bigBoxKnot = new int[7, 7] {
+        public static readonly int[,] bigBoxKnot = new int[7, 7] {
             { 0, 0, 0, 0, 0, 0, 0 },
             { 0, 1, 1, 1, 1, 1, 0 },
             { 0, 1, 1, 1, 1, 1, 0 },
@@ -26,16 +26,16 @@ namespace KTZEngine
             { 0, 1, 1, 1, 1, 1, 0 },
             { 0, 1, 1, 1, 1, 1, 0 },
             { 0, 0, 0, 0, 0, 0, 0 }, };
-        public static int zoneHeight = 6;
-        public static int cityZoneHeight = 3;
-        public static int centralStreetOffset = 7;
-        public static int smallSideStreetDiagonalCoef = 3;
-        public static Dictionary<Vector2, int> aloneWallVectorStructure = new() { { Vector2.zero, 1 }, { Vector2.up, 0 }, { Vector2.right, 0 }, { Vector2.down, 0 }, { Vector2.left, 0 } };
+        public const int zoneHeight = 6;
+        public const int cityZoneHeight = 3;
+        public const int centralStreetOffset = 7;
+        public const int smallSideStreetDiagonalCoef = 3;
+        public static readonly Dictionary<Vector2, int> aloneWallVectorStructure = new() { { Vector2.zero, 1 }, { Vector2.up, 0 }, { Vector2.right, 0 }, { Vector2.down, 0 }, { Vector2.left, 0 } };
 
-        public static Dictionary<Vector2, int> leftUpCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.up, 1 }, { Vector2.left, 1 }, { Vector2.down, 0 }, { Vector2.right, 0 }, };
-        public static Dictionary<Vector2, int> leftDownCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.down, 1 }, { Vector2.left, 1 }, { Vector2.up, 0 }, { Vector2.right, 0 }, };
-        public static Dictionary<Vector2, int> rightUpCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.up, 1 }, { Vector2.right, 1 }, { Vector2.down, 0 }, { Vector2.left, 0 }, };
-        public static Dictionary<Vector2, int> rightDownCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.down, 1 }, { Vector2.right, 1 }, { Vector2.up, 0 }, { Vector2.left, 0 }, };
+        public static readonly Dictionary<Vector2, int> leftUpCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.up, 1 }, { Vector2.left, 1 }, { Vector2.down, 0 }, { Vector2.right, 0 }, };
+        public static readonly Dictionary<Vector2, int> leftDownCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.down, 1 }, { Vector2.left, 1 }, { Vector2.up, 0 }, { Vector2.right, 0 }, };
+        public static readonly Dictionary<Vector2, int> rightUpCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.up, 1 }, { Vector2.right, 1 }, { Vector2.down, 0 }, { Vector2.left, 0 }, };
+        public static readonly Dictionary<Vector2, int> rightDownCornerVectorStructure = new() { { Vector2.zero, 0 }, { Vector2.down, 1 }, { Vector2.right, 1 }, { Vector2.up, 0 }, { Vector2.left, 0 }, };
 
         public static List<int> allUsageNums = new() { 0, 1, 2, 3, 4 };
 
@@ -123,7 +123,6 @@ namespace KTZEngine
             VectorsClearStructureOnVirtualMap(virtualMap, aloneWallVectorStructure, 0, new Vector2(0, zoneHeight), virtualMapSize - new Vector2(0, zoneHeight));
 
 
-            // Create zones
             DrawRectOnVirtualMap(virtualMap, new Vector2(1, virtualMapSize.y - 1 - cityZoneHeight), new Vector2(virtualMapSize.x - 1, cityZoneHeight), 2);
             DrawRectOnVirtualMap(virtualMap, new Vector2(1), new Vector2(virtualMapSize.x - 2, cityZoneHeight), 2);
 
@@ -150,10 +149,8 @@ namespace KTZEngine
 
             ChaoticGeneration(virtualMap);
 
-            // for (int i = 0; i < 3; i++) { RunSmallWormInVirtualMap(virtualMap, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), virtualMapSize.y - zoneHeight), Vector2.upRight, virtualMapSize - 1, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), zoneHeight), allUsageNums, 0, randomChanceGo: -100); }
             for (int i = 0; i < 5; i++) { RunMediumWormInVirtualMap(virtualMap, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), virtualMapSize.y - zoneHeight), Vector2.upRight, virtualMapSize - 1, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), zoneHeight), allUsageNums, 0, randomChanceGo: -100); }
-            // for (int i = 0; i < 3; i++) { RunBigWormInVirtualMap(virtualMap, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), virtualMapSize.y - zoneHeight), Vector2.upRight, virtualMapSize - 1, new Vector2(KTZEngineAplication.random.Next(0, virtualMapSize.x), zoneHeight), allUsageNums, 0, randomChanceGo: -100); }
-
+            
             for (int i = -1; i <= 1; i += 2)
             {
                 Vector2 startPos;
@@ -223,7 +220,6 @@ namespace KTZEngine
         public static int[,] ChaoticGeneration(int[,] virtualMap, int eggsCount = 1000, int growTimes = 2, int fullNum = 1)
         {
             Vector2 virtualMapSize = new(virtualMap.GetLength(0), virtualMap.GetLength(1));
-            Vector2 pos;
             int chance;
 
             for (int i = 0; i < eggsCount; i++)
@@ -237,7 +233,6 @@ namespace KTZEngine
                 {
                     for (int y = 1; y < virtualMapSize.y - 1; y++)
                     {
-                        pos = new Vector2(x, y);
                         chance = 1;
                         for (int q = 0; q < Vector2.eightDirections.Count; q++)
                         {
@@ -255,7 +250,6 @@ namespace KTZEngine
         public static int[,] CreateStructureHard(int[,] virtualMap, int[,] structure, Vector2 position)
         {
             Vector2 mapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
-            // Vector2 structureSize = new Vector2(structure.GetLength(0), structure.GetLength(1));
             if (KTZMath.IsInInterval(position, Vector2.zero, mapSize))
             {
                 for (int x = 0; x < structure.GetLength(0); x++)
@@ -348,7 +342,7 @@ namespace KTZEngine
                 virtualMap[x, 0] = 1;
                 virtualMap[x, virtualMapSize.y] = 1;
             }
-            for (int y = 1/*ignore corners*/; y < virtualMap.GetLength(1) - 1/*ignore corners*/; y++)
+            for (int y = 1; y < virtualMap.GetLength(1) - 1; y++)
             {
                 virtualMap[0, y] = 1;
                 virtualMap[virtualMapSize.x, y] = 1;
@@ -404,7 +398,7 @@ namespace KTZEngine
                     {
                         pos = newPos;
                         path[pos.x, pos.y] = 1;
-                        isInTarget = (pos == target) ? true : false;
+                        isInTarget = pos == target;
                     }
                 }
 
@@ -544,9 +538,7 @@ namespace KTZEngine
         public static int[,] VectorsClearStructureOnVirtualMap(int[,] virtualMap, Dictionary<Vector2, int> tiles, int emptyInt, Vector2 startFieldForClear, Vector2 endFieldForClear)
         {
             Vector2 virtualMapSize = new(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
-            // Vector2 structureSize = new Vector2(structureForClear.GetLength(0) - 1, structureForClear.GetLength(1) - 1);
-
-
+            
             List<Vector2> tilesKeys = tiles.Keys.ToList();
             List<int> tilesValues = tiles.Values.ToList();
             startFieldForClear = KTZMath.CutNumberToInterval(startFieldForClear, Vector2.zero - new Vector2(Math.Min(tilesKeys.MinBy(o => o.x).x, 0), Math.Min(tilesKeys.MinBy(o => o.y).y, 0)), virtualMapSize);
@@ -616,7 +608,7 @@ namespace KTZEngine
 
         public static int[,] BombHoleGenerate(int[,] virtualMap, int holeNum, int eggsCount = 14, int growTimes = 8)
         {
-            Vector2 virtualMapSize = new Vector2(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            Vector2 virtualMapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
             Vector2 currVectorpos;
             int xEgg;
             int yEgg;
@@ -670,8 +662,8 @@ namespace KTZEngine
             if (genCounts == null) { genCounts = new List<int>() { 4, 4, 3, 6 }; }
 
             int[,] virtualMap = VirtualMapCopy(refVirtualMap);
-            Vector2 virtualMapSize = new Vector2(virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
-            List<int[,]> gS2 = new List<int[,]>()
+            Vector2 virtualMapSize = new (virtualMap.GetLength(0) - 1, virtualMap.GetLength(1) - 1);
+            List<int[,]> gS2 = new ()
             {
 
                 new int[,]{
@@ -688,7 +680,7 @@ namespace KTZEngine
                     { 0, 0, 0 },
                 }
             };
-            List<int[,]> gS3 = new List<int[,]>()
+            List<int[,]> gS3 = new ()
             {
 
                 new int[,]{
@@ -707,7 +699,7 @@ namespace KTZEngine
                     { 0, 0, 0 },
                 }
             };
-            List<int[,]> gS4 = new List<int[,]>()
+            List<int[,]> gS4 = new ()
             {
 
                 new int[,]{
@@ -729,7 +721,7 @@ namespace KTZEngine
                 }
             };
 
-            List<List<int[,]>> structures = new List<List<int[,]>> { gS2, gS3, gS4 };
+            List<List<int[,]>> structures = new () { gS2, gS3, gS4 };
 
 
             for (int i = 0; i < structures.Count; i++)

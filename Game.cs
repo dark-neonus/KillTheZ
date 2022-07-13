@@ -10,7 +10,6 @@ namespace KTZEngine
 {
     public class Game : GameTab
     {
-        public KTZEngineAplication aplication;
         public GameGrid gameGrid;
         public bool isInGame;
 
@@ -19,7 +18,7 @@ namespace KTZEngine
         public Dictionary<string, GameObject> gameObjects = new();
         public List<GameObject> gameObjectsList = new();
 
-        private GameObject gmObj;
+        private GameObject? gmObj;
 
         public Game(ref KTZEngineAplication aplication_, Vector2 gameGridSize, string name_, int ups_) : base(aplication_, name_, ups_)
         {
@@ -51,7 +50,7 @@ namespace KTZEngine
             {
                 if (gameObjects.ContainsKey(name))
                 {
-                    GameObject remObj = gameObjects[name];
+                    GameObject? remObj = gameObjects[name];
                     if (KTZMath.IsInInterval(remObj.localPosition, Vector2.zero, new Vector2(remObj.layer.layerWidth, remObj.layer.layerHeight) - 1)) { remObj.layer.grid[remObj.localPosition.x, remObj.localPosition.y] = remObj.layer.emptyChar; }
 
                     gameObjectsList.Remove(remObj);
@@ -69,15 +68,9 @@ namespace KTZEngine
         public override void PreUpdate() { gameObjectsList = gameObjects.Values.ToList(); }
         public override void Update()
         {
-            // Self Update
-
-            // Global Update
             PreUpdateGame();
             GameObjectsPreUpdate();
 
-            // SpecialUpdate();
-
-            gameGrid.Update();
             UpdateGame();
             GameObjectsUpdate();
             GameObjectsDrawOnGrid();
@@ -86,7 +79,6 @@ namespace KTZEngine
 
             AfterUpdateGame();
             GameObjectsAfterUpdate();
-            // UpdateTab();
         }
         public override void AfterUpdate() { }
 
@@ -156,14 +148,14 @@ namespace KTZEngine
         public char emptyChar = ' ';
 
         public Grid grid;
-        public GameLayer[] layersArr;
+        public GameLayer[] layersArr = Array.Empty<GameLayer>();
 
         public Vector2 currPos;
         public Vector2 currPosInLayer;
 
-        public List<KeyValuePair<Vector2, string>> regularPostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
-        public List<KeyValuePair<Vector2, string>> disposablePostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
-        public List<KeyValuePair<Vector2, string>> sumPostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
+        public List<KeyValuePair<Vector2, string>> regularPostProcessingData = new () { };
+        public List<KeyValuePair<Vector2, string>> disposablePostProcessingData = new () { };
+        public List<KeyValuePair<Vector2, string>> sumPostProcessingData = new () { };
 
         private int postProcessX;
         private int postProcessY;
@@ -239,10 +231,7 @@ namespace KTZEngine
 
             disposablePostProcessingData = new List<KeyValuePair<Vector2, string>>() { };
         }
-        public void Update()
-        {
-
-        }
+        
         public void Draw() { grid.Draw(); }
 
         public GameLayer CreateLayer(string name_, int width, int height, Vector2 layerStartPos, char emptyChar, int priority)
@@ -306,7 +295,7 @@ namespace KTZEngine
             }
         }
 
-        public StaticGameObject CreateStaticObject(Vector2 position_, char ico, List<string> ids = null)
+        public StaticGameObject CreateStaticObject(Vector2 position_, char ico, List<string>? ids = null)
         {
             StaticGameObject newStaticGameObj = new(position_, this, ico, ids);
             staticObjects.Add(newStaticGameObj);
@@ -321,7 +310,6 @@ namespace KTZEngine
             obj.localPosition = localPos;
             staticObjects.Add(obj);
             obj.DrawOnLayerGrid();
-            // obj.DrawOnLayerGrid();
         }
 
     }
@@ -341,7 +329,7 @@ namespace KTZEngine
         public List<string> id = new();
         public List<Vector2> blockedDirections = new();
 
-        public GameObject(string objName, GameLayer thisLayer, Vector2 _position, char ico, List<string> ids = null, int priority_ = 1)
+        public GameObject(string objName, GameLayer thisLayer, Vector2 _position, char ico, List<string>? ids = null, int priority_ = 1)
         {
             layer = thisLayer;
             name = objName;
@@ -363,21 +351,11 @@ namespace KTZEngine
         public void GameObjectUpdate()
         {
 
-            // Update position
             finalVelocity = disposableVelocity + regularVelocity;
 
             localPosition = blockedDirections.Contains(finalVelocity.Direction) ? localPosition : localPosition + finalVelocity;
 
-            // if (!blockedDirections.Contains(finalVelocity.Direction))
-            // {
-            //     localPosition += finalVelocity;
-            // }
-
             globalPosition = layer.layerStartPosition + localPosition;
-
-            // currentLayerStartPos = layer.layerStartPosition;
-
-            // ChildUpdate
             Update();
 
         }
@@ -410,7 +388,7 @@ namespace KTZEngine
 
         public List<string> id = new();
 
-        public StaticGameObject(Vector2 position_, GameLayer layer_, char ico_, List<string> ids = null)
+        public StaticGameObject(Vector2 position_, GameLayer layer_, char ico_, List<string>? ids = null)
         {
             localPosition = position_;
             layer = layer_;

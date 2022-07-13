@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Vector2Namespace
 {
-    public struct Vector2 : IEquatable<Vector2>// , ICollection<Vector2>
+    public struct Vector2 : IEquatable<Vector2>
     {
         public int x;
         public int y;
@@ -14,30 +14,29 @@ namespace Vector2Namespace
 
         public int Absolute { get { return (int)Math.Round(Math.Sqrt(x * x + y * y)); } }
 
-        // Constructor
         public Vector2(int X, int Y) { this.x = X; this.y = Y; }
         public Vector2(int XandY) { this.x = XandY; this.y = XandY; }
 
-        public static Vector2 zero = new(0, 0);
+        public static readonly Vector2 zero = new(0, 0);
 
-        public static Vector2 right = new(1, 0);
-        public static Vector2 left = new(-1, 0);
-        public static Vector2 up = new(0, 1);
-        public static Vector2 down = new(0, -1);
+        public static readonly Vector2 right = new(1, 0);
+        public static readonly Vector2 left = new(-1, 0);
+        public static readonly Vector2 up = new(0, 1);
+        public static readonly Vector2 down = new(0, -1);
 
-        public static Vector2 upRight = new(1, 1);
-        public static Vector2 upLeft = new(-1, 1);
-        public static Vector2 downRight = new(1, -1);
-        public static Vector2 downLeft = new(-1, -1);
+        public static readonly Vector2 upRight = new(1, 1);
+        public static readonly Vector2 upLeft = new(-1, 1);
+        public static readonly Vector2 downRight = new(1, -1);
+        public static readonly Vector2 downLeft = new(-1, -1);
 
-        public static List<Vector2> fourDirections = new()
+        public static readonly List<Vector2> fourDirections = new()
         {
             right,
             left,
             up,
             down
         };
-        public static Dictionary<string, Vector2> namedFourDirections = new()
+        public static readonly Dictionary<string, Vector2> namedFourDirections = new()
         {
             { "right", right },
             { "left", left },
@@ -45,14 +44,14 @@ namespace Vector2Namespace
             { "down", down }
         };
 
-        public static List<Vector2> diagonalDirections = new()
+        public static readonly List<Vector2> diagonalDirections = new()
         {
             upRight,
             upLeft,
             downRight,
             downLeft
         };
-        public static Dictionary<string, Vector2> namedDiagonalDirections = new()
+        public static readonly Dictionary<string, Vector2> namedDiagonalDirections = new()
         {
             { "upRight", upRight },
             { "upLeft", upLeft },
@@ -61,7 +60,7 @@ namespace Vector2Namespace
 
         };
 
-        public static List<Vector2> eightDirections = new()
+        public static readonly List<Vector2> eightDirections = new()
         {
             right,
             left,
@@ -72,7 +71,7 @@ namespace Vector2Namespace
             downRight,
             downLeft
         };
-        public static Dictionary<string, Vector2> namedEightDirections = new()
+        public static readonly Dictionary<string, Vector2> namedEightDirections = new()
         {
             { "right", right },
             { "left", left },
