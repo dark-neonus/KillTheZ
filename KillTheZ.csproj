@@ -6,16 +6,41 @@
     <SignAssembly>False</SignAssembly>
     <Authors>DarkNeon</Authors>
     <PackageTags>KillTheZ</PackageTags>
-    <ApplicationIcon>GameIcon.ico</ApplicationIcon>
-    <PackageIcon>GameIcon.png</PackageIcon>
+    <PackageIcon>KTZicon.png</PackageIcon>
+    <ApplicationIcon>KTZicon.ico</ApplicationIcon>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Description>KillTheZ game</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="GameIcon.ico" />
+    <Content Include="KTZicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="GameIcon.png">
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="KTZIcon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="KTZicon.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="KTZicon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

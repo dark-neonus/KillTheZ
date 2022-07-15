@@ -539,7 +539,7 @@ namespace KillTheZGame
         {
             itemList = new List<SLTItem>()
             {
-                new SLTItem("Message1", GameData.aplication.gameText.GetText("CreditsTitle"), GameData.EmptyMethod, 0),
+                new SLTItem("Message1", GameData.aplication.gameText.GetText("CreditsTitle"), GameData.EmptyMethod, 1),
                 new SLTItem("Message2", MakeLinesAround(GameData.aplication.gameText.GetText("Programmer"), linesLen), GameData.EmptyMethod, 3),
                 new SLTItem("Message3", GameData.nameNazar, GameData.EmptyMethod, 1),
                 new SLTItem("Message4", MakeLinesAround(GameData.aplication.gameText.GetText("MainTesters"), linesLen), GameData.EmptyMethod, 3),
@@ -556,7 +556,6 @@ namespace KillTheZGame
             };
 
             AlignToCenter();
-            HeightAlignToCenter();
         }
 
         public static string MakeLinesAround(string text, int lineLength)
@@ -724,7 +723,7 @@ namespace KillTheZGame
 
             currentCityEnemy = GameData.cityEnemyCount[GameData.cityNames[GameData.currentCityIndex]];
 
-            levelEnemysSpawnTimeMiliseconds = (GameData.currentCityIndex + 2) * 60000;
+            levelEnemysSpawnTimeMiliseconds = (GameData.currentCityIndex + 2) * 60000 / 2;
             levelPrepareTime = (int)(levelEnemysSpawnTimeMiliseconds * 0.1);
             levelOneEnemySpawnTimeMiliseconds = (int)(levelEnemysSpawnTimeMiliseconds / levelEnemyCount);
 
