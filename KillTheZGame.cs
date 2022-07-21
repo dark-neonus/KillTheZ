@@ -2217,7 +2217,7 @@ namespace KillTheZGame
         public static Language ukraine;
         public static Language polish;
 
-        public static string nameNazar = "DarkNeon (Nazar Pasichnyk)";
+        public static string nameNazar = "DarkNeonus (Nazar Pasichnyk)";
         public static string namePavlo = "Sprinix (Pavlo Nickel)";
         public static string nameRoman = "CoolGuy228 (Roman Havrylyuk)";
 
