@@ -2195,7 +2195,7 @@ namespace KillTheZGame
         public static CreditsTab creditsTab;
 
         public static YesNoTab yesNoTab;
-
+         
         public static JustTextTab lostCityTab;
         public static JustTextTab captureCityTab;
         public static FinalWinTab finalWinTab;
